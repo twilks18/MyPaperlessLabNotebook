@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http//wwww.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <title>My Paperless</title>
+</head>
+<body>
+
+    <h1>Introduction</h1>
+
+   <p>Title: <span th:text="${title}"></span></p>
+    <br/>
+    <p >Purpose: <span th:text="${purpose}"></span></p>
+    <br/>
+    <p >Materials: <span th:text="${materials}"></span></p>
+    <br/>
+    <br/>
+    
+
+<table>
+      <tr>
+         <td>Chemical Name</td>
+         <td>Molecular Weight(g/mol)</td>
+         <td>Density(g/L)</td>
+         <td>Hazard</td>
+      </tr>
+      <tr th:each="intro: ${intros}">
+          <td th:text="${intro.chemName}"></td>
+          <td th:text="${intro.mw}"></td>
+          <td th:text="${intro.density}"></td>
+          <td th:text="${intro.hazard}"></td>
+
+      </tr>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http//wwww.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <title>My Paperless</title>
+</head>
+<body>
+    <h1 th:text="${title}"></h1>
+
+    <p th:unless="#{titles} and ${titles.size()}">no experiments</p>
+    <ul>
+        <li th:each=" title : ${titles}" th:text="${title}"></li>
+    </ul>
+</body>
+</html>
