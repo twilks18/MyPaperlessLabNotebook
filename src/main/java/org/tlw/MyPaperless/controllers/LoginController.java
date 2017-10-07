@@ -14,21 +14,6 @@ import java.util.ArrayList;
 public class LoginController {
 
 
-
-    //Request path:/login/notusable
-    @RequestMapping(value = "notusable")
-    public String hello(Model model){
-
-        ArrayList<String> experiments = new ArrayList<>();
-//        experiments.add("number1");
-//        experiments.add("number2");
-//        experiments.add("number3");
-
-        model.addAttribute("titles", experiments);
-        model.addAttribute("title", "My Paperless Lab Notebook");
-        return "paperless/index";
-    }
-
     //Create a login form; path: /login
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String loginForm(){
