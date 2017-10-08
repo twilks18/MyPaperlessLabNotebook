@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http//wwww.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body >
+<nav th:replace="fragments :: navigation"></nav>
+
+    <h1>Introduction</h1>
+    <div th:fragments="intro" th:each="intro : ${intros}">
+    <p>Title: <span th:text="${intro.title}"></span></p>
+    <br/>
+    <p >Purpose: <span th:text="${intro.purpose}"></span></p>
+    <br/>
+    <p>Materials: <span th:text="${intro.materials}"></span></p>
+    <br/>
+    <br/>
+    </div>
+
+
+</body>
+</html>
