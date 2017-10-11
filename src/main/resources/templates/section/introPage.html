@@ -2,12 +2,12 @@
 <html lang="en" xmlns:th="http//wwww.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
 <body >
-<a href="/intro/addReagent">Chemical Properties Table</a>
+<a href="/experiment/addReagent">Physical Properties Table</a>
 <h1>Introduction</h1>
 
 
 
-<div th:fragments="intro" th:each="intro : ${intros}">
+<div th:fragment="intro" th:each="intro : ${intros}">
     <p>Title: <span th:text="${intro.title}"></span></p>
     <br/>
     <p >Purpose: <span th:text="${intro.purpose}"></span></p>
@@ -19,7 +19,8 @@
 
 
 <h1>Physical Properties Table</h1>
-<table th:fragments="reagents">
+
+<table>
     <tr>
         <td>Chemical Name</td>
         <td>Molecular Weight(g/mol)</td>
@@ -34,6 +35,7 @@
 
     </tr>
 </table>
+
 
 </body>
 </html>

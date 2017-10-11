@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http//wwww.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body>
+<nav th:replace="fragments :: navigation"></nav>
+<br/>
+<h1>Procedure and Observations</h1>
+<form method="post">
+<label>Procedure</label>
+<textarea rows="40" cols="80" name="procedure"></textarea>
+<textarea rows="40" cols="80" name="observations"></textarea>
+<input type="submit"/>
+</form>
+
+
+
+</body>
+</html>
