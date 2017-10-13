@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http//wwww.thymeleaf.org/">
+<html lang="en" xmlns:th="http//www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
 <body >
 <a href="/experiment/addReagent">Physical Properties Table</a>
@@ -7,7 +7,7 @@
 
 
 
-<div th:fragment="intro" th:each="intro : ${intros}">
+<div th:each="intro : ${intros}">
     <p>Title: <span th:text="${intro.title}"></span></p>
     <br/>
     <p >Purpose: <span th:text="${intro.purpose}"></span></p>

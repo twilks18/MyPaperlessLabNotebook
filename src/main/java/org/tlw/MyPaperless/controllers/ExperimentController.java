@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.tlw.MyPaperless.models.ConclusionModel;
 import org.tlw.MyPaperless.models.IntroductionModel;
 import org.tlw.MyPaperless.models.ProcObsModel;
 import org.tlw.MyPaperless.models.ReagentModel;
@@ -16,10 +17,10 @@ import java.util.ArrayList;
 @RequestMapping(value = "experiment")
 public class ExperimentController {
 
-    ArrayList<IntroductionModel> intros = new ArrayList<IntroductionModel>();
-    ArrayList<ReagentModel> reagents = new ArrayList<ReagentModel>();
-    ArrayList<ProcObsModel> procobs = new ArrayList<ProcObsModel>();
-
+    ArrayList<IntroductionModel> intros = new ArrayList<>();
+    ArrayList<ReagentModel> reagents = new ArrayList<>();
+    ArrayList<ProcObsModel> procobs = new ArrayList<>();
+    ArrayList<ConclusionModel> concludes = new ArrayList<>();
     // final page for intro and reagent contents
     @RequestMapping(value = "intro")
     public String introPage(Model model){
@@ -43,7 +44,7 @@ public class ExperimentController {
 
        model.addAttribute("intros",intros);
 
-        return "section/processIntro";
+        return "section/introPage";
     }
 
     // form for reagent/chemical contents or Chemical Properties table
@@ -53,7 +54,7 @@ public class ExperimentController {
         return "section/reagentForm";
     }
 
-    //Processing of chemical properties table
+    //Processing of physical properties table
     @RequestMapping(value ="addReagent", method = RequestMethod.POST)
     public String processReagentForm(@RequestParam String chemical, @RequestParam int density, @RequestParam int mw, @RequestParam String hazard, Model model) {
 
@@ -78,5 +79,20 @@ public class ExperimentController {
         model.addAttribute("procobs", procobs);
 
         return "section/procAndObsPage";
+    }
+
+    //form for conclusion
+    @RequestMapping(value ="conclusionPage", method = RequestMethod.GET)
+    public String conclusionForm(){
+        return "section/conclusionForm";
+    }
+
+    //processing conclusion
+    @RequestMapping(value = "conclusionPage",method = RequestMethod.POST)
+    public String processConclusionForm(@RequestParam String conclusion,Model model){
+        ConclusionModel conclude = new ConclusionModel(conclusion);
+        concludes.add(conclude);
+        model.addAttribute("conclusions",concludes);
+        return "section/conclusionPage";
     }
 }

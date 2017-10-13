@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http//www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<h1>Conclusion</h1><br/>
+<div th:each="conclusion : ${conclusions}">
+    <p><span th:text="${conclusion.conclusion}"></span></p>
+</div>
+
+</body>
+</html>
