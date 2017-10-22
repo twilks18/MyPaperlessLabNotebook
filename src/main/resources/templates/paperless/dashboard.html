@@ -3,5 +3,12 @@
 <head th:replace="fragments :: head"></head>
 <body>
     <h1 > Welcome <span th:text="${username}"></span></h1>
+
+    <ul>
+        <li th:each=" title : ${titles}" th:text="${title.title}"></li>
+    </ul>
+
+
+
 </body>
 </html>

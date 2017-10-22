@@ -6,10 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.tlw.MyPaperless.models.ConclusionModel;
-import org.tlw.MyPaperless.models.IntroductionModel;
-import org.tlw.MyPaperless.models.ProcObsModel;
-import org.tlw.MyPaperless.models.ReagentModel;
+import org.tlw.MyPaperless.models.*;
 
 import java.util.ArrayList;
 
@@ -17,15 +14,12 @@ import java.util.ArrayList;
 @RequestMapping(value = "experiment")
 public class ExperimentController {
 
-    ArrayList<IntroductionModel> intros = new ArrayList<>();
-    ArrayList<ReagentModel> reagents = new ArrayList<>();
-    ArrayList<ProcObsModel> procobs = new ArrayList<>();
-    ArrayList<ConclusionModel> concludes = new ArrayList<>();
     // final page for intro and reagent contents
-    @RequestMapping(value = "intro")
+    @RequestMapping(value = "")
     public String introPage(Model model){
-        model.addAttribute("intros",intros);
-        model.addAttribute("reagents",reagents);
+        // TODO fix the parameter for intro content, should not pass in a list BAD!!
+        model.addAttribute("intros",ExperimentContents.getAllIntros());
+        model.addAttribute("reagents",ExperimentContents.getAllReagents());
 
         return "section/introPage";
     }
@@ -36,15 +30,16 @@ public class ExperimentController {
 
         return "section/introForm";
     }
-    // processing of intro form
+    // processing of form for title,material, purpose
     @RequestMapping(value = "addIntro", method = RequestMethod.POST)
     public String processIntroForm(@RequestParam String title, @RequestParam String purpose, @RequestParam String materials, Model model){
        IntroductionModel intro = new IntroductionModel( title,purpose,materials);
-       intros.add(intro);
+        ExperimentContents.addIntro(intro);
 
-       model.addAttribute("intros",intros);
-
-        return "section/introPage";
+       model.addAttribute("title",title);
+       model.addAttribute("purpose",purpose);
+       model.addAttribute("materials", materials);
+        return "section/processIntro";
     }
 
     // form for reagent/chemical contents or Chemical Properties table
@@ -58,9 +53,9 @@ public class ExperimentController {
     @RequestMapping(value ="addReagent", method = RequestMethod.POST)
     public String processReagentForm(@RequestParam String chemical, @RequestParam int density, @RequestParam int mw, @RequestParam String hazard, Model model) {
 
-        ReagentModel reagent = new ReagentModel(chemical,density,mw,hazard);
-        reagents.add(reagent);
-        model.addAttribute("reagents",reagents);
+        ReagentModel reagents = new ReagentModel(chemical,density,mw,hazard);
+        ExperimentContents.addReagent(reagents);
+        model.addAttribute("reagents",ExperimentContents.getAllReagents());
         return "section/reagentForm";
     }
 
@@ -74,9 +69,10 @@ public class ExperimentController {
     public String processProcAndObsForm( @RequestParam String procedure, @RequestParam String observations,Model model){
 
         ProcObsModel procob = new ProcObsModel(procedure,observations);
-        procobs.add(procob);
+        ExperimentContents.addProcObs(procob);
 
-        model.addAttribute("procobs", procobs);
+        // TODO check the template for necessary corrections
+        model.addAttribute("procobs", procob);
 
         return "section/procAndObsPage";
     }
@@ -91,8 +87,10 @@ public class ExperimentController {
     @RequestMapping(value = "conclusionPage",method = RequestMethod.POST)
     public String processConclusionForm(@RequestParam String conclusion,Model model){
         ConclusionModel conclude = new ConclusionModel(conclusion);
-        concludes.add(conclude);
-        model.addAttribute("conclusions",concludes);
+        ExperimentContents.addConclusion(conclude);
+
+        // TODO check template for necessary corrections
+        model.addAttribute("conclusions",conclude);
         return "section/conclusionPage";
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.tlw.MyPaperless.models.ExperimentContents;
 
 import java.util.ArrayList;
 
@@ -22,11 +23,12 @@ public class LoginController {
         return "paperless/login";
     }
 
-    @RequestMapping(value = "", method = RequestMethod.POST)
+    @RequestMapping(value = "dashboard")
     public String dashboard(@RequestParam String userName,Model model){
 
         model.addAttribute("title","Welcome");
         model.addAttribute("username",userName);
+        model.addAttribute("titles", ExperimentContents.getAllIntros());
         return "paperless/dashboard";
     }
 

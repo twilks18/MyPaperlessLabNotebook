@@ -2,10 +2,12 @@
 <html lang="en" xmlns:th="http//www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
 <body >
-<a href="/experiment/addReagent">Physical Properties Table</a>
+<nav th:fragment="navigation">
+    <a href="login/dashboard">Dashboard</a>
+
+</nav>
+
 <h1>Introduction</h1>
-
-
 
 <div th:each="intro : ${intros}">
     <p>Title: <span th:text="${intro.title}"></span></p>
@@ -28,10 +30,10 @@
         <td>Hazard</td>
     </tr>
     <tr th:each="reagent: ${reagents}">
-        <td th:text="${reagent.chemName}"></td>
+        <td th:text="${reagent.chemical}"></td>
         <td th:text="${reagent.mw}"></td>
         <td th:text="${reagent.density}"></td>
-        <td th:text="${reagent.hazard}"></td>
+        <td th:text="${reagent.hazards}"></td>
 
     </tr>
 </table>

@@ -26,10 +26,10 @@
         <td>Hazard</td>
     </tr>
     <tr th:each="reagent: ${reagents}">
-        <td th:text="${reagent.chemName}"></td>
+        <td th:text="${reagent.chemical}"></td>
         <td th:text="${reagent.mw}"></td>
         <td th:text="${reagent.density}"></td>
-        <td th:text="${reagent.hazard}"></td>
+        <td th:text="${reagent.hazards}"></td>
 
     </tr>
 </table>
