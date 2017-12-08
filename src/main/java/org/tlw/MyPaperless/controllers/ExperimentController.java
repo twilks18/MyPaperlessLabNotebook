@@ -2,20 +2,23 @@ package org.tlw.MyPaperless.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.tlw.MyPaperless.models.*;
 
-import java.util.ArrayList;
+import javax.validation.Valid;
 
 @Controller
-@RequestMapping(value = "experiment")
 public class ExperimentController {
 
+    /*----------- Sections ------------------*/
+
+
     // final page for intro and reagent contents
-    @RequestMapping(value = "")
+    @RequestMapping(value = "intro")
     public String introPage(Model model){
         // TODO fix the parameter for intro content, should not pass in a list BAD!!
         model.addAttribute("intros",ExperimentContents.getAllIntros());
@@ -24,73 +27,119 @@ public class ExperimentController {
         return "section/introPage";
     }
 
+
     // form for title,material, purpose
     @RequestMapping(value = "addIntro", method = RequestMethod.GET)
-    public String introForm(){
+    public String introForm(Model model){
 
+            model.addAttribute(new Intro());
         return "section/introForm";
     }
+
+
     // processing of form for title,material, purpose
     @RequestMapping(value = "addIntro", method = RequestMethod.POST)
-    public String processIntroForm(@RequestParam String title, @RequestParam String purpose, @RequestParam String materials, Model model){
-       IntroductionModel intro = new IntroductionModel( title,purpose,materials);
+    public String processIntroForm(@ModelAttribute @Valid Intro intro, Errors errors, Model model){
+
+        if (errors.hasErrors()){
+            return "section/introForm";
+        }
+
         ExperimentContents.addIntro(intro);
 
-       model.addAttribute("title",title);
-       model.addAttribute("purpose",purpose);
-       model.addAttribute("materials", materials);
+       model.addAttribute("title",intro.getTitle());
+       model.addAttribute("purpose",intro.getPurpose());
+       model.addAttribute("materials", intro.getMaterials());
         return "section/processIntro";
     }
 
+
+
     // form for reagent/chemical contents or Chemical Properties table
     @RequestMapping(value = "addReagent", method = RequestMethod.GET)
-    public String reagentForm(){
+    public String reagentForm(Model model){
 
+        model.addAttribute(new Reagent());
         return "section/reagentForm";
     }
 
     //Processing of physical properties table
     @RequestMapping(value ="addReagent", method = RequestMethod.POST)
-    public String processReagentForm(@RequestParam String chemical, @RequestParam int density, @RequestParam int mw, @RequestParam String hazard, Model model) {
+    public String processReagentForm(@ModelAttribute @Valid Reagent reagent, Errors errors, Model model) {
 
-        ReagentModel reagents = new ReagentModel(chemical,density,mw,hazard);
-        ExperimentContents.addReagent(reagents);
+        if (errors.hasErrors()){
+            return "section/reagentForm";
+        }
+        ExperimentContents.addReagent(reagent);
         model.addAttribute("reagents",ExperimentContents.getAllReagents());
+
         return "section/reagentForm";
+
     }
 
     //form for procedure and observations
-    @RequestMapping(value = "procAndObsPage",method = RequestMethod.GET)
-    public String procAndObsForm(){
+    @RequestMapping(value = "procAndObs",method = RequestMethod.GET)
+    public String procAndObsForm(Model model){
+
+       model.addAttribute(new Procobs());
         return "section/procAndObsForm";
     }
 
-    @RequestMapping(value = "procAndObsPage", method = RequestMethod.POST)
-    public String processProcAndObsForm( @RequestParam String procedure, @RequestParam String observations,Model model){
+    @RequestMapping(value = "procAndObs", method = RequestMethod.POST)
+    public String processProcAndObsForm(@ModelAttribute @Valid Procobs procob, Errors errors, Model model){
 
-        ProcObsModel procob = new ProcObsModel(procedure,observations);
+        if (errors.hasErrors()){
+            return "section/procAndObsForm";
+        }
+
+
         ExperimentContents.addProcObs(procob);
 
-        // TODO check the template for necessary corrections
-        model.addAttribute("procobs", procob);
+        model.addAttribute("procob", procob.getProcedure());
+        model.addAttribute("procob", procob.getObservations());
 
         return "section/procAndObsPage";
     }
 
-    //form for conclusion
-    @RequestMapping(value ="conclusionPage", method = RequestMethod.GET)
-    public String conclusionForm(){
+    /*---form for conclusion---*/
+    @RequestMapping(value ="conclusion", method = RequestMethod.GET)
+    public String conclusionForm(Model model){
+
+        model.addAttribute(new Conclusion());
         return "section/conclusionForm";
     }
 
-    //processing conclusion
-    @RequestMapping(value = "conclusionPage",method = RequestMethod.POST)
-    public String processConclusionForm(@RequestParam String conclusion,Model model){
-        ConclusionModel conclude = new ConclusionModel(conclusion);
+    /*----processing conclusion*---*/
+    @RequestMapping(value = "conclusion",method = RequestMethod.POST)
+    public String processConclusionForm(@ModelAttribute @Valid  Conclusion conclude, Errors errors,Model model){
+
+        if (errors.hasErrors()){
+            return "section/conclusionForm";
+        }
+
         ExperimentContents.addConclusion(conclude);
 
-        // TODO check template for necessary corrections
-        model.addAttribute("conclusions",conclude);
+
+        model.addAttribute("conclusions", ExperimentContents.getAllConclusions());
         return "section/conclusionPage";
+    }
+
+                             /*----------- Remove Section ------------------*/
+    @RequestMapping(value = "removeReagent", method = RequestMethod.GET)
+    public String displayRemoveReagent(Model model){
+        model.addAttribute("reagents", ExperimentContents.getAllReagents());
+
+        return "removeSection/removeReagent";
+    }
+
+    @RequestMapping(value = "removeReagent", method = RequestMethod.POST)
+    public String processRemoveReagent(@RequestParam int[] chemIds){
+
+        for (int chemId : chemIds) {
+            ExperimentContents.removeReagent(chemId);
+        }
+
+        return "redirect:addReagent";
+
     }
 }

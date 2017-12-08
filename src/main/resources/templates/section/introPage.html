@@ -2,8 +2,8 @@
 <html lang="en" xmlns:th="http//www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
 <body >
-<nav th:fragment="navigation">
-    <a href="login/dashboard">Dashboard</a>
+<nav>
+    <a href="/dashboard">Dashboard</a>
 
 </nav>
 
@@ -30,10 +30,10 @@
         <td>Hazard</td>
     </tr>
     <tr th:each="reagent: ${reagents}">
-        <td th:text="${reagent.chemical}"></td>
+        <td th:text="${reagent.chemName}"></td>
         <td th:text="${reagent.mw}"></td>
         <td th:text="${reagent.density}"></td>
-        <td th:text="${reagent.hazards}"></td>
+        <td th:text="${reagent.hazard}"></td>
 
     </tr>
 </table>

@@ -7,9 +7,10 @@ public class ExperimentContents {
 
     public static ArrayList<Intro> intros = new ArrayList<>();
     public static ArrayList<Reagent> reagents = new ArrayList<>();
-    public static ArrayList<ProcObs> procobs = new ArrayList<>();
+    public static ArrayList<Procobs> procobs = new ArrayList<>();
     public static ArrayList<Conclusion> conclusions = new ArrayList<>();
 
+    /*----------------------Intro(Title) Section----------------------------*/
     //add intro
     public static void addIntro(Intro newIntro){
         intros.add(newIntro);
@@ -20,14 +21,13 @@ public class ExperimentContents {
         return intros;
     }
 
-    //remove
+    //remove title
     public static void removeTitle(int id){
         Intro titleToRemove = getTitleById(id);
         intros.remove(titleToRemove);
     }
 
     //getById (titleId)
-
     public static Intro getTitleById(int id) {
 
         Intro titleid = null;
@@ -40,6 +40,8 @@ public class ExperimentContents {
         return titleid;
     }
 
+    /*----------------------Reagent Section----------------------------*/
+
     //get all reagents
     public static ArrayList<Reagent> getAllReagents(){
         return reagents;
@@ -51,7 +53,6 @@ public class ExperimentContents {
     }
 
     //get reagents by id
-
     public static Reagent getReagentById(int id){
 
         Reagent chemicalID = null;
@@ -65,25 +66,46 @@ public class ExperimentContents {
     }
 
     //remove reagent
-
     public static void removeReagent(int id){
 
         Reagent chemicalToRemove = getReagentById(id);
         reagents.remove(chemicalToRemove);
     }
 
+    /*----------------------Procedure and Observation Section----------------------------*/
+
      //add procedure and observations
-    public static void addProcObs(ProcObs procob){
+    public static void addProcObs(Procobs procob){
         procobs.add(procob);
     }
-    //getall
 
-    public static ArrayList<ProcObs> getAllProcObs(){
+    //get all procedures and observations
+    public static ArrayList<Procobs> getAllProcObs(){
         return procobs;
     }
-    //remove
 
-    //add
+    // get procedures and observations by id
+    public static Procobs getProcobsById(int id){
+
+        Procobs procobID = null;
+
+        for (Procobs theProcob : procobs){
+            if ( theProcob.getProcID() == id){
+                procobID = theProcob;
+            }
+        }
+        return procobID;
+    }
+
+    //remove procedures and observations
+    public static void removeProcob(int id) {
+        Procobs procobsToRemove = getProcobsById(id);
+        procobs.remove(procobsToRemove);
+    }
+
+    /*----------------------Conclusion Section----------------------------*/
+
+    //add conclusion
     public static void addConclusion(Conclusion conclusion){
         conclusions.add(conclusion);
     }
@@ -91,5 +113,23 @@ public class ExperimentContents {
     public static ArrayList<Conclusion> getAllConclusions(){
         return conclusions;
     }
-    //remove
+
+    //get conclusions by id
+    public static Conclusion getConclusionById(int id){
+
+       Conclusion conclusionID = null;
+
+        for (Conclusion theConclusion : conclusions){
+            if ( theConclusion.getConID() == id){
+                conclusionID = theConclusion;
+            }
+        }
+        return conclusionID;
+    }
+
+    //remove conclusions
+    public static void removeConclusion(int id) {
+       Conclusion conclusionToRemove = getConclusionById(id);
+        conclusions.remove(conclusionToRemove);
+    }
 }

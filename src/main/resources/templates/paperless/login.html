@@ -3,12 +3,20 @@
 <head th:replace="fragments :: head"></head>
 <body>
 
-
-    <form action="login/dashboard" method="post">
-        <label>Username</label><br/>
-        <input type="text" name="userName" /><br/>
-        <label>Password</label><br/>
-        <input type="password" /><br/><br/>
+<h1 th:text="${title}"></h1>
+    <form method="post" th:object="${user}">
+        <!--  "user" key value is the default value for the passed in object -->
+        <div>
+        <label th:for="name">Username</label><br/>
+        <input th:field="*{name}" /><br/>
+        <span th:errors="*{name}"></span>
+        </div>
+        <br/>
+        <div>
+        <label th:for="password">Password</label><br/>
+        <input type="password" th:field="*{password}" /><br/><br/>
+        <span th:errors="*{password}"></span>
+        </div>
         <input type="submit" value="Login"/>
     </form>
 

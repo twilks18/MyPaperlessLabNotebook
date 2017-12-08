@@ -5,11 +5,19 @@
 <nav th:replace="fragments :: navigation"></nav>
 <br/>
 <h1>Procedure and Observations</h1>
-<form method="post">
-<label>Procedure</label>
-<textarea rows="40" cols="80" name="procedure"></textarea>
-<textarea rows="40" cols="80" name="observations"></textarea>
-<input type="submit"/>
+
+<form method="post" th:object="${procobs}">
+<div>
+<label th:for="procedure">Procedure</label>
+<textarea rows="40" cols="80" th:field="*{procedure}"></textarea>
+    <span th:errors="*{procedure}"></span>
+</div>
+    <div>
+    <label th:for="observations">Observations</label>
+<textarea rows="40" cols="80" th:field="*{observations}"></textarea>
+    <span th:errors="*{observations}"></span>
+    </div>
+    <input type="submit"/>
 </form>
 
 

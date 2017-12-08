@@ -2,19 +2,36 @@
 <html lang="en" xmlns:th="http//www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
 <body>
-<nav th:replace="fragments :: navigation"></nav>
+<nav>
+    <a href="/intro">Intro Page</a>
+    <a href="/removeReagent">Remove Reagent</a>
+</nav>
 <br/>
 <h1>Create A Physical Properties Table</h1>
 
-<form  method="post">
-    <label>Compound/Reagent</label>
-    <input type="text" name="chemical" />
-    <label>Molecular Weight(g/mol)</label>
-    <input type="text" name="mw"/>
-    <label>Density(g/L)</label>
-    <input type="text" name="density"/>
-    <label>Hazards</label>
-    <textarea name="hazard"></textarea><br/><br/>
+<form  method="post" th:object="${reagent}">
+
+    <div>
+    <label th:for="chemName">Compound/Reagent</label>
+    <input th:field="*{chemName}" />
+    <span th:errors="*{chemName}"></span>
+    </div>
+    <div>
+    <label th:for="">Molecular Weight(g/mol)</label>
+    <input th:field="mw"/>
+        <span th:errors="*{mw}"></span>
+    </div>
+    <div>
+    <label th:for="density">Density(g/L)</label>
+    <input th:field="density"/>
+        <span th:errors="*{density}"></span>
+    </div>
+    <div>
+    <label th:for="hazard">Hazards</label>
+    <textarea th:field="hazard"></textarea><br/><br/>
+        <span th:errors="*{hazard}"></span>
+    </div>
+    <br/>
     <input type="submit" value="Add Chemical"/>
 </form>
 
@@ -26,10 +43,11 @@
         <td>Hazard</td>
     </tr>
     <tr th:each="reagent: ${reagents}">
-        <td th:text="${reagent.chemical}"></td>
+
+        <td th:text="${reagent.chemName}"></td>
         <td th:text="${reagent.mw}"></td>
         <td th:text="${reagent.density}"></td>
-        <td th:text="${reagent.hazards}"></td>
+        <td th:text="${reagent.hazard}"></td>
 
     </tr>
 </table>

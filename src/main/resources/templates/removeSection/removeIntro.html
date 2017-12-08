@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http//www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body>
+<nav ><a href="addReagent">Physical Properties Table</a></nav>
+<br/>
+<h1 th:text="${titlepage}"></h1>
+<form method ="post">
+    <div th:each="title : ${titles}">
+    <input type="checkbox" name="titleIds" th:value ="${title.titleID}" th:id="${title.titleID}"/>
+    <label th:for="${title.titleID}" th:text="${title.title}"></label>
+        <br/>
+    </div>
+
+    <input type="submit" value="Remove"/>
+</form>
+
+</body>
+</html>

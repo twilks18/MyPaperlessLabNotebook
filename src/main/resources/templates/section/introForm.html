@@ -5,13 +5,23 @@
     <h1>Introduction</h1>
 
 
-    <form  method="post">
-        <label>Title</label><br/>
-        <input type="text" name="title" value="Add a title"/><br/>
-        <label>Purpose</label><br/>
-        <textarea rows="3" cols="40" name="purpose"></textarea><br/>
-        <label>Materials</label><br/>
-        <textarea rows="10" cols="30" name="materials"></textarea><br/>
+    <form  method="post" th:object="${intro}">
+
+        <div>
+        <label th:for="title">Title</label><br/>
+        <input th:field="*{title}"/><br/>
+            <span th:errors="*{title}"></span>
+        </div>
+        <div>
+        <label th:for="purpose">Purpose</label><br/>
+        <textarea rows="3" cols="40" th:field="*{purpose}"></textarea><br/>
+        <span th:errors="*{purpose}"></span>
+        </div>
+        <div>
+        <label th:for="materials">Materials</label><br/>
+        <textarea rows="10" cols="30" th:field="*{materials}"></textarea><br/>
+        <span th:errors="*{materials}"></span>
+        </div>
         <input type="submit"/>
      </form>
 

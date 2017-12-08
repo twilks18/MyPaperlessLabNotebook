@@ -6,11 +6,14 @@
 </head>
 <body>
 <h1>Write a Conclusion</h1><br/>
-<form method="post">
+<form method="post" th:object="${conclusions}">
 
-    <textarea rows="40" cols="80" name="conclusion"></textarea><br/>
-    <input type="submit" value="submit conclusion"/>
-
+    <div>
+    <label th:for="conclusions"></label>
+    <textarea rows="40" cols="80" th:field="*{conclusions}"></textarea><br/>
+    <span th:errors="*{conclusions}"></span>
+    <input type="submit" value="submit conclusions"/>
+    </div>
 </form>
 
 </body>
