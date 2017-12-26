@@ -22,22 +22,22 @@ public class ExperimentContents {
     }
 
     //remove title
-    public static void removeTitle(int id){
-        Intro titleToRemove = getTitleById(id);
+    public static void removeIntro(int id){
+        Intro titleToRemove = getIntroById(id);
         intros.remove(titleToRemove);
     }
 
     //getById (titleId)
-    public static Intro getTitleById(int id) {
+    public static Intro getIntroById(int id) {
 
-        Intro titleid = null;
+        Intro introid = null;
 
-        for (Intro theTitle : intros) {
-            if (theTitle.getTitleID() == id) {
-                titleid = theTitle;
+        for (Intro theIntro : intros) {
+            if (theIntro.getIntroid() == id) {
+                introid = theIntro;
             }
         }
-        return titleid;
+        return introid;
     }
 
     /*----------------------Reagent Section----------------------------*/

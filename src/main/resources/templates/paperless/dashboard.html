@@ -2,7 +2,9 @@
 <html lang="en" xmlns:th="http//www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
 <body>
+<div>
     <h1 > Welcome <span th:text="${username}"></span>  </h1>
+</div>
     <nav ><a href="/removeTitle"> Remove Experiment</a>
     <a href="/addIntro">Add Experiment</a></nav>
 

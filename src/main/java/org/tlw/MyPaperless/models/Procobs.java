@@ -1,31 +1,37 @@
 package org.tlw.MyPaperless.models;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+@Entity
+@Table(name = "procobs")
 public class Procobs {
 
     @NotNull
     @Size(min = 1,message = "You forgot something")
+    @Column(name = "procedures")
     private String procedure;
 
     @NotNull
     @Size(min = 1,message = "You forgot something")
+    @Column(name = "observations")
     private String observations;
 
+    @Id
+    @GeneratedValue
+    @NotNull
+    @Column(name = "procid", unique = true)
     private int procID;
-    private static int nextProcID = 1;
+
 
     public Procobs(String procedure, String observations) {
-        this();
+
         this.procedure = procedure;
         this.observations = observations;
     }
 
-    public Procobs() {
-        procID = nextProcID;
-        nextProcID++;
-    }
+    public Procobs() {}
 
     public String getProcedure() {
         return procedure;
@@ -47,7 +53,5 @@ public class Procobs {
         return procID;
     }
 
-    public void setProcID(int procID) {
-        this.procID = procID;
-    }
+
 }

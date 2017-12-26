@@ -1,5 +1,6 @@
 package org.tlw.MyPaperless.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -8,12 +9,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.tlw.MyPaperless.models.*;
+import org.tlw.MyPaperless.models.dao.ConclusionDao;
+import org.tlw.MyPaperless.models.dao.IntroDao;
+import org.tlw.MyPaperless.models.dao.ProcobsDao;
+import org.tlw.MyPaperless.models.dao.ReagentDao;
 
 import javax.validation.Valid;
 
 @Controller
 public class ExperimentController {
 
+    @Autowired
+    private ReagentDao reagentDao;
+
+    @Autowired
+    private ProcobsDao procobsDao;
+
+    @Autowired
+    private IntroDao introDao;
+
+    @Autowired
+    private ConclusionDao conclusionDao;
     /*----------- Sections ------------------*/
 
 
@@ -21,7 +37,7 @@ public class ExperimentController {
     @RequestMapping(value = "intro")
     public String introPage(Model model){
         // TODO fix the parameter for intro content, should not pass in a list BAD!!
-        model.addAttribute("intros",ExperimentContents.getAllIntros());
+        model.addAttribute("intros", introDao.findAll());
         model.addAttribute("reagents",ExperimentContents.getAllReagents());
 
         return "section/introPage";
@@ -45,8 +61,7 @@ public class ExperimentController {
             return "section/introForm";
         }
 
-        ExperimentContents.addIntro(intro);
-
+        introDao.save(intro);
        model.addAttribute("title",intro.getTitle());
        model.addAttribute("purpose",intro.getPurpose());
        model.addAttribute("materials", intro.getMaterials());
@@ -70,7 +85,8 @@ public class ExperimentController {
         if (errors.hasErrors()){
             return "section/reagentForm";
         }
-        ExperimentContents.addReagent(reagent);
+
+        reagentDao.save(reagent);
         model.addAttribute("reagents",ExperimentContents.getAllReagents());
 
         return "section/reagentForm";
@@ -93,7 +109,7 @@ public class ExperimentController {
         }
 
 
-        ExperimentContents.addProcObs(procob);
+        procobsDao.save(procob);
 
         model.addAttribute("procob", procob.getProcedure());
         model.addAttribute("procob", procob.getObservations());
@@ -117,7 +133,7 @@ public class ExperimentController {
             return "section/conclusionForm";
         }
 
-        ExperimentContents.addConclusion(conclude);
+        conclusionDao.save(conclude);
 
 
         model.addAttribute("conclusions", ExperimentContents.getAllConclusions());

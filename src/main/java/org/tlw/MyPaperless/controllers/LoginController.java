@@ -1,6 +1,7 @@
 package org.tlw.MyPaperless.controllers;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -11,13 +12,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.tlw.MyPaperless.models.ExperimentContents;
 import org.tlw.MyPaperless.models.NewUser;
 import org.tlw.MyPaperless.models.User;
+import org.tlw.MyPaperless.models.dao.UserDao;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
 
 @Controller
-
 public class LoginController {
+
+    @Autowired
+    private UserDao userDao;
 
 
     //Create a login form; path: /login
@@ -37,7 +41,7 @@ public class LoginController {
             return "paperless/login";
         }
 
-         NewUser.addUser(newUser);
+         userDao.save(newUser);
 
         model.addAttribute("title","Welcome");
         model.addAttribute("username", newUser.getName());
@@ -65,7 +69,7 @@ public class LoginController {
     public String processRemoveExperiment(@RequestParam int[] titleIds){
 
         for (int titleId : titleIds) {
-            ExperimentContents.removeTitle(titleId);
+            ExperimentContents.removeIntro(titleId);
         }
 
         return "redirect:dashboard";

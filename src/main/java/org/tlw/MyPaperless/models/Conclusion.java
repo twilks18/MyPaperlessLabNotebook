@@ -1,27 +1,29 @@
 package org.tlw.MyPaperless.models;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+@Entity
+@Table(name = "conclusion")
 public class Conclusion {
+    @Column(name = "conslusions")
     @NotNull
     @Size(min = 1,message = "You forgot something")
     private String conclusions;
 
+    @Id
+    @GeneratedValue
+    @NotNull
+    @Column(name = "conid", unique = true)
     private int conID;
-    private static int nextConID = 1;
-
-
 
     public Conclusion(String conclusions) {
-        this();
+
         this.conclusions = conclusions;
     }
 
-    public Conclusion() {
-        conID = nextConID;
-        nextConID++;
-    }
+    public Conclusion() {}
 
     public String getConclusions() {
         return conclusions;
@@ -35,8 +37,6 @@ public class Conclusion {
         return conID;
     }
 
-    public void setConID(int conID) {
-        this.conID = conID;
-    }
+
 
 }

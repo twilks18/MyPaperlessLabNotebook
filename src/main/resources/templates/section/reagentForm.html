@@ -17,18 +17,18 @@
     <span th:errors="*{chemName}"></span>
     </div>
     <div>
-    <label th:for="">Molecular Weight(g/mol)</label>
-    <input th:field="mw"/>
+    <label th:for="mw">Molecular Weight(g/mol)</label>
+    <input th:field="*{mw}"/>
         <span th:errors="*{mw}"></span>
     </div>
     <div>
     <label th:for="density">Density(g/L)</label>
-    <input th:field="density"/>
+    <input th:field="*{density}"/>
         <span th:errors="*{density}"></span>
     </div>
     <div>
     <label th:for="hazard">Hazards</label>
-    <textarea th:field="hazard"></textarea><br/><br/>
+    <textarea th:field="*{hazard}"></textarea><br/><br/>
         <span th:errors="*{hazard}"></span>
     </div>
     <br/>

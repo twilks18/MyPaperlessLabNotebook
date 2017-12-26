@@ -29,7 +29,7 @@ public class NewUser {
         User userid = null;
 
         for (User theUser : user) {
-            if (theUser.getUserID() == id) {
+            if (theUser.getUid() == id) {
                 userid = theUser;
             }
         }
