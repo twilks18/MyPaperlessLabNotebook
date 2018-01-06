@@ -6,13 +6,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "user")
-public class User {
-    /* will generate primary key*/
-    @Id
-    @GeneratedValue
-    @NotNull
-    @Column(name = "uid", unique = true)
-    private int uid;
+public class User extends AbstractModel {
 
     @NotNull
     @Size(min = 5, max = 20, message = "Please add a username that is between 5 and 20 characters")
@@ -32,13 +26,6 @@ public class User {
     }
 
     public User() { }
-
-/* Setter not needed because id should not be changed outside of this model*/
-
-
-    public int getUid() {
-        return uid;
-    }
 
     public String getName() {
         return name;

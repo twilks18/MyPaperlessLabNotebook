@@ -3,12 +3,13 @@ package org.tlw.MyPaperless.models;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 @Entity
 @Table(name = "reagent")
-public class Reagent {
-
+public class Reagent extends AbstractModel {
 
     @NotNull
     @Size(min= 4,message = "You forgot something" )
@@ -16,12 +17,14 @@ public class Reagent {
     private String chemName;
 
     @NotNull
-    @Range(min= 1, message = "You forgot something" )
+    @Digits(integer = 3, fraction=3, message = "You forgot something" )
+    @Min(1)
     @Column(name = "density")
     private int density;
 
     @NotNull
-    @Range(min= 1, max= 3, message = "You forgot something")
+    @Digits(integer = 3, fraction=3, message = "You forgot something" )
+    @Min(1)
     @Column(name = "mweight")
     private int mw; //molecular weight
 
@@ -29,13 +32,6 @@ public class Reagent {
     @Size(min= 1, message = "You forgot something")
     @Column(name = "hazard")
     private  String hazard;
-
-    @Id
-    @GeneratedValue
-    @NotNull
-    @Column(name ="chemid", unique = true)
-    private int chemID;
-
 
     public Reagent(String chemName, int density, int mw, String hazard) {
 
@@ -77,10 +73,6 @@ public class Reagent {
 
     public void setHazard(String hazard) {
         this.hazard = hazard;
-    }
-
-    public int getChemID() {
-        return chemID;
     }
 
 }

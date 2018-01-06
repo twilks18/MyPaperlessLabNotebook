@@ -6,13 +6,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "intro")
-public class Intro {
-
-    @Id
-    @GeneratedValue()
-    @NotNull
-    @Column(name = "introid")
-    private int introid;
+public class Intro extends AbstractModel {
 
     @NotNull
     @Size(min= 5 , max= 30, message = "Experiments need titles right?")
@@ -49,10 +43,6 @@ public class Intro {
 
     public String getPurpose() {
         return purpose;
-    }
-
-    public int getIntroid() {
-        return introid;
     }
 
     public void setPurpose(String purpose) {

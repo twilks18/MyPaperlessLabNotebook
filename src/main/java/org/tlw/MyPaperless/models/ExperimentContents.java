@@ -58,7 +58,7 @@ public class ExperimentContents {
         Reagent chemicalID = null;
 
         for (Reagent theChemical : reagents){
-            if ( theChemical.getChemID() == id){
+            if ( theChemical.getChemid() == id){
                 chemicalID = theChemical;
             }
         }
@@ -90,7 +90,7 @@ public class ExperimentContents {
         Procobs procobID = null;
 
         for (Procobs theProcob : procobs){
-            if ( theProcob.getProcID() == id){
+            if ( theProcob.getProcid() == id){
                 procobID = theProcob;
             }
         }
@@ -120,7 +120,7 @@ public class ExperimentContents {
        Conclusion conclusionID = null;
 
         for (Conclusion theConclusion : conclusions){
-            if ( theConclusion.getConID() == id){
+            if ( theConclusion.getConid() == id){
                 conclusionID = theConclusion;
             }
         }

@@ -15,6 +15,7 @@ import org.tlw.MyPaperless.models.dao.ProcobsDao;
 import org.tlw.MyPaperless.models.dao.ReagentDao;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class ExperimentController {
@@ -38,7 +39,7 @@ public class ExperimentController {
     public String introPage(Model model){
         // TODO fix the parameter for intro content, should not pass in a list BAD!!
         model.addAttribute("intros", introDao.findAll());
-        model.addAttribute("reagents",ExperimentContents.getAllReagents());
+        model.addAttribute("reagents",reagentDao.findAll());
 
         return "section/introPage";
     }
@@ -87,7 +88,7 @@ public class ExperimentController {
         }
 
         reagentDao.save(reagent);
-        model.addAttribute("reagents",ExperimentContents.getAllReagents());
+        model.addAttribute("reagents", reagentDao.findAll());
 
         return "section/reagentForm";
 
@@ -127,7 +128,7 @@ public class ExperimentController {
 
     /*----processing conclusion*---*/
     @RequestMapping(value = "conclusion",method = RequestMethod.POST)
-    public String processConclusionForm(@ModelAttribute @Valid  Conclusion conclude, Errors errors,Model model){
+    public String processConclusionForm(@ModelAttribute @Valid Conclusion conclude, Errors errors,Model model){
 
         if (errors.hasErrors()){
             return "section/conclusionForm";
@@ -136,14 +137,16 @@ public class ExperimentController {
         conclusionDao.save(conclude);
 
 
-        model.addAttribute("conclusions", ExperimentContents.getAllConclusions());
+        model.addAttribute("conclusions", conclusionDao.findAll());
         return "section/conclusionPage";
     }
 
                              /*----------- Remove Section ------------------*/
     @RequestMapping(value = "removeReagent", method = RequestMethod.GET)
     public String displayRemoveReagent(Model model){
-        model.addAttribute("reagents", ExperimentContents.getAllReagents());
+        List<Reagent>  reagents = reagentDao.findAll();
+
+        model.addAttribute("reagents",reagents);
 
         return "removeSection/removeReagent";
     }
@@ -152,10 +155,10 @@ public class ExperimentController {
     public String processRemoveReagent(@RequestParam int[] chemIds){
 
         for (int chemId : chemIds) {
-            ExperimentContents.removeReagent(chemId);
+            reagentDao.delete(chemId);
         }
 
-        return "redirect:addReagent";
+        return "redirect:removeReagent";
 
     }
 }

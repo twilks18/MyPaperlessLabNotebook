@@ -6,10 +6,12 @@
 
 <h1 th:text="${titlepage}"></h1>
 
+<a href="/addReagent">Add Reagent</a>
+
     <form method = "post">
         <div th:each="reagent: ${reagents}">
-            <input type="checkbox" name="chemIds" th:value ="${reagent.chemID}" th:id="${reagent.chemID}"/>
-            <label th:for="${reagent.chemID}" th:text="${reagent.chemName}"></label>
+            <input type="checkbox" name="chemIds" th:value ="${reagent.chemid}" th:id="${reagent.chemid}"/>
+            <label th:for="${reagent.chemid}" th:text="${reagent.chemName}"></label>
         </div>
         <input type="submit" value="Remove"/>
     </form>

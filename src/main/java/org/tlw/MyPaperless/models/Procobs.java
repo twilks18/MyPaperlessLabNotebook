@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "procobs")
-public class Procobs {
+public class Procobs extends AbstractModel {
 
     @NotNull
     @Size(min = 1,message = "You forgot something")
@@ -17,13 +17,6 @@ public class Procobs {
     @Size(min = 1,message = "You forgot something")
     @Column(name = "observations")
     private String observations;
-
-    @Id
-    @GeneratedValue
-    @NotNull
-    @Column(name = "procid", unique = true)
-    private int procID;
-
 
     public Procobs(String procedure, String observations) {
 
@@ -47,10 +40,6 @@ public class Procobs {
 
     public void setObservations(String observations) {
         this.observations = observations;
-    }
-
-    public int getProcID() {
-        return procID;
     }
 
 
