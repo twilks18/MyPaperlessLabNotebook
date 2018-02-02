@@ -3,6 +3,9 @@
 <head th:replace="fragments :: head"></head>
 <body>
 <h1>Procedure and Observations</h1>
+<nav>
+    <a href="/experiment/conclusion">Conclusion</a>
+</nav>
 <br/>
 <div th:each="procob : ${procobs}">
 <p>Procedure: <span th:text="${procob.procedure}"></span></p>

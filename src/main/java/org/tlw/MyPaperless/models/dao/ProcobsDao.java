@@ -15,7 +15,7 @@ public interface ProcobsDao extends CrudRepository<Procobs, Integer > {
 
     List<Procobs> findAll();
 
-    Procobs findByUid(Integer uid);
+    Procobs findByProcid(Integer id);
 
     List<Procobs> findByProcedure(String procedure);
 

@@ -4,21 +4,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.tlw.MyPaperless.models.*;
-import org.tlw.MyPaperless.models.dao.ConclusionDao;
-import org.tlw.MyPaperless.models.dao.IntroDao;
-import org.tlw.MyPaperless.models.dao.ProcobsDao;
-import org.tlw.MyPaperless.models.dao.ReagentDao;
+import org.tlw.MyPaperless.models.dao.*;
 
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
 @Controller
+@SessionAttributes("introid")
+@RequestMapping("experiment")
 public class ExperimentController {
+
+    @Autowired
+    private UserDao userDao;
 
     @Autowired
     private ReagentDao reagentDao;
@@ -31,67 +33,119 @@ public class ExperimentController {
 
     @Autowired
     private ConclusionDao conclusionDao;
+
     /*----------- Sections ------------------*/
 
 
-    // final page for intro and reagent contents
-    @RequestMapping(value = "intro")
-    public String introPage(Model model){
-        // TODO fix the parameter for intro content, should not pass in a list BAD!!
-        model.addAttribute("intros", introDao.findAll());
-        model.addAttribute("reagents",reagentDao.findAll());
-
-        return "section/introPage";
-    }
-
-
-    // form for title,material, purpose
+       // form for title,material, purpose
     @RequestMapping(value = "addIntro", method = RequestMethod.GET)
     public String introForm(Model model){
 
             model.addAttribute(new Intro());
-        return "section/introForm";
+
+        return "section/addIntroForm";
     }
 
+     @RequestMapping(value = "addIntro",  method = RequestMethod.POST)
+    public String processIntroForm(@ModelAttribute @Valid Intro intro, HttpServletRequest request, Errors errors, Model model){
 
-    // processing of form for title,material, purpose
-    @RequestMapping(value = "addIntro", method = RequestMethod.POST)
-    public String processIntroForm(@ModelAttribute @Valid Intro intro, Errors errors, Model model){
 
         if (errors.hasErrors()){
-            return "section/introForm";
+            return "section/addIntroForm";
         }
 
+         HttpSession session = request.getSession();
+         Integer id = (Integer)session.getAttribute("id");
+         User user = userDao.findOne(id);
+         intro.setUser(user);
         introDao.save(intro);
-       model.addAttribute("title",intro.getTitle());
-       model.addAttribute("purpose",intro.getPurpose());
-       model.addAttribute("materials", intro.getMaterials());
+
+        model.addAttribute("title",intro.getTitle());
+        model.addAttribute("purpose",intro.getPurpose());
+        model.addAttribute("materials", intro.getMaterials());
+        model.addAttribute("introid", id);
+
+
         return "section/processIntro";
     }
 
 
-
     // form for reagent/chemical contents or Chemical Properties table
     @RequestMapping(value = "addReagent", method = RequestMethod.GET)
-    public String reagentForm(Model model){
+    public String reagentForm(HttpServletRequest request, Model model){
 
+        HttpSession session = request.getSession();
+        Integer id = (Integer)session.getAttribute("id");
+        Intro intro = introDao.findOne(id);
+        List<Reagent> reagents = intro.getReagent();
+        model.addAttribute("reagents", reagents);
+
+
+        model.addAttribute("number", "The number is" + id);
         model.addAttribute(new Reagent());
+//        Intro intro = introDao.findOne(introid);
+
+
         return "section/reagentForm";
     }
 
     //Processing of physical properties table
     @RequestMapping(value ="addReagent", method = RequestMethod.POST)
-    public String processReagentForm(@ModelAttribute @Valid Reagent reagent, Errors errors, Model model) {
+    public String processReagentForm(HttpServletRequest request, @ModelAttribute @Valid Reagent reagent, Errors errors, Model model) {
 
-        if (errors.hasErrors()){
+        boolean validChemName = Reagent.isValidChemName(request.getParameter("chemName"));
+        boolean validMW = Reagent.isValidNumber(request.getParameter("mw"));
+        boolean validDensity = Reagent.isValidNumber(request.getParameter("density"));
+
+        if(! validChemName){
+
+            model.addAttribute("chemname_error", "Invalid chemical name");
+            return "section/reagentForm";
+        } else if(! validMW){
+            model.addAttribute("mw_error", "Must enter a numerical value greater than 1");
+            return "section/reagentForm";
+        } else if(! validDensity){
+            model.addAttribute("density_error", "Must enter a numerical value greater than 1");
+            return "section/reagentForm";
+
+         } else if (errors.hasErrors()){
             return "section/reagentForm";
         }
 
+        HttpSession session = request.getSession();
+        Integer id = (Integer)session.getAttribute("id");
+        Intro intro = introDao.findOne(id);
+
+        reagent.setIntro(intro);
         reagentDao.save(reagent);
-        model.addAttribute("reagents", reagentDao.findAll());
 
-        return "section/reagentForm";
+        List<Reagent> reagents = intro.getReagent();
+        model.addAttribute("chemicals", reagents);
+        model.addAttribute("reagents", reagent.getChemName() + " " + id + " has been added!");
 
+
+        return "section/test";
+
+    }
+
+
+    // processing of form for title,material, purpose,  and reagent contents
+    @RequestMapping(value = "introReagentPage", method = RequestMethod.GET) // may need to add this " method = RequestMethod.POST" back
+    public String processReagentIntroPage(HttpServletRequest request, Model model){
+
+
+        HttpSession session = request.getSession();
+        Integer id = (Integer)session.getAttribute("id");
+        Intro intro = introDao.findOne(id);
+        List<Reagent> reagents = intro.getReagent();
+        model.addAttribute("chemicals", reagents);
+
+
+        model.addAttribute("title",intro.getTitle());
+        model.addAttribute("purpose",intro.getPurpose());
+        model.addAttribute("materials", intro.getMaterials());
+
+        return "section/introPage";
     }
 
     //form for procedure and observations
@@ -103,13 +157,16 @@ public class ExperimentController {
     }
 
     @RequestMapping(value = "procAndObs", method = RequestMethod.POST)
-    public String processProcAndObsForm(@ModelAttribute @Valid Procobs procob, Errors errors, Model model){
+    public String processProcAndObsForm(HttpServletRequest request, @ModelAttribute @Valid Procobs procob, Errors errors, Model model){
 
         if (errors.hasErrors()){
             return "section/procAndObsForm";
         }
 
-
+        HttpSession session = request.getSession();
+        Integer id = (Integer)session.getAttribute("id");
+        Intro intro = introDao.findOne(id);
+        procob.setIntro(intro);
         procobsDao.save(procob);
 
         model.addAttribute("procob", procob.getProcedure());
@@ -128,11 +185,16 @@ public class ExperimentController {
 
     /*----processing conclusion*---*/
     @RequestMapping(value = "conclusion",method = RequestMethod.POST)
-    public String processConclusionForm(@ModelAttribute @Valid Conclusion conclude, Errors errors,Model model){
+    public String processConclusionForm(HttpServletRequest request, @ModelAttribute @Valid Conclusion conclude, Errors errors,Model model){
 
         if (errors.hasErrors()){
             return "section/conclusionForm";
         }
+
+        HttpSession session = request.getSession();
+        Integer id = (Integer)session.getAttribute("id");
+        Intro intro = introDao.findOne(id);
+        conclude.setIntro(intro);
 
         conclusionDao.save(conclude);
 
@@ -143,10 +205,13 @@ public class ExperimentController {
 
                              /*----------- Remove Section ------------------*/
     @RequestMapping(value = "removeReagent", method = RequestMethod.GET)
-    public String displayRemoveReagent(Model model){
-        List<Reagent>  reagents = reagentDao.findAll();
+    public String displayRemoveReagent(HttpServletRequest request,  Model model){
 
-        model.addAttribute("reagents",reagents);
+        HttpSession session = request.getSession();
+        Integer id = (Integer)session.getAttribute("id");
+       Intro intro = introDao.findOne(id);
+        List<Reagent> reagents = intro.getReagent();
+        model.addAttribute("reagents", reagents);
 
         return "removeSection/removeReagent";
     }

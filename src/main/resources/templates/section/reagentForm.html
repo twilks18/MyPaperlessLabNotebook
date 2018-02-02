@@ -3,8 +3,9 @@
 <head th:replace="fragments :: head"></head>
 <body>
 <nav>
-    <a href="/intro">Intro Page</a>
-    <a href="/removeReagent">Remove Reagent</a>
+    <a href="/experiment/introReagentPage">Intro Page</a>
+    <a href="/experiment/removeReagent">Remove Reagent</a>
+    <a href="/experiment/procAndObs">Procedure and Observations</a>
 </nav>
 <br/>
 <h1>Create A Physical Properties Table</h1>
@@ -14,17 +15,17 @@
     <div>
     <label th:for="chemName">Compound/Reagent</label>
     <input th:field="*{chemName}" />
-    <span th:errors="*{chemName}"></span>
+     <span class="error" th:text="${chemname_error}"></span>
     </div>
     <div>
     <label th:for="mw">Molecular Weight(g/mol)</label>
     <input th:field="*{mw}"/>
-        <span th:errors="*{mw}"></span>
+        <span class="error" th:text="${mw_error}"></span>
     </div>
     <div>
     <label th:for="density">Density(g/L)</label>
     <input th:field="*{density}"/>
-        <span th:errors="*{density}"></span>
+        <span class="error" th:text="${density_error}"></span>
     </div>
     <div>
     <label th:for="hazard">Hazards</label>
@@ -32,8 +33,11 @@
         <span th:errors="*{hazard}"></span>
     </div>
     <br/>
+    <input type="hidden" name="introid" th:value="${introid}"/>
     <input type="submit" value="Add Chemical"/>
 </form>
+
+<p th:text ="${number}"></p>
 
 <table>
     <tr>
@@ -56,3 +60,5 @@
 
 </body>
 </html>
+
+

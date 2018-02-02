@@ -3,10 +3,12 @@
 <head th:replace="fragments :: head"></head>
 <body>
 <div>
-    <h1 > Welcome <span th:text="${username}"></span>  </h1>
+    <h1 ><span th:text="${name}"></span>'s Experiments  </h1>
 </div>
-    <nav ><a href="/removeTitle"> Remove Experiment</a>
-    <a href="/addIntro">Add Experiment</a></nav>
+    <nav >
+        <a href="/removeTitle"> Remove Experiment</a>
+       <a href="/experiment/addIntro"> Add Experiment </a>
+    </nav>
 
     <p th:unless="${titles} and ${titles.size()}"> Add an Experiment</p>
     <ul>

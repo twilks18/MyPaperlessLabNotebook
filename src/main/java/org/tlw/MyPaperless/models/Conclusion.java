@@ -6,16 +6,24 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "conclusion")
-public class Conclusion extends AbstractModel {
+public class Conclusion{
+
+    @Id
+    @GeneratedValue
+    private int conid;
+
     @Column(name = "conslusions")
     @NotNull
     @Size(min = 1,message = "You forgot something")
     private String conclusions;
 
+    @OneToOne
+    private Intro intro;
 
     public Conclusion(String conclusions) {
 
         this.conclusions = conclusions;
+
     }
 
     public Conclusion() {}
@@ -28,5 +36,19 @@ public class Conclusion extends AbstractModel {
         this.conclusions = conclusions;
     }
 
+    public int getConid() {
+        return conid;
+    }
 
+    public void setConid(int conid) {
+        this.conid = conid;
+    }
+
+    public Intro getIntro() {
+        return intro;
+    }
+
+    public void setIntro(Intro intro) {
+        this.intro = intro;
+    }
 }

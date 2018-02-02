@@ -14,7 +14,7 @@ public interface ReagentDao extends CrudRepository<Reagent, Integer > {
 
      List<Reagent> findAll();
 
-     Reagent findByUid(Integer uid);
+     Reagent findByChemid(Integer chemid);
 
      List<Reagent> findByChemName(String chemname);
 }

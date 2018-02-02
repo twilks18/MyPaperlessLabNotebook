@@ -8,8 +8,8 @@
 <h1 th:text="${titlepage}"></h1>
 <form method ="post">
     <div th:each="title : ${titles}">
-    <input type="checkbox" name="titleIds" th:value ="${title.titleID}" th:id="${title.titleID}"/>
-    <label th:for="${title.titleID}" th:text="${title.title}"></label>
+    <input type="checkbox" name="titleIds" th:value ="${title.id}" th:id="${title.id}"/>
+    <label th:for="${title.id}" th:text="${title.title}"></label>
         <br/>
     </div>
 

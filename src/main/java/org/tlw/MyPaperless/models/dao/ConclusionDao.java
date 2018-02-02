@@ -14,7 +14,7 @@ public interface ConclusionDao extends CrudRepository<Conclusion, Integer > {
 
      List<Conclusion> findAll();
 
-    Conclusion findByUid(Integer uid);;
+    Conclusion findByConid(Integer id);
 
      List<Conclusion> findByConclusions(String conclusions);
 }

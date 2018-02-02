@@ -1,17 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http//www.thymeleaf.org/">
+<html lang="en" xmlns:th="http//www.thymeleaf.org/" xmlns:i="http://www.w3.org/1999/xhtml">
 <head th:replace="fragments :: head"></head>
 <body >
     <h1>Introduction</h1>
 
 
-    <form  method="post" th:object="${intro}">
+    <form  method="post" >
 
+
+        <div th:object="${intro}">
         <div>
-        <label th:for="title">Title</label><br/>
+        <label  th:for="title">Title</label><br/>
         <input th:field="*{title}"/><br/>
             <span th:errors="*{title}"></span>
         </div>
+
         <div>
         <label th:for="purpose">Purpose</label><br/>
         <textarea rows="3" cols="40" th:field="*{purpose}"></textarea><br/>
@@ -22,8 +25,15 @@
         <textarea rows="10" cols="30" th:field="*{materials}"></textarea><br/>
         <span th:errors="*{materials}"></span>
         </div>
+
+        </div>
+
+
         <input type="submit"/>
+
      </form>
+
+
 
 
 </body>

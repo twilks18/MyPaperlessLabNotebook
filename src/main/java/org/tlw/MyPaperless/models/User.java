@@ -3,36 +3,88 @@ package org.tlw.MyPaperless.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Entity
-@Table(name = "user")
-public class User extends AbstractModel {
+public class User {
+
+    @Id
+    @GeneratedValue
+    private int uid;
 
     @NotNull
-    @Size(min = 5, max = 20, message = "Please add a username that is between 5 and 20 characters")
-    @Column(name = "name")
-    private String name;
+    private String username;
 
     @NotNull
-    @Size(min= 5 , max= 10, message = "Please add a password")
-    @Column(name = "password")
     private String password;
 
+    @NotNull
+    private String firstname;
 
-    public User(String name, String password) {
+    @NotNull
+    private String lastname;
 
-        this.name = name;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_uid")
+    private List<Intro> intro = new ArrayList<>();
+
+    public User(String username, String password, String firstname, String lastname) {
+        this.username = username;
         this.password = password;
+        this.firstname = firstname;
+        this.lastname = lastname;
     }
 
     public User() { }
 
-    public String getName() {
-        return name;
+    public static boolean isValidName(String name){
+
+        Pattern isAValidName = Pattern.compile("[A-Z][A-Za-z'\\-\\s]{1,19}");
+        Matcher matcher = isAValidName.matcher(name);
+        return matcher.matches();
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public static boolean isValidUserName(String username){
+
+        Pattern isAValidUserName = Pattern.compile("[A-Z][A-Za-z0-9_-]{4,8}");
+        Matcher matcher = isAValidUserName.matcher(username);
+        return matcher.matches();
+    }
+
+    public static boolean isValidPassword(String password){
+
+        Pattern isAValidPassword = Pattern.compile("[A-Z][$@!&A-Za-z0-9_-]{6,10}");
+        Matcher matcher = isAValidPassword.matcher(password);
+        return matcher.matches();
+    }
+
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public String getPassword() {
@@ -41,5 +93,17 @@ public class User extends AbstractModel {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getUid() {
+        return uid;
+    }
+
+    public List<Intro> getIntro() {
+        return intro;
+    }
+
+    public void setIntro(List<Intro> intro) {
+        this.intro = intro;
     }
 }

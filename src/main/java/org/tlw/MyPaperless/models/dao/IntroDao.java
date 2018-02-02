@@ -13,7 +13,7 @@ public interface IntroDao extends CrudRepository<Intro, Integer > {
 
     List<Intro> findAll();
 
-     Intro findByUid(Integer uid);
+     Intro findById(Integer id);
 
       List<Intro> findByTitle(String title);
 }
