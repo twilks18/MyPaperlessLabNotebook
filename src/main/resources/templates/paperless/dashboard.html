@@ -2,19 +2,21 @@
 <html lang="en" xmlns:th="http//www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
 <body>
+<!-- switch username back to name -->
 <div>
     <h1 ><span th:text="${name}"></span>'s Experiments  </h1>
+    <span th:text="${user}"></span>
 </div>
     <nav >
         <a href="/removeTitle"> Remove Experiment</a>
        <a href="/experiment/addIntro"> Add Experiment </a>
+        <a href="/logout"> Logout </a>
     </nav>
 
     <p th:unless="${titles} and ${titles.size()}"> Add an Experiment</p>
     <ul>
         <li th:each=" title : ${titles}" th:text="${title.title}"></li>
     </ul>
-
 
 
 </body>

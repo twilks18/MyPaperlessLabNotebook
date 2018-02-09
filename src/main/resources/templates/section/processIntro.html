@@ -2,7 +2,9 @@
 <html lang="en" xmlns:th="http//www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
 <body >
-<nav ><a href="/experiment/addReagent">Physical Properties Table</a></nav>
+<nav ><a href="/experiment/addReagent">Physical Properties Table</a>
+    <a href="/logout"> Logout </a>
+</nav>
 
     <h1>Introduction</h1>
 
@@ -14,7 +16,8 @@
 <br/>
 <br/>
 
-<p>Intro Id: <span th:text ="${introid}"></span> </p>
+<p>U-Intro Id: <span th:text ="${introid}"></span> </p>
+<p>Intro Id: <span th:text ="${introkey}"></span> </p>
 
 <br/>
 

@@ -2,7 +2,9 @@
 <html lang="en" xmlns:th="http//www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
 <body>
-<nav th:replace="fragments :: navigation"></nav>
+<nav th:replace="fragments :: navigation">
+    <a href="/logout"> Logout </a>
+</nav>
 <br/>
 <h1>Procedure and Observations</h1>
 

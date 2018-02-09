@@ -16,6 +16,7 @@ public class User {
     private int uid;
 
     @NotNull
+    @Column(unique = true )
     private String username;
 
     @NotNull

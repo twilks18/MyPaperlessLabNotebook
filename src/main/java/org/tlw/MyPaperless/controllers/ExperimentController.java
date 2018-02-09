@@ -15,7 +15,6 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@SessionAttributes("introid")
 @RequestMapping("experiment")
 public class ExperimentController {
 
@@ -55,6 +54,8 @@ public class ExperimentController {
         }
 
          HttpSession session = request.getSession();
+
+
          Integer id = (Integer)session.getAttribute("id");
          User user = userDao.findOne(id);
          intro.setUser(user);
@@ -64,6 +65,11 @@ public class ExperimentController {
         model.addAttribute("purpose",intro.getPurpose());
         model.addAttribute("materials", intro.getMaterials());
         model.addAttribute("introid", id);
+
+         session.setAttribute("intro_key", intro.getId());
+
+
+         model.addAttribute("introkey", session.getAttribute("intro_key"));
 
 
         return "section/processIntro";
@@ -75,7 +81,7 @@ public class ExperimentController {
     public String reagentForm(HttpServletRequest request, Model model){
 
         HttpSession session = request.getSession();
-        Integer id = (Integer)session.getAttribute("id");
+        Integer id = (Integer)session.getAttribute("intro_key");
         Intro intro = introDao.findOne(id);
         List<Reagent> reagents = intro.getReagent();
         model.addAttribute("reagents", reagents);
@@ -113,7 +119,7 @@ public class ExperimentController {
         }
 
         HttpSession session = request.getSession();
-        Integer id = (Integer)session.getAttribute("id");
+        Integer id = (Integer)session.getAttribute("intro_key");
         Intro intro = introDao.findOne(id);
 
         reagent.setIntro(intro);
@@ -135,7 +141,7 @@ public class ExperimentController {
 
 
         HttpSession session = request.getSession();
-        Integer id = (Integer)session.getAttribute("id");
+        Integer id = (Integer)session.getAttribute("intro_key");
         Intro intro = introDao.findOne(id);
         List<Reagent> reagents = intro.getReagent();
         model.addAttribute("chemicals", reagents);
@@ -164,7 +170,7 @@ public class ExperimentController {
         }
 
         HttpSession session = request.getSession();
-        Integer id = (Integer)session.getAttribute("id");
+        Integer id = (Integer)session.getAttribute("intro_key");
         Intro intro = introDao.findOne(id);
         procob.setIntro(intro);
         procobsDao.save(procob);
@@ -192,7 +198,7 @@ public class ExperimentController {
         }
 
         HttpSession session = request.getSession();
-        Integer id = (Integer)session.getAttribute("id");
+        Integer id = (Integer)session.getAttribute("intro_key");
         Intro intro = introDao.findOne(id);
         conclude.setIntro(intro);
 
@@ -208,7 +214,7 @@ public class ExperimentController {
     public String displayRemoveReagent(HttpServletRequest request,  Model model){
 
         HttpSession session = request.getSession();
-        Integer id = (Integer)session.getAttribute("id");
+        Integer id = (Integer)session.getAttribute("intro_key");
        Intro intro = introDao.findOne(id);
         List<Reagent> reagents = intro.getReagent();
         model.addAttribute("reagents", reagents);
