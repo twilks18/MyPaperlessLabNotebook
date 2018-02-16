@@ -27,13 +27,14 @@ public class LoginController extends AbstractController{
     private IntroDao introDao;
 
 
-    //Signup form; path: /signup
+    /*----------- --------------------Sign Up--------------------------------*/
     @RequestMapping(value = "signup", method = RequestMethod.GET)
     public String signupForm(Model model){
-        model.addAttribute("title", "Login Page");
+        model.addAttribute("title", "Sign Up ");
         model.addAttribute(new User());
         return "paperless/signup";
     }
+
 
     @RequestMapping(value = "signup", method = RequestMethod.POST)
     public String welcome(HttpServletRequest request, @ModelAttribute @Valid User newUser, Errors errors,Model model){
@@ -69,14 +70,17 @@ public class LoginController extends AbstractController{
 
          userDao.save(newUser);
 
-//        model.addAttribute("heading", "'s Experiments");
-//        model.addAttribute("name", newUser.getFirstname());
 
         session.setAttribute("id", newUser.getUid());
         return "redirect:/dashboard";
     }
 
-    //Login form; path: /login
+
+
+    /*----------- --------------------Login--------------------------------*/
+
+
+
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String loginForm(Model model){
 
@@ -84,6 +88,8 @@ public class LoginController extends AbstractController{
 
         return "paperless/login";
     }
+
+
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public String processLoginForm(HttpServletRequest request, Model model){
@@ -96,12 +102,11 @@ public class LoginController extends AbstractController{
 
         User user = userDao.findByUsername(username);
         Integer userid = user.getUid();
-        session.setAttribute("userkey",userid);
+
 
         if (user != null && user.getPassword().equals(password)) {
 
-//            model.addAttribute("name", user.getFirstname());
-//            model.addAttribute("user", userid);
+
             session.setAttribute("id",userid);
             return "redirect:dashboard";
         }
@@ -111,7 +116,11 @@ public class LoginController extends AbstractController{
 
     }
 
-    // Displays all the experiments
+
+
+    /*----------- --------------------Dashboard--------------------------------*/
+
+
     @RequestMapping(value = "dashboard")
     public String dashboard(HttpServletRequest request, Model model){
 
@@ -130,7 +139,11 @@ public class LoginController extends AbstractController{
     }
 
 
-    @RequestMapping(value = "removeTitle", method = RequestMethod.GET)
+
+    /*----------- --------------------Remove Experiment--------------------------------*/
+
+
+    @RequestMapping(value = "removeExperiment", method = RequestMethod.GET)
     public String displayRemoveExperiment(HttpServletRequest request,Model model){
 
         HttpSession session = request.getSession();
@@ -141,10 +154,12 @@ public class LoginController extends AbstractController{
 
         model.addAttribute("titles", titles);
         model.addAttribute("titlepage", "Remove Experiment");
-        return "removeSection/removeIntro";
+        return "removeSection/removeExperiment";
     }
 
-    @RequestMapping(value = "removeTitle", method = RequestMethod.POST)
+
+
+    @RequestMapping(value = "removeExperiment", method = RequestMethod.POST)
     public String processRemoveExperiment(@RequestParam int[] titleIds){
 
         for (int titleId : titleIds) {
@@ -154,6 +169,10 @@ public class LoginController extends AbstractController{
         return "redirect:dashboard";
 
     }
+
+
+    /*----------- --------------------Logout--------------------------------*/
+
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpServletRequest request){
         request.getSession().invalidate();
