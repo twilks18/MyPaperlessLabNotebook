@@ -31,9 +31,27 @@ public class ExperimentController {
     private IntroDao introDao;
 
     @Autowired
-    private ConclusionDao conclusionDao;
+    private ConclusionsDao conclusionsDao;
 
-    /*----------- Sections ------------------*/
+    /*----------- --------------------Introduction --------------------------------*/
+
+
+    @RequestMapping(value = "introReagentPage/{id}", method = RequestMethod.GET)
+    public String processReagentIntroPage(@PathVariable int id, Model model){
+
+
+        Intro intro = introDao.findOne(id);
+        List<Reagent> reagents = intro.getReagent();
+        model.addAttribute("chemicals", reagents);
+
+
+        model.addAttribute("title",intro.getTitle());
+        model.addAttribute("purpose",intro.getPurpose());
+        model.addAttribute("materials", intro.getMaterials());
+
+        return "section/introPage";
+    }
+
 
 
        // form for title,material, purpose
@@ -44,6 +62,8 @@ public class ExperimentController {
 
         return "section/addIntroForm";
     }
+
+
 
      @RequestMapping(value = "addIntro",  method = RequestMethod.POST)
     public String processIntroForm(@ModelAttribute @Valid Intro intro, HttpServletRequest request, Errors errors, Model model){
@@ -76,6 +96,8 @@ public class ExperimentController {
     }
 
 
+
+
     // form for reagent/chemical contents or Chemical Properties table
     @RequestMapping(value = "addReagent", method = RequestMethod.GET)
     public String reagentForm(HttpServletRequest request, Model model){
@@ -84,16 +106,15 @@ public class ExperimentController {
         Integer id = (Integer)session.getAttribute("intro_key");
         Intro intro = introDao.findOne(id);
         List<Reagent> reagents = intro.getReagent();
+
         model.addAttribute("reagents", reagents);
-
-
         model.addAttribute("number", "The number is" + id);
         model.addAttribute(new Reagent());
-//        Intro intro = introDao.findOne(introid);
-
 
         return "section/reagentForm";
     }
+
+
 
     //Processing of physical properties table
     @RequestMapping(value ="addReagent", method = RequestMethod.POST)
@@ -130,29 +151,29 @@ public class ExperimentController {
         model.addAttribute("reagents", reagent.getChemName() + " " + id + " has been added!");
 
 
-        return "section/test";
+        return "section/processReagentForm";
 
     }
 
 
-    // processing of form for title,material, purpose,  and reagent contents
-    @RequestMapping(value = "introReagentPage", method = RequestMethod.GET) // may need to add this " method = RequestMethod.POST" back
-    public String processReagentIntroPage(HttpServletRequest request, Model model){
+
+ /*----------- --------------------Procedure and Observations --------------------------------*/
+
+    @RequestMapping(value = "procedureAndObservations/{id}", method = RequestMethod.GET)
+    public String displayProcObs(@PathVariable int id, Model model){
 
 
-        HttpSession session = request.getSession();
-        Integer id = (Integer)session.getAttribute("intro_key");
         Intro intro = introDao.findOne(id);
-        List<Reagent> reagents = intro.getReagent();
-        model.addAttribute("chemicals", reagents);
+        Procobs procob = intro.getProcobs();
 
 
-        model.addAttribute("title",intro.getTitle());
-        model.addAttribute("purpose",intro.getPurpose());
-        model.addAttribute("materials", intro.getMaterials());
+        model.addAttribute("procedure", procob.getProcedure());
+        model.addAttribute("observations", procob.getObservations());
 
-        return "section/introPage";
+        return "section/procAndObsPage";
     }
+
+
 
     //form for procedure and observations
     @RequestMapping(value = "procAndObs",method = RequestMethod.GET)
@@ -161,6 +182,8 @@ public class ExperimentController {
        model.addAttribute(new Procobs());
         return "section/procAndObsForm";
     }
+
+
 
     @RequestMapping(value = "procAndObs", method = RequestMethod.POST)
     public String processProcAndObsForm(HttpServletRequest request, @ModelAttribute @Valid Procobs procob, Errors errors, Model model){
@@ -181,20 +204,37 @@ public class ExperimentController {
         return "section/procAndObsPage";
     }
 
-    /*---form for conclusion---*/
+
+
+    /*----------- --------------------Conclusion --------------------------------*/
+
+    @RequestMapping(value = "conclusion/{id}", method = RequestMethod.GET)
+    public String displayConclusion(@PathVariable int id, Model model){
+
+
+        Intro intro = introDao.findOne(id);
+       Conclusions conclude = intro.getConclude();
+
+
+        model.addAttribute("conclusion", conclude.getConclusion());
+
+        return "section/processConclusion";
+    }
+
+
     @RequestMapping(value ="conclusion", method = RequestMethod.GET)
     public String conclusionForm(Model model){
 
-        model.addAttribute(new Conclusion());
+        model.addAttribute(new Conclusions());
         return "section/conclusionForm";
     }
 
-    /*----processing conclusion*---*/
+
     @RequestMapping(value = "conclusion",method = RequestMethod.POST)
-    public String processConclusionForm(HttpServletRequest request, @ModelAttribute @Valid Conclusion conclude, Errors errors,Model model){
+    public String processConclusionForm(HttpServletRequest request, @ModelAttribute @Valid Conclusions conclude, Errors errors,Model model){
 
         if (errors.hasErrors()){
-            return "section/conclusionForm";
+            return "section/processConclusion";
         }
 
         HttpSession session = request.getSession();
@@ -202,14 +242,19 @@ public class ExperimentController {
         Intro intro = introDao.findOne(id);
         conclude.setIntro(intro);
 
-        conclusionDao.save(conclude);
+        conclusionsDao.save(conclude);
 
 
-        model.addAttribute("conclusions", conclusionDao.findAll());
-        return "section/conclusionPage";
+        model.addAttribute("conclusion", conclude.getConclusion());
+        return "section/processConclusion";
     }
 
-                             /*----------- Remove Section ------------------*/
+
+
+
+    /*---------------------------- Remove Section -----------------------------------*/
+
+
     @RequestMapping(value = "removeReagent", method = RequestMethod.GET)
     public String displayRemoveReagent(HttpServletRequest request,  Model model){
 
@@ -221,6 +266,8 @@ public class ExperimentController {
 
         return "removeSection/removeReagent";
     }
+
+
 
     @RequestMapping(value = "removeReagent", method = RequestMethod.POST)
     public String processRemoveReagent(@RequestParam int[] chemIds){

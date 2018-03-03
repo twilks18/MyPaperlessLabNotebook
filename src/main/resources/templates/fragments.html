@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http//www.thymeleaf.org/">
 <head th:fragment="head">
-    <meta charset="UTF-8"/>
     <title>My Paperless Lab Notebook</title>
+    <meta charset="UTF-8"/>
+    <meta charset="viewport" content="width=deice-width,initial-scale=1" />
+    <link rel="stylesheet" href="/bootstrap-3.3.7/css/bootstrap.min.css" />
+
 </head>
 <body>
-<nav th:fragment="navigation">
-    <!-- -->
+<!-- Add my paperless lab notebook brand in navbar and link should go to dashboard-->
+<nav th:fragment="navigation">   <!-- -->
 
 </nav>
 
+
+<div th:fragment="bootstrapit">
+    <script src="/jquery/jquery-3.3.1.min.js"></script>
+    <script src="/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+
+</div>
 
 </body>
 </html>

@@ -8,16 +8,37 @@
     <span th:text="${user}"></span>
 </div>
     <nav >
-        <a href="/removeTitle"> Remove Experiment</a>
-       <a href="/experiment/addIntro"> Add Experiment </a>
+        <a href="/removeExperiment"> Remove Experiment</a>|
+       <a href="/experiment/addIntro"> Add Experiment </a>|
         <a href="/logout"> Logout </a>
     </nav>
 
     <p th:unless="${titles} and ${titles.size()}"> Add an Experiment</p>
-    <ul>
-        <li th:each=" title : ${titles}" th:text="${title.title}"></li>
-    </ul>
 
 
+<div class="panel-group" th:each=" title : ${titles}">
+    <div class="panel panel-default" >
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse"  th:href="'#accordion'+${title.title}" th:text="${title.title}"></a>
+            </h4>
+        </div>
+        <div  th:id="'accordion'+${title.title}" class="panel-collapse collapse">
+            <div  class="panel-body">
+                <ul>
+                    <li><a th:href="@{'/experiment/introReagentPage/'+${title.id}}">Introduction</a></li>
+                    <li><a th:href="@{'/experiment/procedureAndObservations/'+${title.id}}">Procedure and Observations</a></li>
+                    <li><a th:href="@{'/experiment/conclusion/'+${title.id}}">Conclusion</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div th:replace="fragments :: bootstrapit"></div>
 </body>
 </html>

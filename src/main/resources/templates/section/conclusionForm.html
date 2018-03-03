@@ -1,21 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http//www.thymeleaf.org/">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Title</title>
-</head>
+<head th:replace="fragments :: head"></head>
 <body>
 <h1>Write a Conclusion</h1><br/>
-<form method="post" th:object="${conclusion}">
+<form method="post" th:object="${conclusions}">
 
     <div>
-    <label th:for="conclusions"></label>
-    <textarea rows="40" cols="80" th:field="*{conclusions}"></textarea><br/>
-    <span th:errors="*{conclusions}"></span>
-    <input type="submit" value="submit conclusions"/>
+    <label th:for="conclusion"></label>
+    <textarea rows="40" cols="80" th:field="*{conclusion}"></textarea><br/>
+    <span th:errors="*{conclusion}"></span>
+    <input type="submit" value="submit conclusion"/>
     </div>
 </form>
 
+<div th:replace="fragments :: bootstrapit"></div>
 </body>
 </html>
 

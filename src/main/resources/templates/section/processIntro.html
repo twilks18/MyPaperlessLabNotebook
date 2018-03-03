@@ -2,8 +2,9 @@
 <html lang="en" xmlns:th="http//www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
 <body >
-<nav ><a href="/experiment/addReagent">Physical Properties Table</a>
-    <a href="/logout"> Logout </a>
+<nav ><a href="/experiment/addReagent">Physical Properties Table</a>|
+    <a href="/logout"> Logout </a>|
+    <a href="/dashboard"> Dashboard </a>
 </nav>
 
     <h1>Introduction</h1>
@@ -21,7 +22,15 @@
 
 <br/>
 
+<hr/>
 
+<div class="container">
+    <ul class="pager">
+        <li class="next"><a href="/experiment/addReagent" >Next</a> </li>
+    </ul>
+</div>
+
+<div th:replace="fragments :: bootstrapit"></div>
 
 
 </body>

@@ -35,7 +35,7 @@ public class Intro {
 
     @OneToOne(mappedBy = "intro", cascade = CascadeType.ALL)
     @JoinColumn(name="intro_id")
-    private Conclusion conclude;
+    private Conclusions conclude;
 
     @ManyToOne
     private User user;
@@ -93,11 +93,11 @@ public class Intro {
         this.procobs = procobs;
     }
 
-    public Conclusion getConclude() {
+    public Conclusions getConclude() {
         return conclude;
     }
 
-    public void setConclude(Conclusion conclude) {
+    public void setConclude(Conclusions conclude) {
         this.conclude = conclude;
     }
 
