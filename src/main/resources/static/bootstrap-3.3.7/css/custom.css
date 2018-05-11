@@ -18,22 +18,8 @@
 .main3{
     width: 75%;
     margin:auto;
-
     border: 5px double;
     background: #ECF8FC;
-}
-
-.display3 {
-
-    background: url("/images/grid.png") no-repeat center center fixed;
-
-    padding-left: 0%;
-    padding-right: 0%;
-    width: 100%;
-    -webkit-background-size:cover;
-    -moz-background-size:cover;
-    -o-background-size:cover;
-    background-size: cover;
 }
 
 .navbar {
@@ -323,6 +309,18 @@ color:black;
     -o-background-size:cover;
     background-size: cover;
 }
+.display2 {
+
+    background: url("/images/grid.png") no-repeat center center fixed;
+
+    padding-left: 0%;
+    padding-right: 0%;
+    width: 100%;
+    -webkit-background-size:cover;
+    -moz-background-size:cover;
+    -o-background-size:cover;
+    background-size: cover;
+}
 
 .center-heading{
 
@@ -335,6 +333,13 @@ color:black;
 .center-display{
     margin-right:10%;
     margin-left:10%
+
+}
+
+.center-display-poc{
+   margin-top:3%;
+   margin-left:2%;
+   margin-right:2%;
 
 }
 
@@ -364,4 +369,14 @@ table{
   color: #ECF8FC;
 
   background-color:#00385A;
+}
+
+.poc-div{
+padding-bottom:15%;
+margin-top:2%;
+margin-bottom:20%;
+}
+
+.user-name{
+width:100%;
 }

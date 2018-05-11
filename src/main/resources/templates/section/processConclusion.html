@@ -1,28 +1,49 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http//www.thymeleaf.org/">
 <head th:replace="section/addIntroform:: header"></head>
-<body class="main">
+<body class="main3">
 
-<div class="container display">
+<div class="container display2">
 <!--Navbar-->
-<div th:replace="section/introPage::navigation-display"></div>
+<div><nav class="navbar  navbar-custom container-fluid" role="navigation">
 
+    <div class="navbar-header container-fluid">
+
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navCollapse">
+            <span class="glyphicon glyphicon-menu-hamburger text-link"></span>
+        </button>
+
+        <div class="container-fluid">
+            <div class="row">
+
+                <div class="col-md-8">
+                    <img th:src="@{\images\mp.png}" class="img-responsive img-adjust pull-right" alt="title"/>
+
+                </div>
+
+                <div class="col-md-4 pull-right">
+                    <div class="collapse navbar-collapse " id="navCollapse">
+                        <ul class="nav navbar-nav pull-right" style=" margin-top:4%;">
+                            <li><a th:href="@{/dashboard}" class="text-link">Experiment Log</a></li>
+                            <li class="next"><a href="/dashboard" th:unless="${id} != null">Next</a> </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav></div>
+
+    <div class="poc-div">
     <h1 class="center-heading">Conclusion</h1>
-    <div>
-        <p th:text="${conclusion}" class="center-display"></p>
+
+        <p th:text="${conclusion}" class="center-display-poc"></p>
     </div>
 
 
-    <ul class="pager">
-        <li class="next"><a href="/dashboard" th:unless="${id} != null">Complete!!</a> </li>
-    </ul>
-
-    <footer class="row" style="margin-top: 200px;">
-        <div class="col-md-6">
-            <h6><b>Copyright &copy; 2018 Ta'Neisha Wilks</b></h6>
-        </div>
-
-    </footer>
+    <div class="container user-name">
+        <p class="pull-left" style="background:orange;margin-left:0%;">someones name</p>
+    </div>
 </div>
 
 
