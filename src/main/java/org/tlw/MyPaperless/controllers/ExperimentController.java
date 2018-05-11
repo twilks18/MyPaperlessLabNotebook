@@ -257,7 +257,7 @@ public class ExperimentController {
         model.addAttribute("conclusion", conclude.getConclusion());
         model.addAttribute("id",id);
 
-        return "section/processConclusion";
+        return "section/example";
     }
 
 

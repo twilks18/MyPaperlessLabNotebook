@@ -14,7 +14,7 @@ public class Proced {
     @NotNull
     @Lob
     @Column
-    @Size(min = 1, message = "You forgot something")
+    @Size(min = 50, message = "You forgot something")
     private String proceds;
 
     @OneToOne
