@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http//www.thymeleaf.org/" xmlns:i="http://www.w3.org/1999/xhtml">
+<head>
+    <title>My Paperless Lab Notebook</title>
+    <meta charset="UTF-8"/>
+    <meta charset="viewport" content="width=deice-width,initial-scale=1"/>
+    <link th:href="@{/bootstrap-3.3.7/css/bootstrap.min.css}"  type="text/css" rel="stylesheet"/>
+    <link th:href="@{/bootstrap-3.3.7/css/custom.css}"  type="text/css" rel="stylesheet"/>
+
+</head>
+<body class="main">
+
+<div class="container display" style="background:red;">
+    <div th:fragment="navigation-display">
+        <nav class="navbar  navbar-custom container-fluid" role="navigation">
+
+            <div class="navbar-header container-fluid">
+
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navCollapse">
+                    <span class="glyphicon glyphicon-menu-hamburger text-link"></span>
+                </button>
+
+                <div class="container-fluid">
+                    <div class="row">
+
+                        <div class="col-md-9">
+                            <img th:src="@{\images\mp.png}" class="img-responsive img-adjust pull-right" alt="title"/>
+
+                        </div>
+
+                        <div class="col-md-2 pull-right">
+                            <div class="collapse navbar-collapse " id="navCollapse">
+                                <ul class="nav">
+                                    <li><a th:href="@{/dashboard}" class="text-link">Experiment Log</a></li>
+                                    <li><a  th:href="@{'/experiment/introReagentPage/'+ ${id}}" class="text-link">Edit Table</a></li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+<h1 class="center-heading">Physical Properties Table</h1>
+
+<div class="container" style="background:green;">
+<table class="table  table-bordered">
+    <tr>
+        <td>Chemical Name</td>
+        <td>Molecular Weight(g/mol)</td>
+        <td>Density(g/L)</td>
+        <td>Hazard</td>
+    </tr>
+    <tr th:each="chemical : ${chemicals}">
+
+        <td th:text="${chemical.chemName}"></td>
+        <td th:text="${chemical.mw}"></td>
+        <td th:text="${chemical.density}"></td>
+        <td th:text="${chemical.hazard}"></td>
+
+    </tr>
+</table>
+    </div>
+<a href="/experiment/addReagent">Add Another Reagent</a>
+<br/>
+<br/>
+<div class="container">
+    <div>
+    <ul class="pager">
+        <li class="next"><a href="/experiment/procedure">Next</a> </li>
+    </ul>
+    </div>
+</div>
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="/jquery/jquery-3.3.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http//www.thymeleaf.org/">
+<head>
+    <title>My Paperless Lab Notebook</title>
+    <meta charset="UTF-8"/>
+    <meta charset="viewport" content="width=deice-width,initial-scale=1"/>
+    <link th:href="@{/bootstrap-3.3.7/css/bootstrap.min.css}"  type="text/css" rel="stylesheet"/>
+    <link th:href="@{/bootstrap-3.3.7/css/custom.css}"  type="text/css" rel="stylesheet"/>
+
+
+</head>
+<body>
+
+<div  class="container main2">
+
+    <!--Navbar-->
+    <div th:replace="section/addIntroForm::navigation"></div>
+
+    <!--Heading-->
+    <div class="container">
+        <img src="/images/procedure.png"  class="adjust-imgsize-poc" alt="procedure title"/>
+    </div>
+
+
+    <!--Form-->
+
+    <div class="spacing">
+        <form method="post" th:action="@{procedure/save}" th:object="${proced}" class="form-margin-poc">
+
+            <div class="form-group ">
+                <label th:for="proceds" class="form-font"></label>
+                <textarea class="form-control textarea-poc" rows="15" th:field="*{proceds}" placeholder="Add Procedure"></textarea>
+            </div>
+
+            <span th:errors="*{proceds}"></span>
+
+            <button type="submit"  class="btn btn-default form-font">Save</button>
+        </form>
+
+
+    </div>
+
+    <!--Footer-->
+
+    <footer class="footer-custom">
+        <div class="container">
+            <div class="row">
+
+                <h6><b>Copyright &copy; 2018 Ta'Neisha Wilks</b></h6>
+
+            </div>
+        </div>
+    </footer>
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="jquery/jquery-3.3.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>

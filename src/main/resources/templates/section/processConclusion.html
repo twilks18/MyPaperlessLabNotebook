@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http//www.thymeleaf.org/">
+<head th:replace="section/addIntroform:: header"></head>
+<body class="main">
+
+<div class="container display">
+<!--Navbar-->
+<div th:replace="section/introPage::navigation-display"></div>
+
+    <h1 class="center-heading">Conclusion</h1>
+    <div style="width:100%; height: 65%; background:red; padding-left:0%;">
+<p th:text="${conclusion}" class="center-display" style="overflow:scroll; height:100%; background:green; margin-left:0%; margin-right:0%;"></p>
+    </div>
+
+
+    <ul class="pager">
+        <li class="next"><a href="/dashboard" th:unless="${id} != null">Complete!!</a> </li>
+    </ul>
+
+    <footer class="row" style="margin-top: 200px;">
+        <div class="col-md-6">
+            <h6><b>Copyright &copy; 2018 Ta'Neisha Wilks</b></h6>
+        </div>
+
+    </footer>
+</div>
+
+
+<div>
+    <script src= "/jquery/jquery-3.3.1.min.js"></script>
+    <script src= "/js/bootstrap.min.js"></script>
+</div>
+</body>
+</html>
