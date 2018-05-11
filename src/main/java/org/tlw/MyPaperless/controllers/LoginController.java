@@ -18,7 +18,7 @@ import java.util.List;
 
 @Controller
 @SessionAttributes("name")
-public class LoginController extends AbstractController{
+public class LoginController {
 
     @Autowired
     private UserDao userDao;
@@ -98,6 +98,11 @@ public class LoginController extends AbstractController{
 
         String username = request.getParameter("username");
        String password = request.getParameter("password");
+
+        if(username == "" || password == "") {
+            model.addAttribute("error", "Login requires a username and password");
+            return "paperless/login";
+        }
 
 
         User user = userDao.findByUsername(username);

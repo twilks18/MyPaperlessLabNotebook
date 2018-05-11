@@ -1,19 +1,55 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http//www.thymeleaf.org/">
-<head th:replace="fragments :: head"></head>
+<head>
+    <title>My Paperless Lab Notebook</title>
+    <meta charset="UTF-8"/>
+    <meta charset="viewport" content="width=deice-width,initial-scale=1"/>
+    <link th:href="@{/bootstrap-3.3.7/css/bootstrap.min.css}"  type="text/css" rel="stylesheet"/>
+    <link th:href="@{/bootstrap-3.3.7/css/custom.css}"  type="text/css" rel="stylesheet"/>
+
+
+</head>
 <body>
-<h1>Write a Conclusion</h1><br/>
-<form method="post" th:object="${conclusions}">
 
-    <div>
-    <label th:for="conclusion"></label>
-    <textarea rows="40" cols="80" th:field="*{conclusion}"></textarea><br/>
-    <span th:errors="*{conclusion}"></span>
-    <input type="submit" value="submit conclusion"/>
+<div  class="container main2">
+
+    <!--Navbar-->
+    <div th:replace="section/addIntroForm::navigation"></div>
+
+    <!--Heading-->
+    <div class="container">
+        <img src="/images/conclusion.png"  class="adjust-imgsize-poc" alt="observation title"/>
     </div>
-</form>
 
-<div th:replace="fragments :: bootstrapit"></div>
+
+    <!--Form-->
+
+    <div class="spacing">
+        <form method="post" th:action="@{conclusion/save}" th:object="${conclusions}" class="form-margin-poc">
+
+            <div class="form-group ">
+                <label th:for="conclusion" class="form-font"></label>
+                <textarea class="form-control textarea-poc" rows="15" th:field="*{conclusion}" placeholder="Add Conclusion"></textarea>
+            </div>
+
+            <button type="submit"  class="btn btn-default form-font">Save</button>
+        </form>
+
+
+    </div>
+
+    <!--Footer-->
+
+    <footer class="footer-custom">
+
+                <h6><b>Copyright &copy; 2018 Ta'Neisha Wilks</b></h6>
+
+
+    </footer>
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="jquery/jquery-3.3.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 </body>
 </html>
-

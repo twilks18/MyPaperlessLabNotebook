@@ -1,44 +1,85 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http//www.thymeleaf.org/">
-<head th:replace="fragments :: head"></head>
+<head>
+    <title>My Paperless Lab Notebook</title>
+    <meta charset="UTF-8"/>
+    <meta charset="viewport" content="width=deice-width,initial-scale=1"/>
+    <link th:href="@{/bootstrap-3.3.7/css/bootstrap.min.css}"  type="text/css" rel="stylesheet"/>
+    <link th:href="@{/bootstrap-3.3.7/css/custom.css}"  type="text/css" rel="stylesheet"/>
+
+
+</head>
 <body>
-<nav>
-    <a href="/experiment/introReagentPage">Intro Page</a>
-    <a href="/experiment/removeReagent">Remove Reagent</a>
-    <a href="/experiment/procAndObs">Procedure and Observations</a>
-    <a href="/logout"> Logout </a>
-</nav>
-<br/>
-<h1>Create A Physical Properties Table</h1>
+<div class="container main2">
 
-<form method="post" th:object="${reagent}">
+    <!--Navbar-->
+    <div th:replace="section/addIntroForm::navigation"></div>
 
-    <div>
-    <label th:for="chemName">Compound/Reagent</label>
-    <input th:field="*{chemName}" />
-     <span class="error" th:text="${chemname_error}"></span>
+    <!--Heading-->
+    <div class="container">
+        <img src="/images/physicalprops.png"  id="adjust-imgsize-physprop" alt="physical properties title"/>
     </div>
-    <div>
-    <label th:for="mw">Molecular Weight(g/mol)</label>
-    <input th:field="*{mw}"/>
-        <span class="error" th:text="${mw_error}"></span>
-    </div>
-    <div>
-    <label th:for="density">Density(g/L)</label>
-    <input th:field="*{density}"/>
-        <span class="error" th:text="${density_error}"></span>
-    </div>
-    <div>
-    <label th:for="hazard">Hazards</label>
-    <textarea th:field="*{hazard}"></textarea><br/><br/>
-        <span th:errors="*{hazard}"></span>
-    </div>
-    <br/>
-    <input type="hidden" name="introid" th:value="${introid}"/>
-    <input type="submit" value="Add Chemical"/>
-</form>
 
-<p th:text ="${number}"></p>
+
+
+    <!--Form-->
+
+    <div class="spacing">
+
+        <form method="post" class="form-margin-intro" th:object="${reagent}">
+
+            <div  class="form-group ">
+                <label th:for="chemName" class="form-font label-margin">Compound/Reagent</label>
+                <input th:field="*{chemName}" class="form-control textbox-size textbox-margin" placeholder="Add Name"/>
+
+            </div>
+
+
+
+            <div class="form-group row">
+                <div class="col-md-5">
+                    <label th:for="mw" class="form-font label-margin">Molecular Weight(g/mol)</label>
+                    <input th:field="*{mw}" class="form-control textbox-size textbox-margin" placeholder="g/L"/>
+
+                </div>
+
+
+
+                <div class="col-md-5">
+                    <label th:for="density" class="form-font label-margin">Density(g/L)</label>
+                    <input th:field="*{density}" class="form-control textbox-size textbox-margin" placeholder="g/mol"/>
+
+                </div>
+            </div>
+
+            <div class="form-group ">
+                <label th:for="hazard" class="form-font label-margin">Hazards</label>
+                <textarea th:field="*{hazard}" class="form-control textarea-size textbox-margin" placeholder="Add Message"></textarea>
+
+            </div>
+
+
+            <button type="submit" class="btn btn-default form-font" >Submit</button>
+        </form>
+    </div>
+
+
+    <!--Footer-->
+
+    <footer class="footer-custom">
+        <div class="container">
+            <div class="row">
+
+                <h6><b>Copyright &copy; 2018 Ta'Neisha Wilks</b></h6>
+
+            </div>
+        </div>
+    </footer>
+</div>
+
+
+
+<!--
 
 <table>
     <tr>
@@ -57,7 +98,13 @@
     </tr>
 </table>
 
-<div th:replace="fragments :: bootstrapit"></div>
+-->
+
+<div >
+
+    <script src= "/jquery/jquery-3.3.1.min.js"></script>
+    <script src= "/js/bootstrap.min.js"></script>
+</div>
 
 </body>
 </html>

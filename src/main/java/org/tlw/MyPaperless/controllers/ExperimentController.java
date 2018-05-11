@@ -1,6 +1,7 @@
 package org.tlw.MyPaperless.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -18,6 +19,8 @@ import java.util.List;
 @RequestMapping("experiment")
 public class ExperimentController {
 
+
+
     @Autowired
     private UserDao userDao;
 
@@ -25,7 +28,7 @@ public class ExperimentController {
     private ReagentDao reagentDao;
 
     @Autowired
-    private ProcobsDao procobsDao;
+    private ProcedureDao procedureDao;
 
     @Autowired
     private IntroDao introDao;
@@ -33,12 +36,15 @@ public class ExperimentController {
     @Autowired
     private ConclusionsDao conclusionsDao;
 
+    @Autowired
+    private ObservationsDao observDao;
+
+
     /*----------- --------------------Introduction --------------------------------*/
 
 
     @RequestMapping(value = "introReagentPage/{id}", method = RequestMethod.GET)
     public String processReagentIntroPage(@PathVariable int id, Model model){
-
 
         Intro intro = introDao.findOne(id);
         List<Reagent> reagents = intro.getReagent();
@@ -65,7 +71,7 @@ public class ExperimentController {
 
 
 
-     @RequestMapping(value = "addIntro",  method = RequestMethod.POST)
+     @RequestMapping(value = "addIntro/save",  method = RequestMethod.POST)
     public String processIntroForm(@ModelAttribute @Valid Intro intro, HttpServletRequest request, Errors errors, Model model){
 
 
@@ -84,13 +90,8 @@ public class ExperimentController {
         model.addAttribute("title",intro.getTitle());
         model.addAttribute("purpose",intro.getPurpose());
         model.addAttribute("materials", intro.getMaterials());
-        model.addAttribute("introid", id);
 
          session.setAttribute("intro_key", intro.getId());
-
-
-         model.addAttribute("introkey", session.getAttribute("intro_key"));
-
 
         return "section/processIntro";
     }
@@ -139,69 +140,106 @@ public class ExperimentController {
             return "section/reagentForm";
         }
 
-        HttpSession session = request.getSession();
-        Integer id = (Integer)session.getAttribute("intro_key");
+            HttpSession session = request.getSession();
+            Integer id = (Integer) session.getAttribute("intro_key");
+            Intro intro = introDao.findOne(id);
+
+            reagent.setIntro(intro);
+            reagentDao.save(reagent);
+
+            List<Reagent> reagents = intro.getReagent();
+            model.addAttribute("chemicals", reagents);
+            model.addAttribute("reagents", reagent.getChemName() + " " + id + " has been added!");
+
+
+            return "section/processReagentForm";
+
+    }
+
+/*----------------------------------Procedure-----------------------------------*/
+
+   @RequestMapping(value="procedure", method = RequestMethod.GET)
+   public String displayProcedureForm(Model model){
+
+       model.addAttribute(new Proced ());
+
+       return "section/procedureForm";
+   }
+
+   @RequestMapping(value = "procedure/save", method = RequestMethod.POST)
+   public String processProcedureForm(HttpServletRequest request, @ModelAttribute @Valid Proced proceds, Errors errors,Model model){
+
+       if(errors.hasErrors()){
+
+           model.addAttribute("errors","Please add a procedure");
+           return "section/procedureForm";
+       }
+
+       HttpSession session = request.getSession();
+       Integer id = (Integer)session.getAttribute("intro_key");
+       Intro intro = introDao.findOne(id);
+       proceds.setIntro(intro);
+
+       procedureDao.save(proceds);
+
+       model.addAttribute("proceds",proceds.getProceds());
+
+
+       return "section/processProcedureForm";
+   }
+
+   @RequestMapping(value = "procedure/{id}", method = RequestMethod.GET)
+   public String displayProcedure(@PathVariable int id, Model model){
+
+       Intro intro =introDao.findOne(id);
+       Proced proceds = intro.getProceds();
+
+       model.addAttribute("proceds",proceds.getProceds());
+
+       return "section/processProcedureForm";
+   }
+
+    /*------------------------Observations------------------------------------- */
+
+    @RequestMapping(value = "observations/{id}", method = RequestMethod.GET)
+    public String displayObservations(@PathVariable int id, Model model){
+
+
         Intro intro = introDao.findOne(id);
-
-        reagent.setIntro(intro);
-        reagentDao.save(reagent);
-
-        List<Reagent> reagents = intro.getReagent();
-        model.addAttribute("chemicals", reagents);
-        model.addAttribute("reagents", reagent.getChemName() + " " + id + " has been added!");
+        Observations observations = intro.getObservation();
 
 
-        return "section/processReagentForm";
+        model.addAttribute("observations", observations.getObservation());
 
+        return "section/processObservationsForm";
     }
 
 
+    @RequestMapping(value ="observations", method = RequestMethod.GET)
+    public String obsevationsForm(Model model){
 
- /*----------- --------------------Procedure and Observations --------------------------------*/
-
-    @RequestMapping(value = "procedureAndObservations/{id}", method = RequestMethod.GET)
-    public String displayProcObs(@PathVariable int id, Model model){
-
-
-        Intro intro = introDao.findOne(id);
-        Procobs procob = intro.getProcobs();
-
-
-        model.addAttribute("procedure", procob.getProcedure());
-        model.addAttribute("observations", procob.getObservations());
-
-        return "section/procAndObsPage";
+        model.addAttribute(new Observations());
+        return "section/observationsForm";
     }
 
 
-
-    //form for procedure and observations
-    @RequestMapping(value = "procAndObs",method = RequestMethod.GET)
-    public String procAndObsForm(Model model){
-
-       model.addAttribute(new Procobs());
-        return "section/procAndObsForm";
-    }
-
-
-
-    @RequestMapping(value = "procAndObs", method = RequestMethod.POST)
-    public String processProcAndObsForm(HttpServletRequest request, @ModelAttribute @Valid Procobs procob, Errors errors, Model model){
+    @RequestMapping(value = "observations/save",method = RequestMethod.POST)
+    public String processObservationForm(HttpServletRequest request, @ModelAttribute @Valid Observations observations, Errors errors,Model model){
 
         if (errors.hasErrors()){
-            return "section/procAndObsForm";
+            return "section/observationsForm";
         }
 
         HttpSession session = request.getSession();
         Integer id = (Integer)session.getAttribute("intro_key");
         Intro intro = introDao.findOne(id);
-        procob.setIntro(intro);
-        procobsDao.save(procob);
+        observations.setIntro(intro);
 
-        model.addAttribute("procob", procob.getProcedure());
-        model.addAttribute("procob", procob.getObservations());
+        observDao.save(observations);
 
-        return "section/procAndObsPage";
+
+        model.addAttribute("observations", observations.getObservation());
+        return "section/processObservationsForm";
     }
 
 
@@ -217,6 +255,7 @@ public class ExperimentController {
 
 
         model.addAttribute("conclusion", conclude.getConclusion());
+        model.addAttribute("id",id);
 
         return "section/processConclusion";
     }
@@ -230,22 +269,22 @@ public class ExperimentController {
     }
 
 
-    @RequestMapping(value = "conclusion",method = RequestMethod.POST)
-    public String processConclusionForm(HttpServletRequest request, @ModelAttribute @Valid Conclusions conclude, Errors errors,Model model){
+    @RequestMapping(value = "conclusion/save",method = RequestMethod.POST)
+    public String processConclusionForm(HttpServletRequest request, @ModelAttribute @Valid Conclusions conclusion, Errors errors,Model model){
 
         if (errors.hasErrors()){
-            return "section/processConclusion";
+            return "section/conclusionForm";
         }
 
         HttpSession session = request.getSession();
         Integer id = (Integer)session.getAttribute("intro_key");
         Intro intro = introDao.findOne(id);
-        conclude.setIntro(intro);
+        conclusion.setIntro(intro);
+        conclusionsDao.save(conclusion);
 
-        conclusionsDao.save(conclude);
 
 
-        model.addAttribute("conclusion", conclude.getConclusion());
+        model.addAttribute("conclusion", conclusion.getConclusion());
         return "section/processConclusion";
     }
 
@@ -279,4 +318,20 @@ public class ExperimentController {
         return "redirect:removeReagent";
 
     }
+
+     /*------------------------------ Edit Section ----------------------------------- */
+
+    @RequestMapping(value="addIntro/edit/{id}")
+    public String addIntroFormEdit(@PathVariable int id, Model model){
+
+        Intro intro = introDao.findOne(id);
+        model.addAttribute("intro",intro);
+
+        return "section/addIntroForm";
+
+
+    }
 }
+
+
+

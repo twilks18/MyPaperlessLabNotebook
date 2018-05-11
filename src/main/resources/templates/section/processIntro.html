@@ -1,37 +1,75 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http//www.thymeleaf.org/">
-<head th:replace="fragments :: head"></head>
-<body >
-<nav ><a href="/experiment/addReagent">Physical Properties Table</a>|
-    <a href="/logout"> Logout </a>|
-    <a href="/dashboard"> Dashboard </a>
-</nav>
+<head>
+    <title>My Paperless Lab Notebook</title>
+    <meta charset="UTF-8"/>
+    <meta charset="viewport" content="width=deice-width,initial-scale=1"/>
+    <link th:href="@{/bootstrap-3.3.7/css/bootstrap.min.css}"  type="text/css" rel="stylesheet"/>
+    <link th:href="@{/bootstrap-3.3.7/css/custom.css}"  type="text/css" rel="stylesheet"/>
 
-    <h1>Introduction</h1>
+</head>
+<body class="main">
 
-<p>Title: <span th:text="${title}"></span></p>
-<br/>
-<p >Purpose: <span th:text="${purpose}"></span></p>
-<br/>
-<p>Materials: <span th:text="${materials}"></span></p>
-<br/>
-<br/>
+<div class="container display">
+    <div th:fragment="navigation-display">
+        <nav class="navbar  navbar-custom container-fluid" role="navigation">
 
-<p>U-Intro Id: <span th:text ="${introid}"></span> </p>
-<p>Intro Id: <span th:text ="${introkey}"></span> </p>
+            <div class="navbar-header container-fluid">
 
-<br/>
 
-<hr/>
+                <div class="container-fluid">
+                    <div class="row">
 
-<div class="container">
-    <ul class="pager">
-        <li class="next"><a href="/experiment/addReagent" >Next</a> </li>
-    </ul>
+                        <div class="col-md-9">
+                            <img th:src="@{\images\mp.png}" class="img-responsive img-adjust pull-right" alt="title"/>
+
+                        </div>
+
+                        <div class=" col-md-2 pull-right dropdown" style="padding-top: 3%;">
+
+                            <button type="button" class="dropdown-toggle" id="dropdownmenu" data-toggle="dropdown" aria-hashpopup="true" aria-expanded="false" >
+                                <span class="glyphicon glyphicon-menu-hamburger text-link"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownmenu">
+                                <li><a class="dropdown-item" th:href="@{'/experiment/addIntro/edit/'+ ${id}}">Edit Intro</a></li>
+                                <div class="dropdown-divider"></div>
+                                <li><a class="dropdown-item " th:href="@{'/experiment/introReagentPage/'+ ${id}}">Edit Table</a></li>
+                                <div class="dropdown-divider"></div>
+                                <li><a class="dropdown-item" th:href="@{/dashboard}">Experiment Log</a></li>
+                            </ul>
+                        </div>
+
+                        </div>
+                    </div>
+                </div>
+
+        </nav>
+    </div>
+
+
+    <h1 class="center-heading">Introduction</h1>
+
+    <div >
+        <p class="center-display">Title: <span th:text="${title}"></span></p>
+        <br/>
+        <p class="center-display">Purpose: <span th:text="${purpose}"></span></p>
+        <br/>
+        <p class="center-display">Apparatus &amp; Materials: <span th:text="${materials}"></span></p>
+        <br/>
+        <br/>
+
+
+            <ul class="pager">
+                <li class="next"><a href="/experiment/addReagent">Next</a> </li>
+            </ul>
+
+    </div>
+
+
 </div>
-
-<div th:replace="fragments :: bootstrapit"></div>
-
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="/jquery/jquery-3.3.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
 
 </body>
 </html>

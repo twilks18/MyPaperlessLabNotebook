@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http//www.thymeleaf.org/">
+<head th:fragmet="header">
+    <title>My Paperless Lab Notebook</title>
+    <meta charset="UTF-8"/>
+    <meta charset="viewport" content="width=deice-width,initial-scale=1"/>
+    <link th:href="@{/bootstrap-3.3.7/css/bootstrap.min.css}"  type="text/css" rel="stylesheet"/>
+    <link th:href="@{/bootstrap-3.3.7/css/custom.css}"  type="text/css" rel="stylesheet"/>
+</head>
+<body class="main">
+<div class="container landingPage" th:fragment="navigation">
+
+
+    <nav class="navbar  navbar-custom container-fluid" role="navigation">
+
+        <div class="navbar-header container-fluid">
+
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navCollapse">
+                <span class="glyphicon glyphicon-menu-hamburger text-link"></span>
+            </button>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-9">
+                        <img th:src="@{images\mp.png}" class="img-responsive img-adjust pull-right" alt="title"/>
+
+                    </div>
+
+                    <div class="col-md-2 pull-right">
+                        <div class="collapse navbar-collapse " id="navCollapse">
+                            <ul class="nav">
+                                <li><a href="/login" class="text-link" >Login</a></li>
+                                <li><a href="/signup" class="text-link">Sign up</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <footer>
+        <h6><b>Copyright &copy; 2018 Ta'Neisha Wilks</b></h6>
+    </footer>
+
+</div>
+
+
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="jquery/jquery-3.3.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>

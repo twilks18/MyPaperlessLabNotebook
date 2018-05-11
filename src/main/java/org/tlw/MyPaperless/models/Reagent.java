@@ -30,6 +30,7 @@ public class Reagent {
     private String mw; //molecular weight
 
     @NotNull
+    @Lob
     @Size(min= 1, message = "You forgot something")
     private String hazard;
 

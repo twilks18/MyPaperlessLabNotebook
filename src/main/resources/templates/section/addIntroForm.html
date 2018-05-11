@@ -1,45 +1,99 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http//www.thymeleaf.org/" xmlns:i="http://www.w3.org/1999/xhtml">
-<head th:replace="fragments :: head"></head>
-<body >
+<html lang="en" xmlns:th="http//www.thymeleaf.org/">
+<head th:fragment="header">
+    <title>My Paperless Lab Notebook</title>
+    <meta charset="UTF-8"/>
+    <meta charset="viewport" content="width=deice-width,initial-scale=1"/>
+    <link th:href="@{/bootstrap-3.3.7/css/bootstrap.min.css}"  type="text/css" rel="stylesheet"/>
+    <link th:href="@{/bootstrap-3.3.7/css/custom.css}"  type="text/css" rel="stylesheet"/>
 
-<nav>
+</head>
+<body>
 
-    <a href="/logout"> Logout </a>
-</nav>
-    <h1>Introduction</h1>
+<div class="container main2">
+
+    <div th:fragment="navigation">
+
+    <!--Navbar-->
+    <nav class="navbar  navbar-custom container-fluid" role="navigation">
 
 
-    <form  method="post" >
+        <!--Logo-->
+        <div class="navbar-header container-fluid">
 
 
-        <div th:object="${intro}">
-        <div>
-        <label  th:for="title">Title</label><br/>
-        <input th:field="*{title}"/><br/>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navCollapse">
+                <span class="glyphicon glyphicon-menu-hamburger text-link"></span>
+            </button>
+            <a href="#" class="navbar-brand">Add here</a>
+
+        </div>
+        <!-- Menu contents-->
+        <div class="collapse navbar-collapse " id="navCollapse">
+            <ul class="nav navbar-nav pull-right">
+                <li><a class="text-link" th:href="@{/dashboard}" >Experiment Log</a></li>
+                <li><a class="text-link" th:href="@{/logout}">Logout</a></li>
+            </ul>
+        </div>
+
+    </nav>
+    </div>
+
+
+
+    <!--Heading-->
+    <div class="container-fluid">
+        <img th:src="@{/images/Introduction.png}"  id="adjust-imgsize-intro" alt="introduction"/>
+    </div>
+
+    <!--Form-->
+
+    <div class="spacing">
+
+
+    <form  method="post" th:action="@{addIntro/save}" class="form-margin-intro" th:object="${intro}" >
+
+        <input type="hidden" th:text="${id}"/>
+
+        <div class="form-group">
+        <label class="form-font"  th:for="title">Title</label><br/>
+        <input th:field="*{title}" class="form-control textbox-size"/><br/>
             <span th:errors="*{title}"></span>
         </div>
 
-        <div>
-        <label th:for="purpose">Purpose</label><br/>
-        <textarea rows="3" cols="40" th:field="*{purpose}"></textarea><br/>
+            <div class="form-group">
+        <label  class="form-font" th:for="purpose">Purpose</label><br/>
+        <textarea class="form-control textarea-size" th:field="*{purpose}"></textarea><br/>
         <span th:errors="*{purpose}"></span>
         </div>
-        <div>
-        <label th:for="materials">Materials</label><br/>
-        <textarea rows="10" cols="30" th:field="*{materials}"></textarea><br/>
+
+            <div class="form-group">
+        <label th:for="materials">Apparatus &amp; Materials:</label><br/>
+        <textarea class="form-control textarea-size" th:field="*{materials}"></textarea><br/>
         <span th:errors="*{materials}"></span>
         </div>
 
-        </div>
 
 
-        <input type="submit"/>
+
+        <button  type="submit" class="btn btn-default form-font">Save</button>
 
      </form>
 
+</div>
 
-<div th:replace="fragments :: bootstrapit"></div>
+    <!--Footer-->
+
+    <footer class="footer-custom">
+
+                <h6><b>Copyright &copy; 2018 Ta'Neisha Wilks</b></h6>
+
+    </footer>
+</div>
+
+
+    <script src= "/jquery/jquery-3.3.1.min.js"></script>
+    <script src= "/js/bootstrap.min.js"></script>
 
 </body>
 </html>

@@ -14,14 +14,17 @@ public class Intro {
     private int id;
 
     @NotNull
+    @Lob
     @Size(min= 4 , max= 30, message = "Experiments need titles right?")
     private String title;
 
     @NotNull
+    @Lob
     @Size(min= 5, message= " You forgot something")
     private String purpose;
 
     @NotNull
+    @Lob
     @Size(min= 5, message= " You forgot something")
     private String materials;
 
@@ -29,13 +32,20 @@ public class Intro {
     @JoinColumn(name = "intro_id")
     private List<Reagent> reagent = new ArrayList<>();
 
-    @OneToOne(mappedBy = "intro" , cascade = CascadeType.ALL)
-    @JoinColumn(name= "intro_id")
-    private Procobs procobs;
 
     @OneToOne(mappedBy = "intro", cascade = CascadeType.ALL)
     @JoinColumn(name="intro_id")
     private Conclusions conclude;
+
+    @OneToOne(mappedBy = "intro", cascade = CascadeType.ALL)
+    @JoinColumn(name="intro_id")
+    private Observations observation;
+
+
+    @OneToOne(mappedBy = "intro", cascade = CascadeType.ALL)
+    @JoinColumn(name="intro_id")
+    private Proced proceds;
+
 
     @ManyToOne
     private User user;
@@ -85,13 +95,6 @@ public class Intro {
 
     public List<Reagent> getReagent() { return reagent; }
 
-    public Procobs getProcobs() {
-        return procobs;
-    }
-
-    public void setProcobs(Procobs procobs) {
-        this.procobs = procobs;
-    }
 
     public Conclusions getConclude() {
         return conclude;
@@ -99,6 +102,26 @@ public class Intro {
 
     public void setConclude(Conclusions conclude) {
         this.conclude = conclude;
+    }
+
+    public Observations getObservation() {
+        return observation;
+    }
+
+    public void setObservation(Observations observation) {
+        this.observation = observation;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Proced getProceds() {
+        return proceds;
+    }
+
+    public void setProceds(Proced proceds) {
+        this.proceds = proceds;
     }
 
     public User getUser() {

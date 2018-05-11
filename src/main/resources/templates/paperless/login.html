@@ -1,29 +1,57 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http//wwww.thymeleaf.org/">
-<head th:replace="fragments :: head"></head>
-<body>
+<head>
+    <title>My Paperless Lab Notebook</title>
+    <meta charset="UTF-8"/>
+    <meta charset="viewport" content="width=deice-width,initial-scale=1"/>
+    <link th:href="@{/bootstrap-3.3.7/css/bootstrap.min.css}"  type="text/css" rel="stylesheet"/>
+    <link th:href="@{/bootstrap-3.3.7/css/custom.css}"  type="text/css" rel="stylesheet"/>
 
-<h1 th:text="${title}"></h1>
-    <form method="post">
+</head>
+<body class="main">
 
-        <div>
-        <label th:for="username">Username</label><br/>
-        <input name="username" type="text" /><br/>
-            <span class="error" th:text="${username_error}"></span>
+<div class="container-fluid landingPage">
+
+    <div class="container-fluid main-header" >
+        <img src="images/mp.png" class="img-responsive img-adjust1" alt="mp header"/>
+    </div>
+
+    <div class="container-fluid" id="login-spacing">
+        <!--Form-->
+        <div class="container-fluid" id="img-div">
+            <img src="images/login.png" class="img-responsive"  alt="login avator"/>
         </div>
-        <br/>
-        <div>
-        <label th:for="password">Password</label><br/>
-        <input type="password" name="password" /><br/><br/>
-            <span class="error" th:text="${password_error}"></span>
-        </div>
-        <div>
+
+        <form class="form-margin" id="login-form-margin" method="post">
+            <div  class="form-group ">
+                <label th:for="username" class="form-font">Username</label>
+                <input name="username" type="text" class="form-control textbox-size"/>
+            </div>
+
+            <div  class="form-group ">
+                <label th:for="password" class="form-font">Password</label>
+                <input name="password" type="password" class="form-control textbox-size"/>
+            </div>
+
             <span class="error" th:text="${error}"></span>
-        </div>
-        <input type="submit" value="Login"/>
-    </form>
+
+            <input id="login-submit" type="submit" value="Login"/>
+
+            <p><a th:href="@{/signup}" class="link-need-space">New user?</a></p>
+        </form>
+    </div>
+
+    <footer>
+        <h6><b>Copyright &copy; 2018 Ta'Neisha Wilks</b></h6>
+    </footer>
+
+</div>
 
 
-<div th:replace="fragments :: bootjq"></div>
+
+<div>
+    <script src="jquery/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</div>
 </body>
 </html>

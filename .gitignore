@@ -23,3 +23,13 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+/src/main/resources/static/bootstrap-3.3.7/css/bootstrap-theme.css
+/src/main/resources/static/bootstrap-3.3.7/css/bootstrap-theme.css.map
+/src/main/resources/static/bootstrap-3.3.7/css/bootstrap-theme.min.css
+/src/main/resources/static/bootstrap-3.3.7/css/bootstrap-theme.min.css.map
+src/main/resources/static/bootstrap-3.3.7/css/bootstrap.css.map
+src/main/resources/templates/paperless/index2.html
+
+!/.gitignore
+/src/main/resources/static/bootstrap-3.3.7/css/bootstrap.min.css.map
+!/src/main/resources/static/bootstrap-3.3.7/css/bootstrap-theme.css
