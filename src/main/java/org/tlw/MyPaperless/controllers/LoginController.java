@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@SessionAttributes("name")
 public class LoginController {
 
     @Autowired
@@ -25,6 +24,12 @@ public class LoginController {
 
     @Autowired
     private IntroDao introDao;
+
+    /*---------------------------- Home Page-----------------------------***/
+    @RequestMapping(value="/",method = RequestMethod.GET)
+    public String homePage(){
+        return "paperless/landingPage";
+    }
 
 
     /*----------- --------------------Sign Up--------------------------------*/
@@ -37,7 +42,7 @@ public class LoginController {
 
 
     @RequestMapping(value = "signup", method = RequestMethod.POST)
-    public String welcome(HttpServletRequest request, @ModelAttribute @Valid User newUser, Errors errors,Model model){
+    public String welcome(HttpServletRequest request, @ModelAttribute User newUser,Model model){
 // TODO: 2/1/2018 add validation for user and password 
 
         HttpSession session = request.getSession();
@@ -48,25 +53,30 @@ public class LoginController {
         boolean  validLastName = User.isValidName(request.getParameter("lastname"));
         boolean validUserName = User.isValidUserName(request.getParameter("username"));
         boolean validPassword = User.isValidPassword(request.getParameter("password"));
+        boolean verifyPassword = request.getParameter("password").equals(request.getParameter("verify"));
 
-
+        Integer newuserId = newUser.getUid();
         if (! validFirstName){
-            model.addAttribute("firstname_error", "Invalid First Name!");
+            model.addAttribute("error", "Invalid First Name!");
             return "paperless/signup";
 
         } else if (! validLastName){
-            model.addAttribute("lastname_error", "Invalid Last Name!");
+            model.addAttribute("error", "Invalid Last Name!");
             return "paperless/signup";
         }
         else if (! validUserName){
-            model.addAttribute("username_error", "Invalid Username!");
+            model.addAttribute("error", "Invalid Username!");
             return "paperless/signup";
         }
         else if (! validPassword){
-            model.addAttribute("password_error", "Invalid Password!");
+            model.addAttribute("error", "Invalid Password!");
             return "paperless/signup";
         }
 
+        else if(!verifyPassword){
+            model.addAttribute("error", "Passwords don't match");
+            return "paperless/signup";
+        }else
 
          userDao.save(newUser);
 
@@ -83,42 +93,50 @@ public class LoginController {
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String loginForm(Model model){
-
-        model.addAttribute("title", "Welcome Back!!! Please Login Below");
-
         return "paperless/login";
     }
 
 
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String processLoginForm(HttpServletRequest request, Model model){
+    public String processLoginForm(HttpServletRequest request, Model model) {
 
         HttpSession session = request.getSession();
 
         String username = request.getParameter("username");
-       String password = request.getParameter("password");
+        String password = request.getParameter("password");
 
-        if(username == "" || password == "") {
-            model.addAttribute("error", "Login requires a username and password");
+
+        try {
+
+            if (username == "" || password == "") {
+                model.addAttribute("error", "Login requires a username and password");
+                return "paperless/login";
+            }
+
+
+            User returnUser = userDao.findByUsername(username);
+
+            Integer userid = returnUser.getUid();
+
+            if (returnUser != null && returnUser.getPassword().equals(password)) {
+
+                session.setAttribute("id", userid);
+                return "redirect:dashboard";
+            }else if
+                    (returnUser !=null && !returnUser.getPassword().equals(password)) {
+                model.addAttribute("error", "Invalid password");
+                return "paperless/login";
+
+            }
+        } catch (NullPointerException e) {
+            model.addAttribute("error", "Username does not exist");
+
             return "paperless/login";
+
         }
-
-
-        User user = userDao.findByUsername(username);
-        Integer userid = user.getUid();
-
-
-        if (user != null && user.getPassword().equals(password)) {
-
-
-            session.setAttribute("id",userid);
-            return "redirect:dashboard";
-        }
-        model.addAttribute("error", "Either  your username or password is incorrect");
 
         return "paperless/login";
-
     }
 
 

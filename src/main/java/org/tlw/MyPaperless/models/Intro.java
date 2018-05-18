@@ -15,7 +15,7 @@ public class Intro {
 
     @NotNull
     @Lob
-    @Size(min= 4 , max= 30, message = "Experiments need titles right?")
+    @Size(min= 4 , max= 30)
     private String title;
 
     @NotNull

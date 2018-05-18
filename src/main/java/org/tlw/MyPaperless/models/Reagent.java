@@ -20,6 +20,7 @@ public class Reagent {
     private int chemid;
 
     @NotNull
+
     private String chemName;
 
     // TODO: 1/16/2018 add error messages and constraints

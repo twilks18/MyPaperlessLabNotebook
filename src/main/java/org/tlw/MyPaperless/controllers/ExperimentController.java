@@ -71,7 +71,7 @@ public class ExperimentController {
 
 
 
-     @RequestMapping(value = "addIntro/save",  method = RequestMethod.POST)
+     @RequestMapping(value = "addIntro",  method = RequestMethod.POST)
     public String processIntroForm(@ModelAttribute @Valid Intro intro, HttpServletRequest request, Errors errors, Model model){
 
 
