@@ -18,18 +18,17 @@
     <nav class="navbar  navbar-custom container-fluid" role="navigation">
 
 
-        <!--Logo-->
+        <!--Collapsed menu-->
         <div class="navbar-header container-fluid">
-
 
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navCollapse">
                 <span class="glyphicon glyphicon-menu-hamburger text-link"></span>
             </button>
-            <a href="#" class="navbar-brand">Add here</a>
 
         </div>
         <!-- Menu contents-->
-        <div class="collapse navbar-collapse " id="navCollapse">
+        <div class="collapse navbar-collapse pull-right" id="navCollapse"   >
+            <img th:src="@{/images/mp.png}" id="nav-img"/>
             <ul class="nav navbar-nav pull-right">
                 <li><a class="text-link" th:href="@{/dashboard}" >Experiment Log</a></li>
                 <li><a class="text-link" th:href="@{/logout}">Logout</a></li>
@@ -51,26 +50,26 @@
     <div class="spacing">
 
 
-    <form  method="post" class="form-margin-intro" th:object="${intro}" >
+    <form  method="post" th:action="@{/experiment/addIntro/save}" class="form-margin-intro" th:object="${intro}" >
 
         <input type="hidden" th:text="${id}"/>
 
         <div class="form-group">
         <label class="form-font"  th:for="title">Title</label><br/>
         <input th:field="*{title}" class="form-control textbox-size"/><br/>
-            <span th:errors="*{title}"></span>
+            <span class="errors" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
         </div>
 
             <div class="form-group">
         <label  class="form-font" th:for="purpose">Purpose</label><br/>
         <textarea class="form-control textarea-size" th:field="*{purpose}"></textarea><br/>
-        <span th:errors="*{purpose}"></span>
+        <span class="errors" th:if="${#fields.hasErrors('purpose')}" th:errors="*{purpose}"></span>
         </div>
 
             <div class="form-group">
         <label th:for="materials">Apparatus &amp; Materials:</label><br/>
         <textarea class="form-control textarea-size" th:field="*{materials}"></textarea><br/>
-        <span th:errors="*{materials}"></span>
+        <span class="errors" th:if="${#fields.hasErrors('materials')}" th:errors="*{materials}"></span>
         </div>
 
 
@@ -83,13 +82,11 @@
 </div>
 
     <!--Footer-->
-
-    <footer class="footer-custom">
-
-                <h6><b>Copyright &copy; 2018 Ta'Neisha Wilks</b></h6>
-
-    </footer>
+    <div  class="footer-custom">
+        <h6><b>Copyright &copy; 2018 Ta'Neisha Wilks</b></h6>
+    </div>
 </div>
+
 
 
     <script src= "/jquery/jquery-3.3.1.min.js"></script>

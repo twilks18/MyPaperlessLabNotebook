@@ -8,7 +8,6 @@
 
 .main2{
     width: 75%;
-    height:100vh;
     margin:auto;
     padding: 0px;
     border: 5px double;
@@ -29,7 +28,16 @@
     width: 100%;
 }
 
+#nav-img{
+width:30%;
+}
+
+.errors{
+    color: red;
+}
+
 .text-link{
+    font-family:"Georgia","Times New Roman",serif;
     color: #ECF8FC;
 }
 
@@ -51,6 +59,11 @@
     background-size: cover;
 }
 
+a.text-link.nonhover:hover, a.text-link.nonhover:active{
+color:#ECF8FC;
+font-size:125%;
+background-color: transparent;
+}
 
 .navbar-background
 {
@@ -74,9 +87,6 @@ a{
     text-align: center;
 }
 
-ul > li > a:hover{
-    background-color:black;
-    }
 
 .textbox-size{
     width: 80%;
@@ -162,7 +172,7 @@ p{
     }
 
 #login-spacing{
-    margin-top: -3%;
+    margin-top: 2%;
     padding: 0%;
 }
 #img-div{
@@ -204,8 +214,8 @@ color:#ECF8FC;
 .footer-custom{
 
     color: #00385A;
-    margin-bottom:1%;
-
+    margin-bottom:2%;
+    padding-left:1%;
 }
 
 #adjust-imgsize-intro{
@@ -219,6 +229,7 @@ color:#ECF8FC;
 #adjust-imgsize-physprop{
     display: block;
     margin-left:27%;
+    margin-top:2%;
     width:30%;
 }
 
@@ -243,9 +254,9 @@ textarea{
 .textarea-size{
     width: 70%;
     background: #ECF8FC;
-
-
 }
+
+
 
 
 .form-margin-intro {
@@ -256,7 +267,7 @@ textarea{
        box-shadow: 10px 10px 10px #777777;
        margin-left: 25%;
        margin-top: 2%;
-       margin-bottom: 5%;
+       margin-bottom: 7%;
        padding-top: 2%;
        padding-left: 5%;
        padding-bottom: 2%;
@@ -299,20 +310,7 @@ color:black;
 
 .display {
 
-    background: url("/images/grid.png") no-repeat center center fixed;
-    height: 100vh;
-    padding-left: 0%;
-    padding-right: 0%;
-    width: 100%;
-    -webkit-background-size:cover;
-    -moz-background-size:cover;
-    -o-background-size:cover;
-    background-size: cover;
-}
-.display2 {
-
-    background: url("/images/grid.png") no-repeat center center fixed;
-
+    background: url("/images/grid2.png") no-repeat center center fixed;
     padding-left: 0%;
     padding-right: 0%;
     width: 100%;
@@ -324,28 +322,40 @@ color:black;
 
 .center-heading{
 
-    margin-bottom:2%;
+    margin-bottom:5%;
     text-align:center;
-    font-family: Arial,Helvetica,sans-serif;
+    font-family:"Georgia","Times New Roman",serif;
     text-decoration:underline;
-    font-style: italic;
+
 }
 .center-display{
-    margin-right:10%;
-    margin-left:10%
+    font-family:"Georgia","Times New Roman",serif;
+    font-size:130%;
+    margin-left:10%;
 
+}
+
+.span-display{
+font-size:80%;
+font-weight:normal;
 }
 
 .center-display-poc{
+   font-family:"Georgia","Times New Roman",serif;
    margin-top:3%;
-   margin-left:2%;
-   margin-right:2%;
+   margin-left:5%;
+   margin-right:5%;
+   font-size:100%;
+   font-weight:normal;
 
 }
-
-table{
-    margin-left:30%;
-    margin-top:2%;
+#intro-spacing{
+margin-top:5%;
+margin-bottom:20%;
+}
+#ppt-spacing{
+margin-top:10%;
+margin-bottom:30%;
 }
 
 .dropdown-toggle{
@@ -354,10 +364,12 @@ table{
 }
 
 .dropdown-menu{
+    border:0px;
     background: #ECF8FC;
     padding:0px;
 
 }
+
 
 .dropdown-menu > li > a{
 
@@ -378,5 +390,57 @@ margin-bottom:20%;
 }
 
 .user-name{
-width:100%;
+margin-top: 10%;
+ bottom:0px;
+ padding-right:30%;
 }
+
+.user-name > p{
+width:100%; margin-bottom:0%;
+}
+
+#glyph-menu{
+padding-top: 3%;
+}
+
+table{
+    border-collapse: collapse;
+    font-family:"Georgia","Times New Roman",serif;
+    width:80%;
+    margin-left:10%;
+    text-align: center;
+    font-weight:bold;
+    font-size:15px;
+}
+
+table, th, td {
+border:1px solid black;
+}
+
+
+#table-td{
+text-align: left;
+height:30px;
+padding-left:10px;
+}
+#table-th{
+font-size:120%;
+height:40px;
+background:#00385A;
+color:#ECF8FC;
+
+}
+tr:nth-child(even) {
+background-color: #f2f2f2;
+}
+tr:nth-child(odd) {
+background-color: #ECF8FC;
+}
+
+
+
+
+
+
+
+

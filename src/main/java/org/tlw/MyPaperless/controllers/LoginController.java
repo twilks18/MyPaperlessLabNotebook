@@ -4,6 +4,7 @@ import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.tlw.MyPaperless.models.Intro;
@@ -43,35 +44,57 @@ public class LoginController {
 
     @RequestMapping(value = "signup", method = RequestMethod.POST)
     public String welcome(HttpServletRequest request, @ModelAttribute User newUser,Model model){
-// TODO: 2/1/2018 add validation for user and password 
+// TODO: 2/1/2018 add validation for user and password, hashcode
 
         HttpSession session = request.getSession();
 
         /* boolean conditional that will check for errors*/
+        String firstname = request.getParameter("firstname");
+        String lastname = request.getParameter("lastname");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
 
-        boolean validFirstName = User.isValidName(request.getParameter("firstname"));
-        boolean  validLastName = User.isValidName(request.getParameter("lastname"));
-        boolean validUserName = User.isValidUserName(request.getParameter("username"));
-        boolean validPassword = User.isValidPassword(request.getParameter("password"));
+        boolean validFirstName = User.isValidName(firstname);
+        boolean  validLastName = User.isValidName(lastname);
+        boolean validUserName = User.isValidUserName(username);
+        boolean validPassword = User.isValidPassword(password);
         boolean verifyPassword = request.getParameter("password").equals(request.getParameter("verify"));
 
-        Integer newuserId = newUser.getUid();
-        if (! validFirstName){
-            model.addAttribute("error", "Invalid First Name!");
+
+       if ( firstname == null || firstname == ""){
+            model.addAttribute("error", "First Name Required!");
             return "paperless/signup";
 
-        } else if (! validLastName){
-            model.addAttribute("error", "Invalid Last Name!");
+        }
+       else if (!validFirstName){
+           model.addAttribute("error", "Invalid First Name!");
+           return "paperless/signup";
+       }
+
+        else if (lastname == null || lastname == ""){
+            model.addAttribute("error", "Last Name Required!");
             return "paperless/signup";
         }
-        else if (! validUserName){
-            model.addAttribute("error", "Invalid Username!");
+       else if (!validLastName){
+           model.addAttribute("error", "Invalid Last Name!");
+           return "paperless/signup";
+       }
+        else if (username == null || username == ""){
+            model.addAttribute("error", "Username Required!");
             return "paperless/signup";
         }
-        else if (! validPassword){
-            model.addAttribute("error", "Invalid Password!");
+       else if (!validUserName){
+           model.addAttribute("error", "Invalid Username!");
+           return "paperless/signup";
+       }
+        else if (password == null || password == ""){
+            model.addAttribute("error", "Password Required!");
             return "paperless/signup";
         }
+       else if (!validPassword){
+           model.addAttribute("error", "Invalid Password!");
+           return "paperless/signup";
+       }
 
         else if(!verifyPassword){
             model.addAttribute("error", "Passwords don't match");
@@ -80,7 +103,8 @@ public class LoginController {
 
          userDao.save(newUser);
 
-
+        session.setAttribute("firstName",firstname);
+        session.setAttribute("lastName", lastname);
         session.setAttribute("id", newUser.getUid());
         return "redirect:/dashboard";
     }
@@ -121,6 +145,8 @@ public class LoginController {
 
             if (returnUser != null && returnUser.getPassword().equals(password)) {
 
+                session.setAttribute("firstName",returnUser.getFirstname());
+                session.setAttribute("lastName", returnUser.getLastname());
                 session.setAttribute("id", userid);
                 return "redirect:dashboard";
             }else if
@@ -154,10 +180,11 @@ public class LoginController {
         List<Intro> titles = user.getIntro();
 
 
-        model.addAttribute("name", user.getFirstname());
+//        model.addAttribute("name", user.getFirstname());
         model.addAttribute("title","Dashboard");
         model.addAttribute("titles", titles);
         model.addAttribute("user", id);
+        model.addAttribute("name", session.getAttribute("firstName") + " " + session.getAttribute("lastName"));
         return "paperless/dashboard";
     }
 

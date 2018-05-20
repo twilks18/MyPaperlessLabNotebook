@@ -3,36 +3,45 @@
 <head th:replace="section/addIntroform:: header"></head>
 <body class="main3">
 
-<div class="container display2">
+<div class="container display">
 <!--Navbar-->
-<div><nav class="navbar  navbar-custom container-fluid" role="navigation">
+<div>
 
-    <div class="navbar-header container-fluid">
+    <nav class="navbar  navbar-custom container-fluid" role="navigation">
 
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navCollapse">
-            <span class="glyphicon glyphicon-menu-hamburger text-link"></span>
-        </button>
+        <div class="navbar-header container-fluid">
 
-        <div class="container-fluid">
-            <div class="row">
 
-                <div class="col-md-8">
-                    <img th:src="@{\images\mp.png}" class="img-responsive img-adjust pull-right" alt="title"/>
+            <div class="container-fluid">
+                <div class="row">
 
-                </div>
+                    <div class="col-md-9">
+                        <img th:src="@{\images\mp.png}" class="img-responsive img-adjust pull-right" alt="title"/>
 
-                <div class="col-md-4 pull-right">
-                    <div class="collapse navbar-collapse " id="navCollapse">
-                        <ul class="nav navbar-nav pull-right" style=" margin-top:4%;">
-                            <li><a th:href="@{/dashboard}" class="text-link">Experiment Log</a></li>
-                            <li class="next"><a href="/dashboard" th:unless="${id} != null">Next</a> </li>
+                    </div>
+
+                    <div class=" col-md-2 pull-right dropdown" id="glyph-menu">
+
+                        <button type="button" class="dropdown-toggle pull-right" id="dropdownmenu" data-toggle="dropdown" aria-hashpopup="true" aria-expanded="false" >
+                            <span class="glyphicon glyphicon-menu-hamburger text-link"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownmenu">
+                            <li><a class="dropdown-item" th:href="@{'/logout}">Logout</a></li>
+                            <div class="dropdown-divider"></div>
+                            <li ><a class="dropdown-item" th:href="@{/dashboard}" th:unless="${id} != null">Complete</a> </li>
+                            <div class="dropdown-divider"></div>
+                            <li><a class="dropdown-item" th:href="@{'/experiment/conclusion/edit/'+ ${id}}">Edit Conclusion</a></li>
+                            <div class="dropdown-divider"></div>
+                            <li><a class="dropdown-item" th:href="@{/dashboard}" th:unless="${id} == null">Experiment Log</a></li>
                         </ul>
                     </div>
+
                 </div>
             </div>
         </div>
-    </div>
-</nav></div>
+
+    </nav>
+</div>
 
     <div class="poc-div">
     <h1 class="center-heading">Conclusion</h1>
@@ -41,9 +50,7 @@
     </div>
 
 
-    <div class="container user-name">
-        <p class="pull-left" style="background:orange;margin-left:0%;">someones name</p>
-    </div>
+    <div th:replace="section/introPage::user's-name"></div>
 </div>
 
 

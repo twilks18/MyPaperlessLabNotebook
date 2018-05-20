@@ -42,7 +42,6 @@
     padding: 20px;
     padding-top: 30px;
     list-style: none;
-    width: 150px;
 
 }
 
@@ -86,6 +85,16 @@ footer {
   background-color: #00385A;
   border-color: #ddd;
   text-align:center;
+}
+
+.panel-body > ul li{
+
+padding:0px;
+
+}
+.panel-body{
+padding:0px;
+
 }
 
 p{

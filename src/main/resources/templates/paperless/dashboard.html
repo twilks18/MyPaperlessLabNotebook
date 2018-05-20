@@ -26,30 +26,19 @@
                 <div>
 
                     <ul>
-                        <li> <a href="/removeExperiment"> Remove Experiment</a></li>
-                        <li><a href="/experiment/addIntro"> Add Experiment </a></li>
-                        <li> <a href="/logout"> Logout </a></li>
+                        <li> <a th:href="@{/removeExperiment}"> Remove Experiment</a></li>
+                        <li><a th:href="@{/experiment/addIntro}"> Add Experiment </a></li>
+                        <li> <a th:href="@{/logout}"> Logout </a></li>
                     </ul>
                 </div>
 
             </div>
 
             <div class="col-md-5 col-md-offset-3" id="log">
-                <div class="panel-group">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" href="#collapse1">Collapsible panel</a>
-                            </h4>
-                        </div>
-                        <div id="collapse1" class="panel-collapse collapse">
-                            <div class="panel-body ">Panel body</div>
-                        </div>
-                    </div>
-                </div>
 
                 <p th:unless="${titles} and ${titles.size()}"> Add an Experiment</p>
                 <p th:text="${name}"></p>
+
                 <div class="panel-group" th:each=" title : ${titles}">
                     <div class="panel panel-default" >
                         <div class="panel-heading">
@@ -60,10 +49,10 @@
                         <div  th:id="'accordion'+${title.title}" class="panel-collapse collapse">
                             <div  class="panel-body">
                                 <ul>
-                                    <li><a th:href="@{'/experiment/introReagentPage/'+${title.id}}">Introduction</a></li>
-                                    <li><a th:href="@{'/experiment/procedure/'+${title.id}}">Procedure</a></li>
-                                    <li><a th:href="@{'/experiment/observations/'+${title.id}}">Observations</a></li>
-                                    <li><a th:href="@{'/experiment/conclusion/'+${title.id}}">Conclusion</a></li>
+                                    <li class="list-group-item"><a th:href="@{'/experiment/introReagentPage/'+${title.id}}">Introduction</a></li>
+                                    <li class="list-group-item"><a th:href="@{'/experiment/procedure/'+${title.id}}">Procedure</a></li>
+                                    <li class="list-group-item"><a th:href="@{'/experiment/observations/'+${title.id}}">Observations</a></li>
+                                    <li class="list-group-item"><a th:href="@{'/experiment/conclusion/'+${title.id}}">Conclusion</a></li>
                                 </ul>
                             </div>
                         </div>

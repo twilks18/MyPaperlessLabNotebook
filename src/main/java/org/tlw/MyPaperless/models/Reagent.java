@@ -20,19 +20,21 @@ public class Reagent {
     private int chemid;
 
     @NotNull
-
+    @Size(min= 4,message = "You forgot something" )
     private String chemName;
 
     // TODO: 1/16/2018 add error messages and constraints
     @NotNull
+    @Digits(integer = 3, fraction=3, message = "Enter a numerical value" )
     private String density;
 
     @NotNull
+    @Digits(integer = 3, fraction=3, message = "Enter a numerical value" )
     private String mw; //molecular weight
 
     @NotNull
     @Lob
-    @Size(min= 1, message = "You forgot something")
+    @Size(min= 5, message = "You forgot something")
     private String hazard;
 
     @ManyToOne

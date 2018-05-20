@@ -13,7 +13,7 @@ public class Observations {
 
     @NotNull
     @Lob
-    @Size(min = 50, message = "You forgot something")
+    @Size(min=1000, message = "Either you did not add observations or its just too short")
     private String observation;
 
     @OneToOne

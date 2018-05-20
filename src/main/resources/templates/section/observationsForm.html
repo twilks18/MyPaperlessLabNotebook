@@ -25,12 +25,14 @@
     <!--Form-->
 
     <div class="spacing">
-        <form method="post" th:action="@{observations/save}" th:object="${observations}" class="form-margin-poc">
+        <form method="post" th:action="@{/experiment/observations/save}" th:object="${observations}" class="form-margin-poc">
 
             <div class="form-group ">
                 <label th:for="observation" class="form-font"></label>
                 <textarea class="form-control textarea-poc" rows="15" th:field="*{observation}" placeholder="Add Message"></textarea>
+                <span class="errors" th:if="${#fields.hasErrors('observation')}" th:errors="*{observation}"></span>
             </div>
+
 
             <button type="submit"  class="btn btn-default form-font">Save</button>
         </form>
@@ -40,15 +42,9 @@
 
     <!--Footer-->
 
-    <footer class="footer-custom">
-        <div class="container">
-            <div class="row">
-
-                <h6><b>Copyright &copy; 2018 Ta'Neisha Wilks</b></h6>
-
-            </div>
-        </div>
-    </footer>
+    <div class="footer-custom">
+        <h6><b>Copyright &copy; 2018 Ta'Neisha Wilks</b></h6>
+    </div>
 </div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

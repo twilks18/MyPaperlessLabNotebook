@@ -12,7 +12,7 @@ public class Conclusions {
 
     @NotNull
     @Lob
-    @Size(min=50, message = "You forgot something")
+    @Size(min=1000, message = "Either you did not add a conclusion or its just too short")
     private String conclusion;
 
     @OneToOne

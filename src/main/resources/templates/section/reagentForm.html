@@ -26,12 +26,12 @@
 
     <div class="spacing">
 
-        <form method="post" class="form-margin-intro" th:object="${reagent}">
+        <form method="post" th:action="@{/experiment/addReagent/save}" class="form-margin-intro" th:object="${reagent}">
 
             <div  class="form-group ">
                 <label th:for="chemName" class="form-font label-margin">Compound/Reagent</label>
                 <input th:field="*{chemName}" class="form-control textbox-size textbox-margin" placeholder="Add Name"/>
-
+                <span class="errors" th:if="${#fields.hasErrors('chemName')}" th:errors="*{chemName}"></span>
             </div>
 
 
@@ -40,7 +40,7 @@
                 <div class="col-md-5">
                     <label th:for="mw" class="form-font label-margin">Molecular Weight(g/mol)</label>
                     <input th:field="*{mw}" class="form-control textbox-size textbox-margin" placeholder="g/L"/>
-
+                    <span class="errors" th:if="${#fields.hasErrors('mw')}" th:errors="*{mw}"></span>
                 </div>
 
 
@@ -48,14 +48,14 @@
                 <div class="col-md-5">
                     <label th:for="density" class="form-font label-margin">Density(g/L)</label>
                     <input th:field="*{density}" class="form-control textbox-size textbox-margin" placeholder="g/mol"/>
-
+                    <span class="errors" th:if="${#fields.hasErrors('density')}" th:errors="*{density}"></span>
                 </div>
             </div>
 
             <div class="form-group ">
                 <label th:for="hazard" class="form-font label-margin">Hazards</label>
                 <textarea th:field="*{hazard}" class="form-control textarea-size textbox-margin" placeholder="Add Message"></textarea>
-
+                <span class="errors" th:if="${#fields.hasErrors('hazard')}" th:errors="*{hazard}"></span>
             </div>
 
 
@@ -66,15 +66,9 @@
 
     <!--Footer-->
 
-    <footer class="footer-custom">
-        <div class="container">
-            <div class="row">
-
-                <h6><b>Copyright &copy; 2018 Ta'Neisha Wilks</b></h6>
-
-            </div>
-        </div>
-    </footer>
+    <div  class="footer-custom">
+        <h6><b>Copyright &copy; 2018 Ta'Neisha Wilks</b></h6>
+    </div>
 </div>
 
 

@@ -11,74 +11,69 @@
 <body class="main">
 
 <div class="container display">
-    <div th:fragment="navigation-display">
+
     <nav class="navbar  navbar-custom container-fluid" role="navigation">
 
         <div class="navbar-header container-fluid">
 
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navCollapse">
-                <span class="glyphicon glyphicon-menu-hamburger text-link"></span>
-            </button>
+            <div class="row">
 
-            <div class="container-fluid">
-                <div class="row">
+                <div class="col-md-9">
+                    <img th:src="@{\images\mp.png}" class="img-responsive img-adjust pull-right" alt="title"/>
 
-                    <div class="col-md-9">
-                        <img th:src="@{\images\mp.png}" class="img-responsive img-adjust pull-right" alt="title"/>
+                </div>
 
-                    </div>
+                <div class=" col-md-2 pull-right dropdown" id="glyph-menu">
 
-                    <div class="col-md-2 pull-right">
-                        <div class="collapse navbar-collapse " id="navCollapse">
-                            <ul class="nav">
-                                <li><a th:href="@{/dashboard}" class="text-link">Experiment Log</a></li>
-                                <li><a th:href="@{'/experiment/addIntro/edit/'+ ${id}}" class="text-link">Edit Intro</a></li>
-                                <li><a  th:href="@{'/experiment/introReagentPage/'+ ${id}}" class="text-link">Edit Table</a></li>
+                    <button type="button" class="dropdown-toggle pull-right" id="dropdownmenu" data-toggle="dropdown" aria-hashpopup="true" aria-expanded="false" >
+                        <span class="glyphicon glyphicon-menu-hamburger text-link"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownmenu">
+                        <li ><a class="dropdown-item" th:href="@{/experiment/procedure}">Next</a> </li>
+                        <div class="dropdown-divider"></div>
+                        <li><a class="dropdown-item" th:href="@{'/experiment/addIntro/edit/'+ ${id}}">Edit Intro</a></li>
+                        <div class="dropdown-divider"></div>
+                        <li><a class="dropdown-item" th:href="@{/experiment/addReagent}">Edit Table</a></li>
+                        <div class="dropdown-divider"></div>
+                        <li><a class="dropdown-item" th:href="@{/dashboard}">Experiment Log</a></li>
 
-                            </ul>
+                    </ul>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
     </nav>
-    </div>
 
 
-<h1 class="center-heading">Introduction</h1>
 
-<div >
-    <p class="center-display">Title: <span th:text="${title}"></span></p>
-    <br/>
-    <p class="center-display">Purpose: <span th:text="${purpose}"></span></p>
-    <br/>
-    <p class="center-display">Apparatus &amp; Materials: <span th:text="${materials}"></span></p>
-    <br/>
-    <br/>
+    <div >
+        <div th:replace="section/processIntro::Introduction-display"></div>
 </div>
 
-
+<div>
 <h1 class="center-heading">Physical Properties Table</h1>
-<div class="container">
-<table class="table table-striped table-bordered">
-    <tr>
+
+<table>
+    <tr id="table-th">
         <td>Chemical Name</td>
         <td>Molecular Weight(g/mol)</td>
         <td>Density(g/L)</td>
-        <td>Hazard</td>
+        <td>Hazards</td>
     </tr>
     <tr th:each="chemical : ${chemicals}">
 
         <td th:text="${chemical.chemName}"></td>
         <td th:text="${chemical.mw}"></td>
         <td th:text="${chemical.density}"></td>
-        <td th:text="${chemical.hazard}"></td>
+        <td th:text="${chemical.hazard}" id="table-td"></td>
 
     </tr>
 </table>
 </div>
-
-
+    <div th:fragment="user's-name">
+<div class="pull-left user-name">
+    <p th:text="${name}"></p>
+</div>
+    </div>
 
 </div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

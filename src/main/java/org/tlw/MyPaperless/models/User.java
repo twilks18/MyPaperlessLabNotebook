@@ -23,9 +23,11 @@ public class User {
     private String password;
 
     @NotNull
+    @Size(min = 2, max = 30)
     private String firstname;
 
     @NotNull
+    @Size(min = 2, max = 30)
     private String lastname;
 
 

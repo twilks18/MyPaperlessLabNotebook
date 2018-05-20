@@ -25,17 +25,16 @@
 
                         </div>
 
-                        <div class=" col-md-2 pull-right dropdown" style="padding-top: 3%;">
+                        <div class=" col-md-2 pull-right dropdown" id="glyph-menu">
 
-                            <button type="button" class="dropdown-toggle" id="dropdownmenu" data-toggle="dropdown" aria-hashpopup="true" aria-expanded="false" >
+                            <button type="button" class="dropdown-toggle pull-right" id="dropdownmenu" data-toggle="dropdown" aria-hashpopup="true" aria-expanded="false" >
                                 <span class="glyphicon glyphicon-menu-hamburger text-link"></span>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownmenu">
+                                <li ><a class="dropdown-item" th:href="@{/experiment/addReagent}">Next</a> </li>
+                                <div class="dropdown-divider"></div>
                                 <li><a class="dropdown-item" th:href="@{'/experiment/addIntro/edit/'+ ${id}}">Edit Intro</a></li>
-                                <div class="dropdown-divider"></div>
-                                <li><a class="dropdown-item " th:href="@{'/experiment/introReagentPage/'+ ${id}}">Edit Table</a></li>
-                                <div class="dropdown-divider"></div>
-                                <li><a class="dropdown-item" th:href="@{/dashboard}">Experiment Log</a></li>
+
                             </ul>
                         </div>
 
@@ -46,27 +45,20 @@
         </nav>
     </div>
 
-
+    <div id="intro-spacing" th:fragment="Introduction-display">
     <h1 class="center-heading">Introduction</h1>
-
-    <div >
-        <p class="center-display">Title: <span th:text="${title}"></span></p>
+        <p class="center-display">Title: <span class="span-display" th:text="${title}"></span></p>
         <br/>
-        <p class="center-display">Purpose: <span th:text="${purpose}"></span></p>
+        <p class="center-display">Purpose: <span  class="span-display" th:text="${purpose}"></span></p>
         <br/>
-        <p class="center-display">Apparatus &amp; Materials: <span th:text="${materials}"></span></p>
+        <p class="center-display">Apparatus <span class="span-display"> &amp; </span>Materials: <span class="span-display" th:text="${materials}"></span></p>
         <br/>
         <br/>
-
-
-            <ul class="pager">
-                <li class="next"><a href="/experiment/addReagent">Next</a> </li>
-            </ul>
+    </div>
 
     </div>
 
 
-</div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="/jquery/jquery-3.3.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

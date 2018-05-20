@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.tlw.MyPaperless.models.*;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("experiment")
+@SessionAttributes({"firstName","lastName"})
 public class ExperimentController {
 
 
@@ -44,16 +46,20 @@ public class ExperimentController {
 
 
     @RequestMapping(value = "introReagentPage/{id}", method = RequestMethod.GET)
-    public String processReagentIntroPage(@PathVariable int id, Model model){
+    public String processReagentIntroPage(HttpServletRequest request, @PathVariable int id, Model model){
+
+        HttpSession session = request.getSession();
 
         Intro intro = introDao.findOne(id);
         List<Reagent> reagents = intro.getReagent();
+        User user = userDao.findByUid(id);
         model.addAttribute("chemicals", reagents);
 
 
         model.addAttribute("title",intro.getTitle());
         model.addAttribute("purpose",intro.getPurpose());
         model.addAttribute("materials", intro.getMaterials());
+        model.addAttribute("name", session.getAttribute("firstName") + "" + session.getAttribute("lastName"));
 
         return "section/introPage";
     }
@@ -71,11 +77,11 @@ public class ExperimentController {
 
 
 
-     @RequestMapping(value = "addIntro",  method = RequestMethod.POST)
-    public String processIntroForm(@ModelAttribute @Valid Intro intro, HttpServletRequest request, Errors errors, Model model){
+     @RequestMapping(value = "addIntro/save",  method = RequestMethod.POST)
+    public String processIntroForm(@ModelAttribute @Valid Intro intro, BindingResult bindingResult, HttpServletRequest request, Model model){
 
 
-        if (errors.hasErrors()){
+        if (bindingResult.hasErrors()){
             return "section/addIntroForm";
         }
 
@@ -90,6 +96,7 @@ public class ExperimentController {
         model.addAttribute("title",intro.getTitle());
         model.addAttribute("purpose",intro.getPurpose());
         model.addAttribute("materials", intro.getMaterials());
+         model.addAttribute("name", session.getAttribute("firstName") + "" + session.getAttribute("lastName"));
 
          session.setAttribute("intro_key", intro.getId());
 
@@ -118,25 +125,10 @@ public class ExperimentController {
 
 
     //Processing of physical properties table
-    @RequestMapping(value ="addReagent", method = RequestMethod.POST)
-    public String processReagentForm(HttpServletRequest request, @ModelAttribute @Valid Reagent reagent, Errors errors, Model model) {
+    @RequestMapping(value ="addReagent/save", method = RequestMethod.POST)
+    public String processReagentForm(HttpServletRequest request, @ModelAttribute @Valid Reagent reagent, BindingResult bindingResult, Model model) {
 
-        boolean validChemName = Reagent.isValidChemName(request.getParameter("chemName"));
-        boolean validMW = Reagent.isValidNumber(request.getParameter("mw"));
-        boolean validDensity = Reagent.isValidNumber(request.getParameter("density"));
-
-        if(! validChemName){
-
-            model.addAttribute("chemname_error", "Invalid chemical name");
-            return "section/reagentForm";
-        } else if(! validMW){
-            model.addAttribute("mw_error", "Must enter a numerical value greater than 1");
-            return "section/reagentForm";
-        } else if(! validDensity){
-            model.addAttribute("density_error", "Must enter a numerical value greater than 1");
-            return "section/reagentForm";
-
-         } else if (errors.hasErrors()){
+         if (bindingResult.hasErrors()){
             return "section/reagentForm";
         }
 
@@ -156,6 +148,7 @@ public class ExperimentController {
 
     }
 
+
 /*----------------------------------Procedure-----------------------------------*/
 
    @RequestMapping(value="procedure", method = RequestMethod.GET)
@@ -167,11 +160,9 @@ public class ExperimentController {
    }
 
    @RequestMapping(value = "procedure/save", method = RequestMethod.POST)
-   public String processProcedureForm(HttpServletRequest request, @ModelAttribute @Valid Proced proceds, Errors errors,Model model){
+   public String processProcedureForm(HttpServletRequest request, @ModelAttribute @Valid Proced proceds, BindingResult bindingResult,Model model){
 
-       if(errors.hasErrors()){
-
-           model.addAttribute("errors","Please add a procedure");
+       if(bindingResult.hasErrors()){
            return "section/procedureForm";
        }
 
@@ -183,18 +174,22 @@ public class ExperimentController {
        procedureDao.save(proceds);
 
        model.addAttribute("proceds",proceds.getProceds());
+       model.addAttribute("name", session.getAttribute("firstName") + " " + session.getAttribute("lastName"));
+
 
 
        return "section/processProcedureForm";
    }
 
    @RequestMapping(value = "procedure/{id}", method = RequestMethod.GET)
-   public String displayProcedure(@PathVariable int id, Model model){
+   public String displayProcedure(HttpServletRequest request, @PathVariable int id, Model model){
 
+       HttpSession session = request.getSession();
        Intro intro =introDao.findOne(id);
        Proced proceds = intro.getProceds();
 
        model.addAttribute("proceds",proceds.getProceds());
+       model.addAttribute("name", session.getAttribute("firstName") + " " + session.getAttribute("lastName"));
 
        return "section/processProcedureForm";
    }
@@ -202,13 +197,13 @@ public class ExperimentController {
     /*------------------------Observations------------------------------------- */
 
     @RequestMapping(value = "observations/{id}", method = RequestMethod.GET)
-    public String displayObservations(@PathVariable int id, Model model){
+    public String displayObservations(HttpServletRequest request,@PathVariable int id, Model model){
 
-
+        HttpSession session = request.getSession();
         Intro intro = introDao.findOne(id);
         Observations observations = intro.getObservation();
 
-
+        model.addAttribute("name", session.getAttribute("firstName") + " " + session.getAttribute("lastName"));
         model.addAttribute("observations", observations.getObservation());
 
         return "section/processObservationsForm";
@@ -224,9 +219,9 @@ public class ExperimentController {
 
 
     @RequestMapping(value = "observations/save",method = RequestMethod.POST)
-    public String processObservationForm(HttpServletRequest request, @ModelAttribute @Valid Observations observations, Errors errors,Model model){
+    public String processObservationForm(HttpServletRequest request, @ModelAttribute @Valid Observations observations, BindingResult bindingResult,Model model){
 
-        if (errors.hasErrors()){
+        if (bindingResult.hasErrors()){
             return "section/observationsForm";
         }
 
@@ -237,7 +232,7 @@ public class ExperimentController {
 
         observDao.save(observations);
 
-
+        model.addAttribute("name", session.getAttribute("firstName") + " " + session.getAttribute("lastName"));
         model.addAttribute("observations", observations.getObservation());
         return "section/processObservationsForm";
     }
@@ -247,15 +242,16 @@ public class ExperimentController {
     /*----------- --------------------Conclusion --------------------------------*/
 
     @RequestMapping(value = "conclusion/{id}", method = RequestMethod.GET)
-    public String displayConclusion(@PathVariable int id, Model model){
+    public String displayConclusion(HttpServletRequest request, @PathVariable int id, Model model){
 
-
+        HttpSession session = request.getSession();
         Intro intro = introDao.findOne(id);
        Conclusions conclude = intro.getConclude();
 
 
         model.addAttribute("conclusion", conclude.getConclusion());
         model.addAttribute("id",id);
+        model.addAttribute("name", session.getAttribute("firstName") + " " + session.getAttribute("lastName"));
 
         return "section/processConclusion";
     }
@@ -270,9 +266,9 @@ public class ExperimentController {
 
 
     @RequestMapping(value = "conclusion/save",method = RequestMethod.POST)
-    public String processConclusionForm(HttpServletRequest request, @ModelAttribute @Valid Conclusions conclusion, Errors errors,Model model){
+    public String processConclusionForm(HttpServletRequest request, @ModelAttribute @Valid Conclusions conclusion, BindingResult bindingResult,Model model){
 
-        if (errors.hasErrors()){
+        if (bindingResult.hasErrors()){
             return "section/conclusionForm";
         }
 
@@ -283,7 +279,7 @@ public class ExperimentController {
         conclusionsDao.save(conclusion);
 
 
-
+        model.addAttribute("name", session.getAttribute("firstName") + " " + session.getAttribute("lastName"));
         model.addAttribute("conclusion", conclusion.getConclusion());
         return "section/processConclusion";
     }

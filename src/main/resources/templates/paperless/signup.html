@@ -54,9 +54,7 @@
         <label th:for="verify" class="form-font">Verify Password</label>
         <input type="password" name="verify" class="form-control textbox-size"/>
     </div>
-
-
-
+    <span class="error" th:text="${error}"></span>
     <input type="submit"/>
 
     <p><a th:href="@{/login}" class="link-need-space"> Existing user?</a></p>
