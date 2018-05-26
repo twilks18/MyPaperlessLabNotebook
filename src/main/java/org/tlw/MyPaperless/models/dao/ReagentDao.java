@@ -1,5 +1,6 @@
 package org.tlw.MyPaperless.models.dao;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.tlw.MyPaperless.models.Reagent;
@@ -10,7 +11,7 @@ import java.util.List;
 
 @Repository
 @Transactional
-public interface ReagentDao extends CrudRepository<Reagent, Integer > {
+public interface ReagentDao extends JpaRepository<Reagent, Integer > {
 
      List<Reagent> findAll();
 

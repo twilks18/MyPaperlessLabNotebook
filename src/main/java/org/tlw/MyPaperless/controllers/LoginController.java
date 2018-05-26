@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class LoginController {
@@ -26,7 +27,7 @@ public class LoginController {
     @Autowired
     private IntroDao introDao;
 
-    /*---------------------------- Home Page-----------------------------***/
+    /*---------------------------- Home Page-----------------------------*/
     @RequestMapping(value="/",method = RequestMethod.GET)
     public String homePage(){
         return "paperless/landingPage";
@@ -43,7 +44,7 @@ public class LoginController {
 
 
     @RequestMapping(value = "signup", method = RequestMethod.POST)
-    public String welcome(HttpServletRequest request, @ModelAttribute User newUser,Model model){
+    public String welcome(@ModelAttribute User newUser,HttpServletRequest request,Model model){
 // TODO: 2/1/2018 add validation for user and password, hashcode
 
         HttpSession session = request.getSession();
@@ -59,6 +60,9 @@ public class LoginController {
         boolean validUserName = User.isValidUserName(username);
         boolean validPassword = User.isValidPassword(password);
         boolean verifyPassword = request.getParameter("password").equals(request.getParameter("verify"));
+
+        User existingUsername = userDao.findByUsername(username);
+        Optional<User> usernameExist = Optional.ofNullable(existingUsername);
 
 
        if ( firstname == null || firstname == ""){
@@ -85,6 +89,10 @@ public class LoginController {
         }
        else if (!validUserName){
            model.addAttribute("error", "Invalid Username!");
+           return "paperless/signup";
+       }
+       else if (usernameExist.isPresent() == true){
+           model.addAttribute("error", "Username Already Exist!");
            return "paperless/signup";
        }
         else if (password == null || password == ""){

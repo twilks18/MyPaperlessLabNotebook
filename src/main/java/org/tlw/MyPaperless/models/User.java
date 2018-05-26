@@ -1,5 +1,7 @@
 package org.tlw.MyPaperless.models;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -30,6 +32,11 @@ public class User {
     @Size(min = 2, max = 30)
     private String lastname;
 
+    @Column
+    private String hashedPassword;
+
+    private static final BCryptPasswordEncoder encodedPassword = new BCryptPasswordEncoder();
+
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_uid")
@@ -40,6 +47,8 @@ public class User {
         this.password = password;
         this.firstname = firstname;
         this.lastname = lastname;
+        this.hashedPassword = hashIt(this.password);
+
     }
 
     public User() { }
@@ -65,6 +74,22 @@ public class User {
         return matcher.matches();
     }
 
+    public String getHashedPassword() {
+        return hashedPassword;
+    }
+
+    public void setHashedPassword(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
+    }
+
+    private static String hashIt(String password) {
+        return encodedPassword.encode(password);
+    }
+
+    public boolean isCorrectPassword(String password){
+
+        return encodedPassword.matches(password,hashedPassword);
+    }
 
     public String getUsername() {
         return username;

@@ -52,14 +52,13 @@ public class ExperimentController {
 
         Intro intro = introDao.findOne(id);
         List<Reagent> reagents = intro.getReagent();
-        User user = userDao.findByUid(id);
         model.addAttribute("chemicals", reagents);
 
 
         model.addAttribute("title",intro.getTitle());
         model.addAttribute("purpose",intro.getPurpose());
         model.addAttribute("materials", intro.getMaterials());
-        model.addAttribute("name", session.getAttribute("firstName") + "" + session.getAttribute("lastName"));
+        model.addAttribute("name", session.getAttribute("firstName") + " " + session.getAttribute("lastName"));
 
         return "section/introPage";
     }
@@ -116,7 +115,6 @@ public class ExperimentController {
         List<Reagent> reagents = intro.getReagent();
 
         model.addAttribute("reagents", reagents);
-        model.addAttribute("number", "The number is" + id);
         model.addAttribute(new Reagent());
 
         return "section/reagentForm";
@@ -141,8 +139,7 @@ public class ExperimentController {
 
             List<Reagent> reagents = intro.getReagent();
             model.addAttribute("chemicals", reagents);
-            model.addAttribute("reagents", reagent.getChemName() + " " + id + " has been added!");
-
+            model.addAttribute("id",id);
 
             return "section/processReagentForm";
 
