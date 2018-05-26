@@ -38,13 +38,13 @@ public class LoginController {
     @RequestMapping(value = "signup", method = RequestMethod.GET)
     public String signupForm(Model model){
         model.addAttribute("title", "Sign Up ");
-        model.addAttribute(new User());
+
         return "paperless/signup";
     }
 
 
     @RequestMapping(value = "signup", method = RequestMethod.POST)
-    public String welcome(@ModelAttribute User newUser,HttpServletRequest request,Model model){
+    public String welcome(HttpServletRequest request,Model model){
 // TODO: 2/1/2018 add validation for user and password, hashcode
 
         HttpSession session = request.getSession();
@@ -107,7 +107,8 @@ public class LoginController {
         else if(!verifyPassword){
             model.addAttribute("error", "Passwords don't match");
             return "paperless/signup";
-        }else
+        }
+        User newUser = new User(username, password, firstname, lastname);
 
          userDao.save(newUser);
 
