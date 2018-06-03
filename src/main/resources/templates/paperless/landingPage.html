@@ -8,7 +8,7 @@
     <link th:href="@{/bootstrap-3.3.7/css/custom.css}"  type="text/css" rel="stylesheet"/>
 </head>
 <body class="main">
-<div class="container landingPage" th:fragment="navigation">
+<div class="container landingPage" id="homepage" th:fragment="navigation">
 
 
     <nav class="navbar  navbar-custom container-fluid" role="navigation">
@@ -29,8 +29,8 @@
                     <div class="col-md-2 pull-right">
                         <div class="collapse navbar-collapse " id="navCollapse">
                             <ul class="nav">
-                                <li><a th:href="@{/login}" class="text-link nonhover" >Login</a></li>
-                                <li><a th:href="@{/signup}" class="text-link nonhover">Sign up</a></li>
+                                <li><a th:href="@{/login}" class="text-link hovering" >Login</a></li>
+                                <li><a th:href="@{/signup}" class="text-link hovering">Sign up</a></li>
                             </ul>
                         </div>
                     </div>

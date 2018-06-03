@@ -2,6 +2,7 @@ package org.tlw.MyPaperless.controllers;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,7 +39,6 @@ public class LoginController {
     @RequestMapping(value = "signup", method = RequestMethod.GET)
     public String signupForm(Model model){
         model.addAttribute("title", "Sign Up ");
-
         return "paperless/signup";
     }
 
@@ -108,8 +108,8 @@ public class LoginController {
             model.addAttribute("error", "Passwords don't match");
             return "paperless/signup";
         }
-        User newUser = new User(username, password, firstname, lastname);
 
+        User newUser = new User(username,password,firstname,lastname);
          userDao.save(newUser);
 
         session.setAttribute("firstName",firstname);
@@ -152,14 +152,14 @@ public class LoginController {
 
             Integer userid = returnUser.getUid();
 
-            if (returnUser != null && returnUser.getPassword().equals(password)) {
+            if (returnUser != null && returnUser.isCorrectPassword(password)) {
 
                 session.setAttribute("firstName",returnUser.getFirstname());
                 session.setAttribute("lastName", returnUser.getLastname());
                 session.setAttribute("id", userid);
                 return "redirect:dashboard";
             }else if
-                    (returnUser !=null && !returnUser.getPassword().equals(password)) {
+                    (returnUser !=null && !returnUser.isCorrectPassword(password)) {
                 model.addAttribute("error", "Invalid password");
                 return "paperless/login";
 
@@ -180,7 +180,7 @@ public class LoginController {
 
 
     @RequestMapping(value = "dashboard")
-    public String dashboard(HttpServletRequest request, Model model){
+    public String dashboard(HttpServletRequest request, Model model,@RequestParam(defaultValue="0") int page){
 
         HttpSession session = request.getSession();
         Integer id = (Integer)session.getAttribute("id");
@@ -189,11 +189,11 @@ public class LoginController {
         List<Intro> titles = user.getIntro();
 
 
-//        model.addAttribute("name", user.getFirstname());
-        model.addAttribute("title","Dashboard");
-        model.addAttribute("titles", titles);
-        model.addAttribute("user", id);
-        model.addAttribute("name", session.getAttribute("firstName") + " " + session.getAttribute("lastName"));
+
+        model.addAttribute("titles", introDao.findAll(new PageRequest(page,7)));
+        model.addAttribute("currentPage",page);
+        model.addAttribute("titleList",titles);
+        model.addAttribute("firstname", session.getAttribute("firstName"));
         return "paperless/dashboard";
     }
 

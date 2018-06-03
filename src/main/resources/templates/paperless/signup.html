@@ -13,21 +13,19 @@
 <body class="main">
 
 <div class="container-fluid landingPage">
+
     <div class="container-fluid main-header" >
         <img src="images/mp.png" class="img-responsive img-adjust1"  alt="mp header"/>
     </div>
-<div class="row">
-    <div class="col-md-12">
 
-    </div>
-</div>
-<form method="post"  class="form-margin">
+<div>
+
+
+<form method="post"  class="form-style" id="signup-form">
     <!--  "user" key value is the default value for the passed in object -->
 
-    <div style="margin-left: 30%; margin-bottom: 10px;">
-
-        <!-- REMOVE THE STYLE-->
-         <h4 >Sign up!</h4>
+    <div>
+        <h4 id="signup-title" >Sign up!</h4>
     </div>
 
     <div  class="form-group ">
@@ -60,12 +58,18 @@
     <p><a th:href="@{/login}" class="link-need-space"> Existing user?</a></p>
 
 </form>
+    <div id="copyright">
 
-    <footer>
-        <h6><b>Copyright &copy; 2018 Ta'Neisha Wilks</b></h6>
-    </footer>
+        <h6>Copyright &copy; 2018 Ta'Neisha Wilks</h6>
+
+    </div>
+    </div>
+
 
 </div>
+
+
+
 
     <script src="jquery/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>

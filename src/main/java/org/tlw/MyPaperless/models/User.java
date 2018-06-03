@@ -1,6 +1,9 @@
 package org.tlw.MyPaperless.models;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+
+
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -9,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static org.springframework.security.crypto.bcrypt.BCrypt.checkpw;
 
 @Entity
 public class User {
@@ -21,8 +26,6 @@ public class User {
     @Column(unique = true )
     private String username;
 
-    @NotNull
-    private String password;
 
     @NotNull
     @Size(min = 2, max = 30)
@@ -32,11 +35,8 @@ public class User {
     @Size(min = 2, max = 30)
     private String lastname;
 
-    @Column
+    @NotNull
     private String hashedPassword;
-
-    private static final BCryptPasswordEncoder encodedPassword = new BCryptPasswordEncoder();
-
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_uid")
@@ -44,10 +44,9 @@ public class User {
 
     public User(String username, String password, String firstname, String lastname) {
         this.username = username;
-        this.password = password;
         this.firstname = firstname;
         this.lastname = lastname;
-        this.hashedPassword = hashIt(this.password);
+        this.hashedPassword = hashIt(password);
 
     }
 
@@ -83,12 +82,12 @@ public class User {
     }
 
     private static String hashIt(String password) {
-        return encodedPassword.encode(password);
+        return BCrypt.hashpw(password,BCrypt.gensalt());
     }
 
     public boolean isCorrectPassword(String password){
 
-        return encodedPassword.matches(password,hashedPassword);
+        return checkpw(password,hashedPassword);
     }
 
     public String getUsername() {
@@ -113,14 +112,6 @@ public class User {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public int getUid() {

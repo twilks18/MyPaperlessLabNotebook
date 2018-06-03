@@ -58,6 +58,7 @@ public class ExperimentController {
         model.addAttribute("title",intro.getTitle());
         model.addAttribute("purpose",intro.getPurpose());
         model.addAttribute("materials", intro.getMaterials());
+        model.addAttribute("introid",intro);
         model.addAttribute("name", session.getAttribute("firstName") + " " + session.getAttribute("lastName"));
 
         return "section/introPage";
@@ -99,7 +100,7 @@ public class ExperimentController {
 
          session.setAttribute("intro_key", intro.getId());
 
-        return "section/processIntro";
+        return "redirect:/experiment/addReagent";
     }
 
 

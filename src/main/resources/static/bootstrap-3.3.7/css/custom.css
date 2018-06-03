@@ -49,10 +49,13 @@ color: #ECF8FC;
 
 }
 
+#homepage{
+height:100vh;
+}
+
 .landingPage {
 
     background: url("/images/Mypaperless5.png") no-repeat center center fixed;
-    height: 100vh;
     padding-left: 0%;
     padding-right: 0%;
     width: 100%;
@@ -62,9 +65,9 @@ color: #ECF8FC;
     background-size: cover;
 }
 
-a.text-link.nonhover:hover, a.text-link.nonhover:active{
+a.text-link.hovering:hover, a.text-link.hovering:active{
 color:#ECF8FC;
-font-size:125%;
+font-size:110%;
 background-color: transparent;
 }
 
@@ -101,31 +104,17 @@ a{
     background: white;
 }
 
-.form-margin{
-    width: 40%;
-    background: rgba(0,56,90,0.8);
-    -moz-box-shadow: 10px 10px 10px #777777;
-    -webkit-box-shadow: 10px 10px 10px #777777;
-    box-shadow: 10px 10px 10px #777777;
-    margin-left: 30%;
-    padding-top: 2%;
-    padding-left: 5%;
-    padding-bottom: 1%;
-    margin-top: 2%;
-    color: #ECF8FC;
-}
+
 
 .img-adjust1{
-    width: 60%;
+    width: 35%;
      margin-left: auto;
      margin-right: auto;
 }
 
 .main-header{
     background: #00385A;
-    padding-bottom: 10%;
     width: 100%;
-    height: 15%;
 
 }
 
@@ -171,29 +160,72 @@ p{
     color:red;
     }
 
-#login-spacing{
-    margin-top: 2%;
-    padding: 0%;
+.form-style{
+
+        background: rgba(0,56,90,0.8);
+        -moz-box-shadow: 10px 10px 10px #777777;
+        -webkit-box-shadow: 10px 10px 10px #777777;
+        box-shadow: 10px 10px 10px #777777;
+        color: #ECF8FC;
+        width:35%;
 }
+
+#signup-title{
+
+        margin-top:0%;
+        padding-bottom: 2%;
+        padding-top: 5%;
+        padding-left:35%;
+        font-family:"Georgia","Times New Roman",serif;
+        font-weight:bold;
+ }
+
+#signup-form{
+margin-left:auto;
+margin-right:auto;
+margin-top:4%;
+padding-bottom: 2%;
+margin-bottom: 3%;
+padding-left: 6%;
+}
+
+
 #img-div{
-    width: 30%;
 
+    margin-top:0%;
+    margin-left:auto;
+    margin-right:auto;
+    width: 25%;
 }
-#login-form-margin{
 
-    margin-top: -12%;
-    padding-top: 6%;
-    padding-bottom: 2%;
-    padding-left: 5%;
+#login-title{
 
+        padding-left:30%;
+        padding-bottom: 6%;
+        font-family:"Georgia","Times New Roman",serif;
+        font-weight:bold;
+ }
+
+#login-style{
+margin-bottom:5%;
+}
+#login-form{
+    margin-left:auto;
+    margin-right:auto;
+    margin-top: -10%;
+    padding-top: 5%;
+    padding-bottom: 3%;
+    padding-left: 6%;
 }
 
 label{
 color:#ECF8FC;
 }
 
-#login-form input[type="submit"]{
+.form-style input[type="submit"]{
  margin-top: 10%;
+ margin-bottom:5%;
+ margin-left:1%;
  font-weight:bold;
 }
 
@@ -209,6 +241,11 @@ color:#ECF8FC;
 {
     border-radius: 0px;
     background-color: #00385A;
+}
+
+#copyright{
+margin-left:2%;
+ color: #ECF8FC;
 }
 
 .footer-custom{
@@ -228,7 +265,8 @@ color:#ECF8FC;
 
 #adjust-imgsize-physprop{
     display: block;
-    margin-left:27%;
+    margin-left:auto;
+    margin-right:auto;
     margin-top:2%;
     width:30%;
 }
@@ -279,8 +317,8 @@ textarea{
 
 .adjust-imgsize-poc{
 
-margin-left: 30%;
-width:25%;
+margin-left: 40%;
+width:20%;
 
 }
 .form-margin-poc{
@@ -288,13 +326,13 @@ width:25%;
        -moz-box-shadow: 10px 10px 10px #777777;
        -webkit-box-shadow: 10px 10px 10px #777777;
        box-shadow: 10px 10px 10px #777777;
-        width:75%;
+        width:60%;
         margin-left:auto;
         margin-right:auto;
         padding-left:3%;
         padding-right:3%;
         padding-top:2%;
-        padding-bottom:1%;
+        padding-bottom:2%;
 
 
 
@@ -334,9 +372,7 @@ color:black;
     margin-left:10%;
 }
 
-#intro-spacing{
-margin-bottom:15%;
-}
+
 .span-display{
 font-size:80%;
 font-weight:normal;
@@ -384,6 +420,8 @@ margin-bottom:30%;
 
   background-color:#00385A;
 }
+
+
 
 .poc-div{
 padding-bottom:15%;

@@ -29,7 +29,7 @@
                         <span class="glyphicon glyphicon-menu-hamburger" id="glyph"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownmenu">
-                        <li ><a class="dropdown-item" th:href="@{/experiment/procedure}">Next</a> </li>
+                        <li ><a class="dropdown-item" th:href="@{/experiment/procedure}" >Next</a> </li>
                         <div class="dropdown-divider"></div>
                         <li><a class="dropdown-item" th:href="@{'/experiment/addIntro/edit/'+ ${id}}">Edit Intro</a></li>
                         <div class="dropdown-divider"></div>
@@ -46,7 +46,18 @@
 
 
     <div >
-        <div th:replace="section/processIntro::Introduction-display"></div>
+        <div>
+            <div th:fragment="Introduction-display">
+                <h1 class="center-heading">Introduction</h1>
+                <p class="center-display">Title: <span class="span-display" th:text="${title}"></span></p>
+                <br/>
+                <p class="center-display">Purpose: <span  class="span-display" th:text="${purpose}"></span></p>
+                <br/>
+                <p class="center-display">Apparatus <span class="span-display"> &amp; </span>Materials: <span class="span-display" th:text="${materials}"></span></p>
+                <br/>
+                <br/>
+            </div>
+        </div>
 </div>
 
 <div>

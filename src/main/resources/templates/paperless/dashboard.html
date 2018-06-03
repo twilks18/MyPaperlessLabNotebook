@@ -41,7 +41,7 @@
 
             <div class="col-md-5" id="log">
 
-                <p class="text-link" th:unless="${titles} and ${titles.size()}"> Add an Experiment</p>
+                <p class="text-link" th:unless="${titleList} and ${titleList.size()}"> Add an Experiment</p>
                 <p class="text-link" th:text="${name}"></p>
 
                 <div class="panel-group" th:each=" title : ${titles}">
@@ -65,6 +65,8 @@
                 </div>
             </div>
         </div>
+
+
 
 
         <div class="row" id="space-bar">
