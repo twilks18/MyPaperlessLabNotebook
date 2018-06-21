@@ -11,73 +11,85 @@
 
 
 <div class="container" id="div-background">
-    <!--Heading-->
-    <div class="container-fluid">
-        <img src="images/expLogWave.png" id="explog-adjust-imgsize" alt="experiment log"/>
+
+
+    <div class ="side-nav" id="side-menu">
+
+        <a href="#" class="btn-close" onclick="closeSlideMenu()">&times;</a>
+        <ul>
+            <li><a th:href="@{/experiment/addIntro}"> Add Experiment </a></li>
+            <li> <a th:href="@{/removeExperiment}"> Remove Experiment</a></li>
+            <li> <a href="#"> Contact </a></li>
+            <li> <a th:href="@{/logout}"> Logout </a></li>
+        </ul>
     </div>
 
-    <!--Experiment Log-->
+    <div class="grid-container">
+        <!--Heading-->
 
-
-
-
-    <div class="container" id="contents">
-        <div class="row" id="welcome">
-            <p>Welcome To Your Lab Notebook Ta'Neisha</p>
+        <div id="glyph">
+             <span class="open-slide">
+                    <a href="#" onclick="openSlideMenu()">
+                <span class="glyphicon glyphicon-menu-hamburger"></span>
+                    </a>
+                </span>
         </div>
-        <div class="row">
-            <div class="col-md-2" id="sidebar1">
 
-                <div>
+        <div class="header">
 
-                    <ul>
-                        <li><a class="text-link" th:href="@{/experiment/addIntro}"> Add Experiment </a></li>
-                        <li> <a class="text-link" th:href="@{/removeExperiment}"> Remove Experiment</a></li>
-                        <li> <a class="text-link" th:href="@{/logout}"> Logout </a></li>
-                    </ul>
+            <h1><i><span th:text="${firstname}"></span>'s Lab Notebook</i></h1>
+        </div>
+
+
+
+
+        <!--Experiment Log-->
+            <div id="log">
+
+                <div id="heading">
+                    <h1>Experiment Log</h1>
                 </div>
 
-            </div>
-
-            <div class="col-md-5" id="log">
-
-                <p class="text-link" th:unless="${titleList} and ${titleList.size()}"> Add an Experiment</p>
-                <p class="text-link" th:text="${name}"></p>
-
-                <div class="panel-group" th:each=" title : ${titles}">
-                    <div class="panel panel-default" >
+                <p id="message" th:unless="${titles} and ${titles.size()}"><span th:text="${firstname}"></span>, click the icon in the top left corner to begin documenting your first experiment.</p>
+                <div class="panel-group"  id="accordion">
+                    <div class="panel panel-default" th:each=" title : ${titles}">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a data-toggle="collapse"  th:href="'#accordion'+${title.title}" th:text="${title.title}"></a>
+                                <a data-toggle="collapse" th:attr="data-parent='#accordion'" th:href="'#collapse-it'+${title.id}" th:text="${title.title}"></a>
                             </h4>
                         </div>
-                        <div  th:id="'accordion'+${title.title}" class="panel-collapse collapse">
+                        <div  class="panel-collapse collapse" th:id="'collapse-it'+${title.id}" >
                             <div  class="panel-body">
                                 <ul>
-                                    <li class=" text-link list-group-item"><a th:href="@{'/experiment/introReagentPage/'+${title.id}}">Introduction</a></li>
-                                    <li class=" text-link list-group-item"><a th:href="@{'/experiment/procedure/'+${title.id}}">Procedure</a></li>
-                                    <li class=" text-link list-group-item"><a th:href="@{'/experiment/observations/'+${title.id}}">Observations</a></li>
-                                    <li class=" text-link list-group-item"><a th:href="@{'/experiment/conclusion/'+${title.id}}">Conclusion</a></li>
+                                    <li><a th:href="@{'/experiment/introReagentPage/'+${title.id}}">Introduction</a></li>
+                                    <li><a th:href="@{'/experiment/procedure/'+${title.id}}">Procedure</a></li>
+                                    <li><a th:href="@{'/experiment/observations/'+${title.id}}">Observations</a></li>
+                                    <li><a th:href="@{'/experiment/conclusion/'+${title.id}}">Conclusion</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
 
 
 
-        <div class="row" id="space-bar">
-        </div>
-
+<!-- <div id="pagination">
+    <ul class="pagination">
+        <li  th:class="${currentPage}==${i}?'active': null" th:each="i : ${#numbers.sequence(0,titles.totalPages -  1)}">
+            <a th:href="@{/dashboard(page=${i})}" th:text="${i}"  id="pager"></a>
+        </li>
+    </ul>
+        </div>-->
 
     </div>
 
 
 
 
+
+<!--
     <footer class="row">
         <div class="col-md-6">
             <h6><b>Copyright &copy; 2018 Ta'Neisha Wilks</b></h6>
@@ -85,11 +97,24 @@
 
     </footer>
 
-
+-->
 </div>
 <div>
     <script src="jquery/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script>
+   function openSlideMenu(){
+        document.getElementById('side-menu').style.width
+        = '200px';
+        }
+
+
+        function closeSlideMenu(){
+        document.getElementById('side-menu').style.width
+        = '0';
+        }
+
+    </script>
 </div>
 </body>
 </html>

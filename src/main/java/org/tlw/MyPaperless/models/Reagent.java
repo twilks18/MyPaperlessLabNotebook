@@ -1,14 +1,12 @@
 package org.tlw.MyPaperless.models;
 
-import org.hibernate.validator.constraints.Range;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.Min;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,7 +21,7 @@ public class Reagent {
     @Size(min= 4,message = "You forgot something" )
     private String chemName;
 
-    // TODO: 1/16/2018 add error messages and constraints
+
     @NotNull
     @Digits(integer = 3, fraction=3, message = "Enter a numerical value" )
     private String density;

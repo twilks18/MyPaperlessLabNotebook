@@ -27,12 +27,12 @@
                             <span class="glyphicon glyphicon-menu-hamburger" id="glyph"></span>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownmenu">
-                            <li ><a class="dropdown-item" th:href="@{/experiment/observations}" th:unless="${id} != null">Next</a> </li>
+                            <li ><a class="dropdown-item" th:href="@{/experiment/observations}">Next</a> </li>
                             <div class="dropdown-divider"></div>
                             <li><a class="dropdown-item" th:href="@{'/experiment/procedure/edit/'+ ${id}}">Edit Procedure</a></li>
                             <div class="dropdown-divider"></div>
                             <li><a class="dropdown-item" th:href="@{/dashboard}">Experiment Log</a></li>
-
+                           <!-- th:unless="${id} != null"-->
                         </ul>
                     </div>
 

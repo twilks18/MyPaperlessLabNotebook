@@ -1,142 +1,212 @@
+/*---Page Setup---*/
 #main{
     width:95%;
-    height: 100%;
-      margin:auto;
-        padding: 0%;
+    margin:auto;
+    padding: 0%;
 
 }
 
 #div-background{
-border: 7px double #ECF8FC;
-width:100%;
-background: #00385A;
-
-}
-
-#explog-adjust-imgsize{
-
-    display: block;
-    padding-top: 2%;
-    padding-bottom:2%;
-    margin-left:auto;
-    margin-right:auto;
-    width:40%;
- }
-
-
-.text-link{
-    font-family:"Georgia","Times New Roman",serif;
-
-}
-
-
-
-#contents{
-    background: #ECF8FC;
-    width: 80%;
-    padding-top: 2%;
-    padding-left:6%;
-    padding-right:auto;
-    border-style: ridge;
-    border-width: 5px;
-    border-color: #256DA8;
-    margin-top:0%;
-    margin-bottom:2%;
-
-}
-
-#space-bar{
-background:red;
-margin-bottom:25%;
-}
-
-#welcome{
-font-family:"Georgia","Times New Roman",serif;
-font-size: 200%;
-margin-right:auto;
-margin-left:auto;
-margin-bottom:5%;
-color: #00385A;
-
-}
-
-
-#sidebar1{
-background:#00385A;
-width:15%;
-padding-bottom:1%;
-position:fixed;
-
-}
-
-#sidebar1 li{
-padding-top:5%;
-
-}
-
-#log{
-
-margin-left:50%;
-
-}
-
-
- ul{
-    margin:0%;
-    padding: 0%;
-    padding-top: 5%;
-    padding-bottom:5%;
-    list-style: none;
-
-}
-
-
-li a{
+    border: 7px double #ECF8FC;
     width:100%;
+    background: #00385A;
+    padding-left:0%;
+
+}
+
+a:hover{
+text-decoration:none;
+font-weight:bold;
+}
+
+h1{
+font-family:"Georgia","Times New Roman",serif;
+
+}
+
+/*---Content ---*/
+.grid-container{
+    display: grid;
+    grid-template-columns: auto auto;
+    padding-top:2%;
+
+}
+
+
+/*---Header --*/
+
+#glyph{
+padding-left:20%;
+
+}
+.glyphicon-menu-hamburger{
+color: #ddd;
+font-size:20px;
+}
+
+.header{
+grid-column: 2/4;
+}
+
+.header h1{
+color: #ECF8FC;
+font-size: 300%;
+padding-left:15%;
+margin-bottom:5%;
+
+}
+
+/*--- Experiment Log--*/
+
+#message{
+font-size: 20px;
+margin-top:10%;
+text-align:center;
+}
+
+#heading{
+text-align:center;
+color:#00385A;
+padding-top: 2%;
+padding-bottom:8%;
+
+}
+#log{
+background: #ECF8FC;
+height:510px;
+grid-column:1/4;
+margin-left:20%;
+margin-right:20%;
+padding-left:10%;
+padding-right:10%;
+}
+
+
+/*--- Sidebar ----*/
+
+.side-nav{
+background:#00385A;
+    height:100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top:0;
+    left:0;
+    opacity:0.9;
+    overflow-x:hidden;
+    padding-top: 60px;
+    transition:0.5s;
+}
+
+.side-nav ul {
+padding-left:0%;
+
+}
+
+ .side-nav ul  li {
+    list-style: none;
+    line-height:45px;
+    padding:10% 10% 10%;
     padding-left:10%;
-    margin-left:0%;
-    color: #ECF8FC;
-    text-align:center;
+    margin-left:0px;
+    border-bottom:1px solid #ddd;
+
+    }
+
+ .side-nav ul li a {
+     text-decoration: none;
+     color:#ECF8FC;
+     display: block;
+     transition: 0.5s;
+
+     font-family:"Georgia","Times New Roman",serif;
 
 }
 
 
-
-
-li a:hover, li a:active {
-    background-color:#00385A ;
-   font-weight:bold;
-    text-decoration: none;
-    color: #ECF8FC;
+.side-nav .btn-close{
+    position:absolute;
+    top:0;
+    right:22px;
+    font-size: 30px;
+    color:#ddd;
+    margin-left: 50px;
 }
 
 
+/*----Panel-----*/
 
+.panel-default  .panel-heading {
+  color: #ECF8FC;
+  background-color: #00385A;
+  border-color: #ddd;
+  text-align:center;
+
+}
+
+
+.panel{
+padding-bottom:1%;
+}
+
+.panel-title{
+font-size:20px;
+color:#ddd;
+}
+
+.panel-body  ul {
+padding-left:0%;
+}
+
+.panel-body  ul li{
+
+line-height:25px;
+font-family:"Georgia","Times New Roman",serif;
+text-align:center;
+list-style:none;
+}
+
+.panel-body  ul li a:hover{
+
+text-decoration:none;
+font-weight: bold;
+
+}
+
+
+.panel-body{
+padding-bottom:0px;
+background:#ddd;
+
+
+}
+
+/*----- Pagination -----*/
+
+#pagination{
+
+    grid-column:3/4;
+    margin-bottom:0%;
+}
+
+.pagination{
+margin-left:50%;
+}
+
+.pagination a {
+background:#ddd !important;
+color: #00385A  !important;
+}
+
+.active a{
+background:#00385A !important;
+color:#ECF8FC !important;
+}
+
+/*--- Footer ---*/
 footer {
     background-color: transparent;
     margin-top: 20px;
     color: #ECF8FC;
 
-}
-
-.panel-default > .panel-heading {
-  color: #ECF8FC;
-  background-color: #00385A;
-  border-color: #ddd;
-  text-align:center;
-}
-
-.panel-body > ul li{
-
-padding:0px;
-
-}
-.panel-body{
-padding:0px;
-
-}
-
-p{
-    text-align:center;
-    font-weight:bold
 }

@@ -188,11 +188,7 @@ public class LoginController {
         Intro intro = introDao.findOne(id);
         List<Intro> titles = user.getIntro();
 
-
-
-        model.addAttribute("titles", introDao.findAll(new PageRequest(page,7)));
-        model.addAttribute("currentPage",page);
-        model.addAttribute("titleList",titles);
+        model.addAttribute("titles",titles);
         model.addAttribute("firstname", session.getAttribute("firstName"));
         return "paperless/dashboard";
     }

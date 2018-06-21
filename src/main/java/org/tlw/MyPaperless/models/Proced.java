@@ -8,7 +8,6 @@ import javax.validation.constraints.Size;
 public class Proced {
 
     @Id
-    @GeneratedValue
     private int pid;
 
     @NotNull

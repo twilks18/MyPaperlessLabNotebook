@@ -27,7 +27,7 @@
 
         </div>
         <!-- Menu contents-->
-        <div class="collapse navbar-collapse pull-right " id="navCollapse"   >
+        <div class="collapse navbar-collapse pull-right " id="navCollapse">
             <img th:src="@{/images/mp.png}" id="nav-img"/>
             <ul class="nav navbar-nav pull-right">
                 <li><a class="text-link hovering" th:href="@{/dashboard}" >Experiment Log</a></li>
@@ -52,7 +52,7 @@
 
     <form  method="post" th:action="@{/experiment/addIntro/save}" class="form-margin-intro" th:object="${intro}" >
 
-        <input type="hidden" th:text="${id}"/>
+       <input type="hidden" th:field="*{id}"/>
 
         <div class="form-group">
         <label class="form-font"  th:for="title">Title</label><br/>

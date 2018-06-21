@@ -7,7 +7,6 @@ import javax.validation.constraints.Size;
 @Entity
 public class Conclusions {
     @Id
-    @GeneratedValue
     private int conid;
 
     @NotNull

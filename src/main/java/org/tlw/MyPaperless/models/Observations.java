@@ -8,7 +8,6 @@ import javax.validation.constraints.Size;
 public class Observations {
 
     @Id
-    @GeneratedValue
     private int observid;
 
     @NotNull
