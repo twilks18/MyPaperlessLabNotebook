@@ -13,5 +13,7 @@ public interface ConclusionsDao extends JpaRepository<Conclusions, Integer> {
 
     Conclusions findByConid(Integer conid);
 
+    boolean exists(Integer primaryKey);
+
 
 }

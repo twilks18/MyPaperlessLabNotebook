@@ -13,4 +13,5 @@ import org.tlw.MyPaperless.models.Observations;
 public interface ObservationsDao extends JpaRepository<Observations,Integer> {
 
     Observations findByObservid(Integer observid);
+    boolean exists(Integer primaryKey);
 }

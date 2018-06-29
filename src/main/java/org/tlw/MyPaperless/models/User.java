@@ -38,8 +38,7 @@ public class User {
     @NotNull
     private String hashedPassword;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_uid")
+    @OneToMany(mappedBy = "user", fetch=FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Intro> intro = new ArrayList<>();
 
     public User(String username, String password, String firstname, String lastname) {
@@ -47,6 +46,7 @@ public class User {
         this.firstname = firstname;
         this.lastname = lastname;
         this.hashedPassword = hashIt(password);
+
 
     }
 
@@ -124,5 +124,9 @@ public class User {
 
     public void setIntro(List<Intro> intro) {
         this.intro = intro;
+    }
+
+    protected void addIntro(Intro intros) {
+        intro.add(intros);
     }
 }

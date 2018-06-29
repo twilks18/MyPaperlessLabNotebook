@@ -45,7 +45,6 @@ public class LoginController {
 
     @RequestMapping(value = "signup", method = RequestMethod.POST)
     public String welcome(HttpServletRequest request,Model model){
-// TODO: 2/1/2018 add validation for user and password, hashcode
 
         HttpSession session = request.getSession();
 
@@ -71,7 +70,7 @@ public class LoginController {
 
         }
        else if (!validFirstName){
-           model.addAttribute("error", "Invalid First Name!");
+           model.addAttribute("error", "First Name must contain at least two characters and the first letter must be capitalized!");
            return "paperless/signup";
        }
 
@@ -80,7 +79,7 @@ public class LoginController {
             return "paperless/signup";
         }
        else if (!validLastName){
-           model.addAttribute("error", "Invalid Last Name!");
+           model.addAttribute("error", "Last Name must contain at least two characters and the first letter must be capitalized!");
            return "paperless/signup";
        }
         else if (username == null || username == ""){
@@ -88,7 +87,7 @@ public class LoginController {
             return "paperless/signup";
         }
        else if (!validUserName){
-           model.addAttribute("error", "Invalid Username!");
+           model.addAttribute("error", "Username must be 4-8 characters in length(may contain $@!& along with numbers) and begin with a capital letter!");
            return "paperless/signup";
        }
        else if (usernameExist.isPresent() == true){
@@ -100,12 +99,12 @@ public class LoginController {
             return "paperless/signup";
         }
        else if (!validPassword){
-           model.addAttribute("error", "Invalid Password!");
+           model.addAttribute("error", "Password must be 6-10 characters in length(may contain $@!& along with numbers) and begin with a capital letter!");
            return "paperless/signup";
        }
 
         else if(!verifyPassword){
-            model.addAttribute("error", "Passwords don't match");
+            model.addAttribute("error", "Ummmm...Don't think your passwords match.");
             return "paperless/signup";
         }
 
@@ -180,7 +179,7 @@ public class LoginController {
 
 
     @RequestMapping(value = "dashboard")
-    public String dashboard(HttpServletRequest request, Model model,@RequestParam(defaultValue="0") int page){
+    public String dashboard(HttpServletRequest request, Model model){
 
         HttpSession session = request.getSession();
         Integer id = (Integer)session.getAttribute("id");

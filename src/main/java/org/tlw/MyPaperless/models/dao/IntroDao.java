@@ -17,7 +17,7 @@ import java.util.List;
 public interface IntroDao extends JpaRepository<Intro, Integer > {
 
     List<Intro> findAll();
-
+    boolean exists(Integer primaryKey);
 
 
      Intro findById(Integer id);

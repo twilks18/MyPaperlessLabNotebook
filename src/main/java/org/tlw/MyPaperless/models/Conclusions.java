@@ -15,6 +15,7 @@ public class Conclusions {
     private String conclusion;
 
     @OneToOne
+    @JoinColumn(name="intro_id",nullable = false)
     private Intro intro;
 
     public Conclusions(String conclusion) {

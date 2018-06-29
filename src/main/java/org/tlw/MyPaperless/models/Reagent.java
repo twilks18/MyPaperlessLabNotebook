@@ -18,7 +18,7 @@ public class Reagent {
     private int chemid;
 
     @NotNull
-    @Size(min= 4,message = "You forgot something" )
+    @Size(min= 4, max= 50)
     private String chemName;
 
 
@@ -32,10 +32,11 @@ public class Reagent {
 
     @NotNull
     @Lob
-    @Size(min= 5, message = "You forgot something")
+    @Size(min= 5, max= 200, message = "Must be 5 to 100 characters long including spaces")
     private String hazard;
 
     @ManyToOne
+    @JoinColumn(name = "intro_id",nullable = false)
     private Intro intro;
 
     public Reagent(String chemName, String density, String mw, String hazard) {
@@ -44,6 +45,7 @@ public class Reagent {
         this.density = density;
         this.mw = mw;
         this.hazard = hazard;
+        intro.addReagent(this);
     }
 
     public Reagent() {}

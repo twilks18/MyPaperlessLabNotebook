@@ -1,23 +1,19 @@
 package org.tlw.MyPaperless.controllers;
 
-import org.hibernate.SessionFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.provider.HibernateUtils;
-import org.springframework.data.jpa.repository.query.Procedure;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
+
 import org.springframework.web.bind.annotation.*;
 import org.tlw.MyPaperless.models.*;
 import org.tlw.MyPaperless.models.dao.*;
 
-import org.hibernate.Session;
-
-import org.hibernate.Transaction;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.Configuration;
+
 import javax.validation.Valid;
 import java.util.List;
 
@@ -64,6 +60,7 @@ public class ExperimentController {
         model.addAttribute("purpose",intro.getPurpose());
         model.addAttribute("materials", intro.getMaterials());
         model.addAttribute("introid",intro);
+        model.addAttribute("exist",procedureDao.exists(id));
         model.addAttribute("name", session.getAttribute("firstName") + " " + session.getAttribute("lastName"));
 
         return "section/introPage";
@@ -83,7 +80,7 @@ public class ExperimentController {
 
 
      @RequestMapping(value = "addIntro/save",  method = RequestMethod.POST)
-    public String processIntroForm(@ModelAttribute @Valid Intro intro, BindingResult bindingResult, HttpServletRequest request, Model model){
+    public String processIntroForm(@ModelAttribute @Valid Intro intro, BindingResult bindingResult, HttpServletRequest request, @RequestParam int id, Model model){
 
 
         if (bindingResult.hasErrors()){
@@ -92,9 +89,28 @@ public class ExperimentController {
 
          HttpSession session = request.getSession();
 
+        if (introDao.exists(id)){
 
-         Integer id = (Integer)session.getAttribute("id");
-         User user = userDao.findOne(id);
+            Integer introid = (Integer)session.getAttribute("id");
+            User user = userDao.findOne(introid);
+            intro.setUser(user);
+            introDao.save(intro);
+
+            model.addAttribute("title",intro.getTitle());
+            model.addAttribute("purpose",intro.getPurpose());
+            model.addAttribute("materials", intro.getMaterials());
+            model.addAttribute("name", session.getAttribute("firstName") + "" + session.getAttribute("lastName"));
+
+            String introPageFormat = "redirect:/experiment/introReagentPage/%1s";
+            String introPage = String.format(introPageFormat,id);
+
+            return introPage;
+
+        }
+
+
+         Integer introid = (Integer)session.getAttribute("id");
+         User user = userDao.findOne(introid);
          intro.setUser(user);
         introDao.save(intro);
 
@@ -105,7 +121,7 @@ public class ExperimentController {
 
          session.setAttribute("intro_key", intro.getId());
 
-        return "redirect:/experiment/addReagent";
+        return "redirect:/experiment/addReagent"; //changed this from a redirect
     }
 
     // form for reagent/chemical contents or Chemical Properties table
@@ -144,9 +160,9 @@ public class ExperimentController {
             model.addAttribute("chemicals", reagents);
             model.addAttribute("id",id);
 
-            return "section/processReagentForm";
+             return "section/processReagentForm";
 
-    }
+        }
 
 
 /*----------------------------------Procedure-----------------------------------*/
@@ -176,6 +192,7 @@ public class ExperimentController {
            procedureDao.save(proceds);
 
            model.addAttribute("proceds", proceds.getProceds());
+           model.addAttribute("exist",observDao.exists(id));
            model.addAttribute("name", session.getAttribute("firstName") + " " + session.getAttribute("lastName"));
            model.addAttribute("id",id);
 
@@ -188,6 +205,7 @@ public class ExperimentController {
            procedureDao.save(proceds);
 
            model.addAttribute("proceds",proceds.getProceds());
+           model.addAttribute("exist",observDao.exists(pid));
            model.addAttribute("name", session.getAttribute("firstName") + " " + session.getAttribute("lastName"));
 
            return "section/processProcedureForm";
@@ -204,7 +222,7 @@ public class ExperimentController {
 
        model.addAttribute("proceds",proceds.getProceds());
        model.addAttribute("name", session.getAttribute("firstName") + " " + session.getAttribute("lastName"));
-
+       model.addAttribute("exist",observDao.exists(id));
        return "section/processProcedureForm";
    }
 
@@ -219,6 +237,7 @@ public class ExperimentController {
 
         model.addAttribute("name", session.getAttribute("firstName") + " " + session.getAttribute("lastName"));
         model.addAttribute("observations", observations.getObservation());
+        model.addAttribute("exist",conclusionsDao.exists(id));
 
         return "section/processObservationsForm";
     }
@@ -250,6 +269,7 @@ public class ExperimentController {
 
             model.addAttribute("name", session.getAttribute("firstName") + " " + session.getAttribute("lastName"));
             model.addAttribute("observations", observations.getObservation());
+            model.addAttribute("exist",conclusionsDao.exists(id));
             model.addAttribute("id",id);
 
             return "section/processObservationsForm";
@@ -263,6 +283,7 @@ public class ExperimentController {
 
         model.addAttribute("name", session.getAttribute("firstName") + " " + session.getAttribute("lastName"));
         model.addAttribute("observations", observations.getObservation());
+        model.addAttribute("exist",conclusionsDao.exists(observid));
 
         return "section/processObservationsForm";
     }
@@ -371,6 +392,7 @@ public class ExperimentController {
 
         Intro intro = introDao.findById(id);
         model.addAttribute("intro",intro);
+        model.addAttribute("introid",intro.getId());
 
         return "section/addIntroForm";
     }

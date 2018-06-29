@@ -16,6 +16,7 @@ public class Observations {
     private String observation;
 
     @OneToOne
+    @JoinColumn(name="intro_id",nullable = false)
     private Intro intro;
 
     public Observations(String observation) {

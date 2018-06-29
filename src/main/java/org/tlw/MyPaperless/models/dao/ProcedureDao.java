@@ -11,4 +11,6 @@ import org.tlw.MyPaperless.models.Proced;
 public interface ProcedureDao extends JpaRepository<Proced,Integer> {
 
     Proced findByPid(Integer pid);
+
+    boolean exists(Integer primaryKey);
 }

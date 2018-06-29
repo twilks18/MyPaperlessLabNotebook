@@ -29,11 +29,9 @@
                         <span class="glyphicon glyphicon-menu-hamburger" id="glyph"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownmenu">
-                        <li ><a class="dropdown-item" th:href="@{/experiment/procedure}" >Next</a> </li>
+                        <li ><a class="dropdown-item" th:href="@{/experiment/procedure}" th:unless="${exist}" >Next</a> </li>
                         <div class="dropdown-divider"></div>
                         <li><a class="dropdown-item" th:href="@{'/experiment/addIntro/edit/'+ ${id}}">Edit Intro</a></li>
-                        <div class="dropdown-divider"></div>
-                        <li><a class="dropdown-item" th:href="@{/experiment/addReagent}">Edit Table</a></li>
                         <div class="dropdown-divider"></div>
                         <li><a class="dropdown-item" th:href="@{/dashboard}">Experiment Log</a></li>
 

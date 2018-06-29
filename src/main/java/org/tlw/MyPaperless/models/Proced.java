@@ -17,6 +17,7 @@ public class Proced {
     private String proceds;
 
     @OneToOne
+    @JoinColumn(name="intro_id",nullable = false)
     Intro intro;
 
     public Proced(String proceds) {

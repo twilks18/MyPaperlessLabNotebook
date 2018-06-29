@@ -20,34 +20,31 @@ public class Intro {
 
     @NotNull
     @Lob
-    @Size(min= 5, message= " You forgot something")
+    @Size(min= 5, message= "Add a purpose")
     private String purpose;
 
     @NotNull
     @Lob
-    @Size(min= 5, message= " You forgot something")
+    @Size(min= 5, message= "Add materials")
     private String materials;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "intro_id")
+    @OneToMany(mappedBy = "intro",cascade = CascadeType.ALL)
     private List<Reagent> reagent = new ArrayList<>();
 
 
     @OneToOne(mappedBy = "intro", cascade = CascadeType.ALL)
-    @JoinColumn(name="intro_id")
     private Conclusions conclude;
 
     @OneToOne(mappedBy = "intro", cascade = CascadeType.ALL)
-    @JoinColumn(name="intro_id")
     private Observations observation;
 
 
     @OneToOne(mappedBy = "intro", cascade = CascadeType.ALL)
-    @JoinColumn(name="intro_id")
     private Proced proceds;
 
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private User user;
 
     public Intro(String title, String purpose, String materials) {
@@ -55,6 +52,7 @@ public class Intro {
         this.title = title;
         this.purpose = purpose;
         this.materials = materials;
+        user.addIntro(this);
     }
 
 
@@ -94,6 +92,11 @@ public class Intro {
     }
 
     public List<Reagent> getReagent() { return reagent; }
+
+
+    protected void addReagent(Reagent reagents) {
+        reagent.add(reagents);
+    }
 
 
     public Conclusions getConclude() {
